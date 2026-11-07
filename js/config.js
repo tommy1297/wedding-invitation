@@ -5,8 +5,8 @@ window.WEDDING = {
   calendarEndUTC: '20270620T060000Z',
   title: 'The Wedding of Alya & Bima',
   venue: 'Grand Ballroom, Jakarta',
-  supabaseUrl: 'PASTE_PROJECT_URL_HERE',
-  supabasePublishableKey: 'PASTE_PUBLISHABLE_KEY_HERE'
+  supabaseUrl: 'https://pztwbekzaturtnzjxsct.supabase.co',
+  supabasePublishableKey: 'sb_publishable_2jGwL2iKP0_GomDix_HCEw_zmfYsZQM'
 };
 // Publishable/anon key boleh di frontend jika RLS benar.
 // JANGAN pernah masukkan secret key atau service_role key.
