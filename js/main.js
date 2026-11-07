@@ -1,7 +1,7 @@
 const el = id => document.getElementById(id);
 
 // =====================================
-// 1. AUTOMATIC GUEST NAME
+// AUTOMATIC GUEST NAME
 // =====================================
 const params = new URLSearchParams(window.location.search);
 const guest = (params.get('to') || '').trim();
@@ -10,14 +10,14 @@ const guestName = guest
   ? guest.replace(/\+/g, ' ').slice(0, 100)
   : 'Tamu Undangan';
 
-// Tampilkan nama tamu di halaman cover
+// Nama di halaman cover
 if (el('guest')) {
   el('guest').textContent = guestName;
 }
 
-// Otomatis isi nama pada form RSVP / ucapan
-if (el('wishName')) {
-  el('wishName').value = guest ? guestName : '';
+// Nama otomatis di form RSVP
+if (el('name')) {
+  el('name').value = guest ? guestName : '';
 }
 
 // =====================================
