@@ -153,25 +153,6 @@ el('copyAccount').onclick = async () => {
 };
 
 // =====================================
-// 7. BACKGROUND MUSIC
-// =====================================
-el('music').onclick = async () => {
-  const audio = el('audio');
-
-  try {
-    if (audio.paused) {
-      await audio.play();
-      el('music').classList.add('playing');
-    } else {
-      audio.pause();
-      el('music').classList.remove('playing');
-    }
-  } catch {
-    toast('Tambahkan assets/music/wedding.mp3 terlebih dahulu');
-  }
-};
-
-// =====================================
 // 8. PHOTO GALLERY
 // =====================================
 document.querySelectorAll('.gallery button').forEach(button => {
