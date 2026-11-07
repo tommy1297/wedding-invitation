@@ -21,37 +21,73 @@ function setGuestName() {
 
 setGuestName();
 
+
 // =====================================
-// 2. OPEN INVITATION
+// SCROLL REVEAL ANIMATION
 // =====================================
 
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.08
+});
+
+// =====================================
+// OPEN INVITATION + AUTOPLAY MUSIC
+// =====================================
 
 el('open').onclick = () => {
   const cover = el('cover');
   const content = el('content');
   const music = el('music');
+  const audio = el('audio');
 
-  // Hilangkan cover
-  cover.style.display = 'none';
+  // Mulai musik saat pengguna menekan Open Invitation
+  audio.loop = true;
 
-  // Tampilkan seluruh undangan
-  content.hidden = false;
-  content.style.display = 'block';
-  content.style.visibility = 'visible';
-  content.style.opacity = '1';
-
-  // Tampilkan tombol musik
-  music.hidden = false;
-
-  // Matikan animasi reveal sementara
-  content.querySelectorAll('.reveal').forEach(node => {
-    node.classList.add('visible');
-    node.style.opacity = '1';
-    node.style.visibility = 'visible';
-    node.style.transform = 'none';
+  audio.play().then(() => {
+    music.classList.add('playing');
+  }).catch(error => {
+    console.log('Musik gagal diputar:', error);
   });
 
-  window.scrollTo(0, 0);
+  // Transisi cover
+  cover.style.transition = 'opacity .85s ease';
+  cover.style.opacity = '0';
+
+  setTimeout(() => {
+    cover.hidden = true;
+
+    content.hidden = false;
+    content.style.display = 'block';
+
+    music.hidden = false;
+
+    // Hero pertama langsung terlihat
+    const hero = content.querySelector('section.hero');
+    if (hero) {
+      const inner = hero.querySelector('.inner');
+
+      if (inner) {
+        inner.classList.add('visible');
+      }
+    }
+
+    // Animasi untuk section lainnya
+    content.querySelectorAll('.reveal').forEach(node => {
+      if (!hero || !hero.contains(node)) {
+        observer.observe(node);
+      }
+    });
+
+    window.scrollTo(0, 0);
+
+  }, 850);
 };
 
 // =====================================
