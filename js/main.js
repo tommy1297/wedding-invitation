@@ -25,53 +25,33 @@ setGuestName();
 // 2. OPEN INVITATION
 // =====================================
 
+
 el('open').onclick = () => {
   const cover = el('cover');
   const content = el('content');
   const music = el('music');
 
   // Hilangkan cover
-  cover.style.transition = 'opacity .85s ease';
-  cover.style.opacity = '0';
+  cover.style.display = 'none';
 
-  setTimeout(() => {
-    cover.hidden = true;
+  // Tampilkan seluruh undangan
+  content.hidden = false;
+  content.style.display = 'block';
+  content.style.visibility = 'visible';
+  content.style.opacity = '1';
 
-    // Paksa konten utama ditampilkan
-    content.hidden = false;
-    content.removeAttribute('hidden');
-    content.style.display = 'block';
-    content.style.visibility = 'visible';
-    content.style.opacity = '1';
+  // Tampilkan tombol musik
+  music.hidden = false;
 
-    music.hidden = false;
+  // Matikan animasi reveal sementara
+  content.querySelectorAll('.reveal').forEach(node => {
+    node.classList.add('visible');
+    node.style.opacity = '1';
+    node.style.visibility = 'visible';
+    node.style.transform = 'none';
+  });
 
-    // Tampilkan section pertama secara langsung
-    const hero = content.querySelector('section.hero');
-    if (hero) {
-      hero.style.display = 'grid';
-      hero.style.visibility = 'visible';
-      hero.style.opacity = '1';
-      hero.style.minHeight = '100vh';
-
-      const inner = hero.querySelector('.inner');
-      if (inner) {
-        inner.classList.add('visible');
-        inner.style.opacity = '1';
-        inner.style.visibility = 'visible';
-        inner.style.transform = 'none';
-      }
-    }
-
-    // Aktifkan animasi untuk section berikutnya
-    content.querySelectorAll('.reveal').forEach(node => {
-      if (!hero || !hero.contains(node)) {
-        observer.observe(node);
-      }
-    });
-
-    window.scrollTo(0, 0);
-  }, 850);
+  window.scrollTo(0, 0);
 };
 
 // =====================================
