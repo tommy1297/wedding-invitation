@@ -17,6 +17,46 @@
   min-height: 100vh;
 }
 
+/* =================================
+   FIX OPEN INVITATION BLANK SCREEN
+================================= */
+
+/* Keep hidden elements hidden */
+[hidden] {
+  display: none !important;
+}
+
+/* Make the first hero visible immediately */
+#content > section.hero:first-of-type .inner {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Make sure hero background and overlay are visible */
+#content > section.hero:first-of-type {
+  display: grid;
+  min-height: 100vh;
+  position: relative;
+  visibility: visible;
+}
+
+/* Ensure hero text appears above background */
+#content > section.hero:first-of-type .inner {
+  position: relative;
+  z-index: 2;
+}
+
+/* Main content background */
+#content {
+  display: block;
+  min-height: 100vh;
+  background: var(--paper);
+}
+
+
+
 #content > .hero:first-child {
   min-height: 100vh;
 }
