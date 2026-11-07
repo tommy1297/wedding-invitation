@@ -2,7 +2,8 @@
 
 
 
-/* FINAL FIX - INVITATION CONTENT */
+
+/* TEMPORARY DEBUG: FORCE ALL CONTENT VISIBLE */
 
 #content:not([hidden]) {
   display: block !important;
@@ -10,20 +11,20 @@
   opacity: 1 !important;
 }
 
-#content:not([hidden]) > section:first-child {
-  display: grid !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  min-height: 100vh !important;
-}
-
-#content:not([hidden]) > section:first-child .inner {
+#content .reveal {
   opacity: 1 !important;
   visibility: visible !important;
   transform: none !important;
-  z-index: 5 !important;
 }
 
-#content:not([hidden]) .veil {
-  z-index: 0;
+#content > section {
+  display: block;
+  visibility: visible;
 }
+
+#content > section.hero,
+#content > section.photo-section {
+  display: grid;
+}
+
+
