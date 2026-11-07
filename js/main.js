@@ -1,94 +1,61 @@
 
 const el = id => document.getElementById(id);
 
-function setGuestName() {
-  const params = new URLSearchParams(window.location.search);
-  const guest = (params.get('to') || '').trim();
-  const guestName = guest || 'Tamu Undangan';
+// =====================================
+// 1. GUEST NAME
+// =====================================
+const params = new URLSearchParams(window.location.search);
+const guest = (params.get('to') || '').trim();
+const guestName = guest || 'Tamu Undangan';
 
-  // Nama pada cover
-  const coverName = el('guest');
-  if (coverName) {
-    coverName.textContent = guestName;
-  }
-
-  // Nama pada RSVP
-  const rsvpName = el('name');
-  if (rsvpName && guest) {
-    rsvpName.value = guestName;
-  }
+if (el('guest')) {
+  el('guest').textContent = guestName;
 }
 
-setGuestName();
-
-
-// =====================================
-// SCROLL REVEAL ANIMATION
-// =====================================
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, {
-  threshold: 0.08
-});
+if (el('name') && guest) {
+  el('name').value = guestName;
+}
 
 // =====================================
-// OPEN INVITATION + AUTOPLAY MUSIC
+// 2. OPEN INVITATION + MUSIC
 // =====================================
-
-el('open').onclick = () => {
+el('open').addEventListener('click', async () => {
   const cover = el('cover');
   const content = el('content');
   const music = el('music');
   const audio = el('audio');
 
-  // Mulai musik saat pengguna menekan Open Invitation
-  audio.loop = true;
+  // Tampilkan undangan dahulu
+  cover.hidden = true;
+  content.hidden = false;
+  content.style.display = 'block';
+  content.style.visibility = 'visible';
 
-  audio.play().then(() => {
-    music.classList.add('playing');
-  }).catch(error => {
-    console.log('Musik gagal diputar:', error);
+  // Paksa semua teks dan section terlihat
+  content.querySelectorAll('.reveal').forEach(node => {
+    node.classList.add('visible');
+    node.style.opacity = '1';
+    node.style.visibility = 'visible';
+    node.style.transform = 'none';
   });
 
-  // Transisi cover
-  cover.style.transition = 'opacity .85s ease';
-  cover.style.opacity = '0';
+  music.hidden = false;
 
-  setTimeout(() => {
-    cover.hidden = true;
+  window.scrollTo(0, 0);
 
-    content.hidden = false;
-    content.style.display = 'block';
+  // Mulai musik setelah interaksi pengguna
+  audio.loop = true;
+  audio.volume = 0.8;
 
-    music.hidden = false;
-
-    // Hero pertama langsung terlihat
-    const hero = content.querySelector('section.hero');
-    if (hero) {
-      const inner = hero.querySelector('.inner');
-
-      if (inner) {
-        inner.classList.add('visible');
-      }
-    }
-
-    // Animasi untuk section lainnya
-    content.querySelectorAll('.reveal').forEach(node => {
-      if (!hero || !hero.contains(node)) {
-        observer.observe(node);
-      }
-    });
-
-    window.scrollTo(0, 0);
-
-  }, 850);
-};
+  try {
+    await audio.play();
+    music.classList.add('playing');
+    console.log('Music playing');
+  } catch (error) {
+    console.error('Music playback failed:', error);
+    alert('Musik belum bisa diputar. Periksa file wedding.mp3 dan lokasi file.');
+  }
+});
 
 // =====================================
 // 3. COUNTDOWN
@@ -122,12 +89,14 @@ if (el('calendar')) {
 }
 
 // =====================================
-// 5. TOAST NOTIFICATION
+// 5. TOAST
 // =====================================
 let toastTimer;
 
-function toast(s) {
-  el('toast').textContent = s;
+function toast(message) {
+  if (!el('toast')) return;
+
+  el('toast').textContent = message;
   el('toast').classList.add('show');
 
   clearTimeout(toastTimer);
@@ -140,17 +109,31 @@ function toast(s) {
 // =====================================
 // 6. COPY BANK ACCOUNT
 // =====================================
-el('copyAccount').onclick = async () => {
-  try {
-    await navigator.clipboard.writeText(
-      el('account').textContent.trim()
-    );
+if (el('copyAccount')) {
+  el('copyAccount').onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        el('account').textContent.trim()
+      );
+      toast('Nomor rekening disalin');
+    } catch {
+      toast('Silakan salin nomor secara manual');
+    }
+  };
+}
 
-    toast('Nomor rekening disalin');
-  } catch {
-    toast('Silakan salin nomor secara manual');
-  }
-};
+// =====================================
+// 7. VINYL RECORD - NO STOP BUTTON
+// =====================================
+const audio = el('audio');
+
+audio.addEventListener('ended', () => {
+  audio.play().catch(error => console.log(error));
+});
+
+audio.addEventListener('error', () => {
+  console.error('Audio file could not be loaded:', audio.error);
+});
 
 // =====================================
 // 8. PHOTO GALLERY
@@ -162,12 +145,16 @@ document.querySelectorAll('.gallery button').forEach(button => {
   };
 });
 
-el('closePhoto').onclick = () => {
-  el('lightbox').hidden = true;
-};
-
-el('lightbox').onclick = e => {
-  if (e.target.id === 'lightbox') {
+if (el('closePhoto')) {
+  el('closePhoto').onclick = () => {
     el('lightbox').hidden = true;
-  }
-};
+  };
+}
+
+if (el('lightbox')) {
+  el('lightbox').onclick = event => {
+    if (event.target.id === 'lightbox') {
+      el('lightbox').hidden = true;
+    }
+  };
+}
