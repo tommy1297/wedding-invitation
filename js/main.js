@@ -25,35 +25,45 @@ setGuestName();
 // 2. OPEN INVITATION
 // =====================================
 
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.05 });
-
 el('open').onclick = () => {
   const cover = el('cover');
   const content = el('content');
+  const music = el('music');
 
+  // Hilangkan cover
+  cover.style.transition = 'opacity .85s ease';
   cover.style.opacity = '0';
 
   setTimeout(() => {
     cover.hidden = true;
-    content.hidden = false;
-    el('music').hidden = false;
 
-    // First section must be visible immediately
+    // Paksa konten utama ditampilkan
+    content.hidden = false;
+    content.removeAttribute('hidden');
+    content.style.display = 'block';
+    content.style.visibility = 'visible';
+    content.style.opacity = '1';
+
+    music.hidden = false;
+
+    // Tampilkan section pertama secara langsung
     const hero = content.querySelector('section.hero');
     if (hero) {
+      hero.style.display = 'grid';
+      hero.style.visibility = 'visible';
+      hero.style.opacity = '1';
+      hero.style.minHeight = '100vh';
+
       const inner = hero.querySelector('.inner');
-      if (inner) inner.classList.add('visible');
+      if (inner) {
+        inner.classList.add('visible');
+        inner.style.opacity = '1';
+        inner.style.visibility = 'visible';
+        inner.style.transform = 'none';
+      }
     }
 
-    // Animate remaining sections
+    // Aktifkan animasi untuk section berikutnya
     content.querySelectorAll('.reveal').forEach(node => {
       if (!hero || !hero.contains(node)) {
         observer.observe(node);
