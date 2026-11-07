@@ -24,6 +24,11 @@ setGuestName();
 // =====================================
 // 2. OPEN INVITATION
 // =====================================
+
+ // =====================================
+ // 2. OPEN INVITATION - FIX BLANK PAGE
+ // =====================================
+
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -31,23 +36,43 @@ const observer = new IntersectionObserver(entries => {
       observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.1 });
+}, {
+  threshold: 0.05
+});
 
 el('open').onclick = () => {
-  el('cover').style.transition = 'opacity .85s';
-  el('cover').style.opacity = '0';
+  const cover = el('cover');
+  const content = el('content');
+
+  cover.style.transition = 'opacity .85s ease';
+  cover.style.opacity = '0';
 
   setTimeout(() => {
-    el('cover').hidden = true;
-    el('content').hidden = false;
+    cover.hidden = true;
+    content.hidden = false;
+
     el('music').hidden = false;
 
-    // Aktifkan animasi elemen setelah halaman dibuka
-    document.querySelectorAll('.reveal').forEach(node => {
-      observer.observe(node);
+    // Pastikan halaman pertama langsung terlihat
+    const firstHero = content.querySelector('.hero .inner');
+    if (firstHero) {
+      firstHero.classList.add('visible');
+    }
+
+    // Aktifkan animasi untuk bagian lainnya
+    content.querySelectorAll('.reveal').forEach(node => {
+      if (node !== firstHero) {
+        observer.observe(node);
+      }
     });
 
-    window.scrollTo(0, 0);
+    // Kembali ke posisi paling atas
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant'
+    });
+
   }, 850);
 };
 
