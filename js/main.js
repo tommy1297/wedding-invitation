@@ -1,24 +1,25 @@
+
 const el = id => document.getElementById(id);
 
-// =====================================
-// AUTOMATIC GUEST NAME
-// =====================================
-const params = new URLSearchParams(window.location.search);
-const guest = (params.get('to') || '').trim();
+function setGuestName() {
+  const params = new URLSearchParams(window.location.search);
+  const guest = (params.get('to') || '').trim();
+  const guestName = guest || 'Tamu Undangan';
 
-const guestName = guest
-  ? guest.replace(/\+/g, ' ').slice(0, 100)
-  : 'Tamu Undangan';
+  // Nama pada cover
+  const coverName = el('guest');
+  if (coverName) {
+    coverName.textContent = guestName;
+  }
 
-// Nama di halaman cover
-if (el('guest')) {
-  el('guest').textContent = guestName;
+  // Nama pada RSVP
+  const rsvpName = el('name');
+  if (rsvpName && guest) {
+    rsvpName.value = guestName;
+  }
 }
 
-// Nama otomatis di form RSVP
-if (el('name')) {
-  el('name').value = guest ? guestName : '';
-}
+setGuestName();
 
 // =====================================
 // 2. OPEN INVITATION
