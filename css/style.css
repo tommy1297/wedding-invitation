@@ -94,3 +94,74 @@
   transform: none;
 }
 
+
+
+/* STABLE INVITATION DISPLAY */
+
+[hidden] {
+  display: none !important;
+}
+
+#content:not([hidden]) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+#content:not([hidden]) .reveal {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+/* VINYL RECORD */
+.music {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #101010;
+  border: 1px solid #bda77d;
+  display: grid;
+  place-items: center;
+  font-size: 0;
+  pointer-events: none;
+}
+
+.music::before {
+  content: "";
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    #222 0px,
+    #080808 2px,
+    #292929 3px,
+    #080808 5px
+  );
+}
+
+.music::after {
+  content: "";
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #bda77d;
+  border: 3px solid #171717;
+}
+
+.music.playing {
+  animation: vinylSpin 3s linear infinite;
+}
+
+@keyframes vinylSpin {
+  to { transform: rotate(360deg); }
+}
+
+
+
+
+
+
