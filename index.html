@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="id">
 <head>
@@ -16,18 +15,14 @@
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="css/style.css?v=34">
+  <link rel="stylesheet" href="css/style.css?v=35">
 </head>
 
 <body>
 
-  <!-- =================================
-       OPENING INVITATION
-  ================================== -->
-
+  <!-- OPENING INVITATION -->
   <div id="cover" class="cover">
     <div class="cover-frame">
-
       <div class="cover-card">
 
         <div class="cover-floral-top">❧</div>
@@ -65,16 +60,10 @@
       </div>
 
       <div class="cover-ornament bottom">❧</div>
-
     </div>
   </div>
 
-
-  <!-- =================================
-       MAIN INVITATION
-       Each section is one slide
-  ================================== -->
-
+  <!-- MAIN INVITATION: EACH SECTION IS ONE SLIDE -->
   <main id="content" hidden>
 
     <!-- 1. HERO -->
@@ -99,9 +88,7 @@
         </a>
 
       </div>
-
     </section>
-
 
     <!-- 2. WELCOME -->
     <section class="paper section">
@@ -121,9 +108,7 @@
         </p>
 
       </div>
-
     </section>
-
 
     <!-- 3. COUPLE -->
     <section class="green section" id="couple">
@@ -173,11 +158,8 @@
           </article>
 
         </div>
-
       </div>
-
     </section>
-
 
     <!-- 4. LOVE STORY -->
     <section class="paper section">
@@ -209,7 +191,6 @@
 
           </article>
 
-
           <article class="reveal">
 
             <span>02</span>
@@ -224,7 +205,6 @@
             </div>
 
           </article>
-
 
           <article class="reveal">
 
@@ -242,11 +222,8 @@
           </article>
 
         </div>
-
       </div>
-
     </section>
-
 
     <!-- 5. COUNTDOWN -->
     <section class="photo-section section">
@@ -291,9 +268,7 @@
         </a>
 
       </div>
-
     </section>
-
 
     <!-- 6. WEDDING EVENTS -->
     <section class="paper section">
@@ -333,7 +308,6 @@
 
           </article>
 
-
           <article>
 
             <p class="eyebrow">RECEPTION</p>
@@ -362,11 +336,8 @@
           </article>
 
         </div>
-
       </div>
-
     </section>
-
 
     <!-- 7. GALLERY -->
     <section class="green section">
@@ -412,11 +383,8 @@
           </button>
 
         </div>
-
       </div>
-
     </section>
-
 
     <!-- 8. WEDDING GIFT -->
     <section class="paper section">
@@ -449,11 +417,8 @@
           </button>
 
         </div>
-
       </div>
-
     </section>
-
 
     <!-- 9. RSVP -->
     <section class="green section">
@@ -477,7 +442,6 @@
             >
           </label>
 
-
           <label>
             Kehadiran
 
@@ -486,7 +450,6 @@
               <option value="Tidak hadir">Tidak hadir</option>
             </select>
           </label>
-
 
           <label>
             Jumlah tamu
@@ -498,7 +461,6 @@
               <option value="4">4 orang</option>
             </select>
           </label>
-
 
           <label>
             Ucapan
@@ -512,7 +474,6 @@
             ></textarea>
           </label>
 
-
           <button id="submitWish" type="submit">
             SEND WISHES ↗
           </button>
@@ -520,7 +481,6 @@
           <p id="status" role="status"></p>
 
         </form>
-
 
         <h3 class="wishes-heading">
           Wishes from our loved ones
@@ -531,9 +491,7 @@
         </div>
 
       </div>
-
     </section>
-
 
     <!-- 10. CLOSING -->
     <section class="hero closing full">
@@ -562,11 +520,7 @@
 
   </main>
 
-
-  <!-- =================================
-       MUSIC AND GALLERY LIGHTBOX
-  ================================== -->
-
+  <!-- MUSIC AND GALLERY LIGHTBOX -->
   <button
     id="music"
     class="music"
@@ -583,7 +537,6 @@
     preload="none"
     src="./wedding.mp3"
   ></audio>
-
 
   <div id="lightbox" class="lightbox" hidden>
 
@@ -602,30 +555,20 @@
 
   </div>
 
-
   <div id="toast" role="status" class="toast"></div>
 
-
-  <!-- =================================
-       JAVASCRIPT
-  ================================== -->
-
+  <!-- JAVASCRIPT -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script src="js/config.js?v=10"></script>
-
-  <script src="js/main.js?v=10"></script>
-
-  <script src="js/wishes.js?v=10"></script>
-
+  <script src="js/config.js?v=11"></script>
+  <script src="js/main.js?v=11"></script>
+  <script src="js/wishes.js?v=11"></script>
 
   <!-- PERSONALIZED GUEST NAME -->
-
   <script>
     (function () {
 
       const params = new URLSearchParams(window.location.search);
-
       const guest = (params.get('to') || '').trim();
 
       if (!guest) return;
