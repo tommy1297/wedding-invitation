@@ -28,19 +28,34 @@ const submitButton = el('submitWish');
 
 
 // 3. ATTENDANCE AND GUEST COUNT
+
 function updateGuestCount() {
   const notAttending =
     attendanceInput.value === 'Tidak hadir';
 
+  // Jika tidak hadir, tampilkan hanya 0 orang
   if (notAttending) {
+    countInput.innerHTML = '';
+    
+    const option = document.createElement('option');
+    option.value = '0';
+    option.textContent = '0 orang';
+    countInput.appendChild(option);
+
     countInput.value = '0';
     countInput.disabled = true;
-  } else {
-    countInput.disabled = false;
 
-    if (countInput.value === '0') {
-      countInput.value = '1';
-    }
+  } else {
+    // Jika hadir, tampilkan pilihan 1 sampai 4
+    countInput.disabled = false;
+    countInput.innerHTML = `
+      <option value="1">1 orang</option>
+      <option value="2">2 orang</option>
+      <option value="3">3 orang</option>
+      <option value="4">4 orang</option>
+    `;
+
+    countInput.value = '1';
   }
 }
 
