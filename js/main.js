@@ -50,19 +50,30 @@ updateGuestCount();
 // =====================================
 // 2. OPEN INVITATION + MUSIC
 // =====================================
+
 el('open').addEventListener('click', async () => {
   const cover = el('cover');
   const content = el('content');
   const music = el('music');
   const audio = el('audio');
+  const openButton = el('open');
 
-  // Tampilkan undangan dahulu
+  // Prevent double click
+  if (cover.classList.contains('is-opening')) return;
+
+  openButton.disabled = true;
+  cover.classList.add('is-opening');
+
+  // Wait for opening animation
+  await new Promise(resolve => setTimeout(resolve, 900));
+
   cover.hidden = true;
+  cover.classList.remove('is-opening');
+
   content.hidden = false;
   content.style.display = 'block';
   content.style.visibility = 'visible';
 
-  // Paksa semua teks dan section terlihat
   content.querySelectorAll('.reveal').forEach(node => {
     node.classList.add('visible');
     node.style.opacity = '1';
@@ -71,20 +82,18 @@ el('open').addEventListener('click', async () => {
   });
 
   music.hidden = false;
-
   window.scrollTo(0, 0);
 
-  // Mulai musik setelah interaksi pengguna
+  // Start background music after user interaction
   audio.loop = true;
   audio.volume = 0.8;
 
   try {
     await audio.play();
     music.classList.add('playing');
-    console.log('Music playing');
   } catch (error) {
     console.error('Music playback failed:', error);
-    alert('Musik belum bisa diputar. Periksa file wedding.mp3 dan lokasi file.');
+    alert('Musik belum bisa diputar. Periksa file wedding.mp3 dan lokasinya.');
   }
 });
 
