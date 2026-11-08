@@ -135,7 +135,8 @@ el('open').addEventListener('click', async () => {
   content.style.display = 'block';
   content.style.visibility = 'visible';
   initializeScrollReveal();
-
+  initializeSlideScroll();
+   
   music.hidden = false;
   window.scrollTo(0, 0);
 
@@ -253,3 +254,78 @@ if (el('lightbox')) {
     }
   };
 }
+
+
+
+```javascript
+/* POWERPOINT-LIKE PAGE TRANSITION */
+
+function initializeSlideScroll() {
+  const sections = Array.from(
+    document.querySelectorAll('#content > section')
+  );
+
+  if (!sections.length) return;
+
+  let currentSlide = 0;
+  let isAnimating = false;
+
+  function goToSlide(index) {
+    if (isAnimating) return;
+
+    index = Math.max(0, Math.min(index, sections.length - 1));
+
+    if (index === currentSlide) return;
+
+    currentSlide = index;
+    isAnimating = true;
+
+    sections[currentSlide].scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 1000);
+  }
+
+  window.addEventListener('wheel', function(event) {
+    event.preventDefault();
+
+    if (isAnimating || Math.abs(event.deltaY) < 10) return;
+
+    goToSlide(currentSlide + (event.deltaY > 0 ? 1 : -1));
+  }, { passive: false });
+
+  window.addEventListener('keydown', function(event) {
+    if (['ArrowDown', 'PageDown', ' '].includes(event.key)) {
+      event.preventDefault();
+      goToSlide(currentSlide + 1);
+    }
+
+    if (['ArrowUp', 'PageUp'].includes(event.key)) {
+      event.preventDefault();
+      goToSlide(currentSlide - 1);
+    }
+  });
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
