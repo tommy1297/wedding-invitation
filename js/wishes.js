@@ -104,10 +104,12 @@ async function loadWishes() {
   const box = el('wishes');
 
   if (!db) {
-    box.textContent =
-      'Database belum terhubung. Periksa js/config.js.';
-    return;
-  }
+  box.textContent = connectionProblem ||
+    'Koneksi Supabase belum tersedia.';
+
+  console.error('Supabase connection:', connectionProblem);
+  return;
+}
 
   const { data, error } = await db
     .from('wedding_wishes')
