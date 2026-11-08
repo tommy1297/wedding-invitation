@@ -815,10 +815,58 @@ form button:disabled {
   font: 28px 'Cormorant Garamond', serif;
 }
 
+/* =========================================
+   RSVP WISHES - INDEPENDENT SCROLL
+========================================= */
+
 #wishes {
   text-align: left;
+
+  /* Tampilkan sekitar 3 wishes */
+  height: 540px;
+  max-height: 540px;
+
+  /* Scroll hanya pada daftar wishes */
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* Scroll behavior */
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+
+  /* Spacing */
+  padding: 0 12px 0 0;
+  margin-top: 20px;
+
+  /* Firefox scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) transparent;
 }
 
+/* Chrome, Edge, Android */
+#wishes::-webkit-scrollbar {
+  width: 6px;
+}
+
+#wishes::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#wishes::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 10px;
+}
+
+/* Wish item */
+#wishes .wish {
+  padding: 18px 0;
+  border-top: 1px solid #667c6c;
+  overflow-wrap: anywhere;
+}
+
+#wishes .wish:last-child {
+  border-bottom: 1px solid #667c6c;
+}
 .wish {
   padding: 15px 0;
   border-top: 1px solid #667c6c;
