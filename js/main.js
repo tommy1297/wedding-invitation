@@ -258,26 +258,39 @@ if (el('lightbox')) {
 
 
 ```javascript
-/* POWERPOINT-LIKE PAGE TRANSITION */
+/* =====================================
+   POWERPOINT-LIKE PAGE TRANSITION
+===================================== */
 
 function initializeSlideScroll() {
-  const sections = Array.from(
-    document.querySelectorAll('#content > section')
+  const content = el('content');
+
+  if (!content) return;
+
+  const sections = Array.from(content.children).filter(section =>
+    section.tagName === 'SECTION'
   );
 
-  if (!sections.length) return;
+  if (sections.length < 2) {
+    console.warn('Slide sections not found. Check HTML structure.');
+    return;
+  }
 
   let currentSlide = 0;
   let isAnimating = false;
+  let touchStartY = 0;
 
   function goToSlide(index) {
     if (isAnimating) return;
 
-    index = Math.max(0, Math.min(index, sections.length - 1));
+    const nextSlide = Math.max(
+      0,
+      Math.min(index, sections.length - 1)
+    );
 
-    if (index === currentSlide) return;
+    if (nextSlide === currentSlide) return;
 
-    currentSlide = index;
+    currentSlide = nextSlide;
     isAnimating = true;
 
     sections[currentSlide].scrollIntoView({
@@ -287,10 +300,15 @@ function initializeSlideScroll() {
 
     setTimeout(() => {
       isAnimating = false;
-    }, 1000);
+    }, 1100);
   }
 
-  window.addEventListener('wheel', function(event) {
+  // Mouse wheel
+  window.addEventListener('wheel', event => {
+    if (event.target.closest(
+      'input, textarea, select, button, a, #lightbox'
+    )) return;
+
     event.preventDefault();
 
     if (isAnimating || Math.abs(event.deltaY) < 10) return;
@@ -298,8 +316,11 @@ function initializeSlideScroll() {
     goToSlide(currentSlide + (event.deltaY > 0 ? 1 : -1));
   }, { passive: false });
 
-  window.addEventListener('keydown', function(event) {
-    if (['ArrowDown', 'PageDown', ' '].includes(event.key)) {
+  // Keyboard
+  window.addEventListener('keydown', event => {
+    if (event.target.matches('input, textarea, select')) return;
+
+    if (['ArrowDown', 'PageDown'].includes(event.key)) {
       event.preventDefault();
       goToSlide(currentSlide + 1);
     }
@@ -309,9 +330,22 @@ function initializeSlideScroll() {
       goToSlide(currentSlide - 1);
     }
   });
+
+  // Touch / mobile swipe
+  window.addEventListener('touchstart', event => {
+    touchStartY = event.touches[0].clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchend', event => {
+    const touchEndY = event.changedTouches[0].clientY;
+    const difference = touchStartY - touchEndY;
+
+    if (Math.abs(difference) < 50) return;
+
+    goToSlide(currentSlide + (difference > 0 ? 1 : -1));
+  }, { passive: true });
 }
 ```
-
 
 
 
