@@ -109,6 +109,7 @@ attendanceInput.addEventListener('change', updateGuestCount);
 updateGuestCount();
 
 
+```javascript
 // =====================================
 // 2. OPEN INVITATION + MUSIC
 // =====================================
@@ -120,13 +121,18 @@ el('open').addEventListener('click', async () => {
   const audio = el('audio');
   const openButton = el('open');
 
-  // Prevent double click
   if (cover.classList.contains('is-opening')) return;
 
   openButton.disabled = true;
   cover.classList.add('is-opening');
 
-  // Wait for opening animation
+  // IMPORTANT: Start audio immediately during user click
+  audio.loop = true;
+  audio.volume = 0.8;
+
+  const musicPromise = audio.play();
+
+  // Opening animation
   await new Promise(resolve => setTimeout(resolve, 900));
 
   cover.hidden = true;
@@ -136,23 +142,22 @@ el('open').addEventListener('click', async () => {
   content.style.display = 'block';
   content.style.visibility = 'visible';
   content.scrollTop = 0;
+
   initializeScrollReveal();
-   
+
   music.hidden = false;
   window.scrollTo(0, 0);
 
-  // Start background music after user interaction
-  audio.loop = true;
-  audio.volume = 0.8;
-
   try {
-    await audio.play();
+    await musicPromise;
     music.classList.add('playing');
+    console.log('Music playing successfully');
   } catch (error) {
     console.error('Music playback failed:', error);
-    alert('Musik belum bisa diputar. Periksa file wedding.mp3 dan lokasinya.');
+    toast('Tekan tombol musik untuk memutar lagu');
   }
 });
+```
 
 // =====================================
 // 3. COUNTDOWN
