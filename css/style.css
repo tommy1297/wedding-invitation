@@ -1152,6 +1152,37 @@ body {
 ```
 
 
+```css
+/* FIX OPEN INVITATION BUTTON */
+
+#cover {
+  position: relative;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+#cover .cover-frame,
+#cover .cover-card,
+#cover .open-button {
+  pointer-events: auto;
+}
+
+#cover .open-button {
+  position: relative;
+  z-index: 1002;
+  cursor: pointer;
+}
+
+#content {
+  z-index: 1;
+}
+
+#content[hidden] {
+  display: none !important;
+  pointer-events: none !important;
+}
+```
+
 
 
 
