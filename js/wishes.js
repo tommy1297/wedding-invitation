@@ -1,4 +1,22 @@
+(function () {
+  const result = {
+    configLoaded: typeof window.WEDDING !== 'undefined',
+    supabaseLoaded: typeof window.supabase !== 'undefined',
+    createClientAvailable:
+      typeof window.supabase?.createClient === 'function',
+    urlAvailable: !!window.WEDDING?.supabaseUrl,
+    keyAvailable: !!window.WEDDING?.supabasePublishableKey
+  };
 
+  console.log('SUPABASE DIAGNOSTIC:', result);
+
+  const box = document.getElementById('wishes');
+
+  if (box) {
+    box.textContent =
+      'DIAGNOSTIC: ' + JSON.stringify(result);
+  }
+})();
 // =====================================
 // SUPABASE WEDDING GUESTBOOK
 // =====================================
