@@ -109,10 +109,11 @@ attendanceInput.addEventListener('change', updateGuestCount);
 updateGuestCount();
 
 
-```javascript
+
 // =====================================
 // 2. OPEN INVITATION + MUSIC
 // =====================================
+
 const openButton = el('open');
 
 if (openButton) {
@@ -127,11 +128,14 @@ if (openButton) {
 
     openButton.disabled = true;
 
-    // Start music directly from user interaction
+    // Start music directly from the click
     audio.loop = true;
     audio.volume = 0.8;
 
-    const musicPromise = audio.play();
+    const musicPromise = audio.play().catch(error => {
+      console.error('Music playback failed:', error);
+      return false;
+    });
 
     cover.classList.add('is-opening');
 
@@ -149,15 +153,15 @@ if (openButton) {
 
     if (music) music.hidden = false;
 
-    try {
-      await musicPromise;
-      if (music) music.classList.add('playing');
-    } catch (error) {
-      console.error('Music playback failed:', error);
+    const musicStarted = await musicPromise;
+
+    if (musicStarted && music) {
+      music.classList.add('playing');
     }
+
+    openButton.disabled = false;
   });
 }
-```
 
 // =====================================
 // 3. COUNTDOWN
