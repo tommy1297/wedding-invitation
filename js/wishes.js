@@ -1,5 +1,214 @@
-// Supabase guestbook. Semua teks tamu ditampilkan via textContent, bukan innerHTML.
-const ready = WEDDING.supabaseUrl.startsWith('https://') && !WEDDING.supabasePublishableKey.includes('PASTE_') && !!window.supabase;
-const db = ready ? window.supabase.createClient(WEDDING.supabaseUrl,WEDDING.supabasePublishableKey) : null;
-async function loadWishes(){const box=el('wishes');if(!db){box.textContent='Database belum terhubung. Isi js/config.js setelah setup Supabase.';return}const {data,error}=await db.from('wedding_wishes').select('guest_name,attendance,guest_count,message,created_at').order('created_at',{ascending:false}).limit(30);if(error){box.textContent='Gagal memuat ucapan. Periksa RLS dan konfigurasi.';console.error(error);return}box.replaceChildren();if(!data.length){box.textContent='Belum ada ucapan. Jadilah yang pertama!';return}data.forEach(w=>{const card=document.createElement('article');card.className='wish';const title=document.createElement('strong');title.textContent=w.guest_name;const meta=document.createElement('small');meta.textContent=`${w.attendance} · ${w.guest_count} tamu`;const message=document.createElement('p');message.textContent=w.message;card.append(title,meta,message);box.append(card)})}
-el('wishForm').onsubmit=async e=>{e.preventDefault();if(!db){el('status').textContent='Hubungkan Supabase terlebih dahulu.';return}const payload={guest_name:el('name').value.trim(),attendance:el('attendance').value,guest_count:Number(el('count').value),message:el('message').value.trim()};if(!payload.guest_name||!payload.message)return;el('submitWish').disabled=true;el('status').textContent='Mengirim...';const {error}=await db.from('wedding_wishes').insert(payload);el('submitWish').disabled=false;if(error){el('status').textContent='Gagal mengirim. Coba lagi.';console.error(error);return}el('status').textContent='Terima kasih, ucapan berhasil dikirim!';e.target.reset();await loadWishes()};loadWishes();
+
+// =====================================
+// SUPABASE WEDDING GUESTBOOK
+// =====================================
+
+// 1. SUPABASE CONNECTION
+const ready =
+  WEDDING.supabaseUrl.startsWith('https://') &&
+  !WEDDING.supabasePublishableKey.includes('PASTE_') &&
+  !!window.supabase;
+
+const db = ready
+  ? window.supabase.createClient(
+      WEDDING.supabaseUrl,
+      WEDDING.supabasePublishableKey
+    )
+  : null;
+
+
+// 2. ELEMENT REFERENCES
+const wishForm = el('wishForm');
+const nameInput = el('name');
+const attendanceInput = el('attendance');
+const countInput = el('count');
+const messageInput = el('message');
+const statusBox = el('status');
+const submitButton = el('submitWish');
+
+
+// 3. ATTENDANCE AND GUEST COUNT
+function updateGuestCount() {
+  const notAttending =
+    attendanceInput.value === 'Tidak hadir';
+
+  if (notAttending) {
+    countInput.value = '0';
+    countInput.disabled = true;
+  } else {
+    countInput.disabled = false;
+
+    if (countInput.value === '0') {
+      countInput.value = '1';
+    }
+  }
+}
+
+attendanceInput.addEventListener(
+  'change',
+  updateGuestCount
+);
+
+// Set kondisi awal
+updateGuestCount();
+
+
+// 4. LOAD WISHES FROM SUPABASE
+async function loadWishes() {
+  const box = el('wishes');
+
+  if (!db) {
+    box.textContent =
+      'Database belum terhubung. Periksa js/config.js.';
+    return;
+  }
+
+  const { data, error } = await db
+    .from('wedding_wishes')
+    .select(
+      'guest_name,attendance,guest_count,message,created_at'
+    )
+    .order('created_at', { ascending: false })
+    .limit(30);
+
+  if (error) {
+    box.textContent =
+      'Gagal memuat ucapan. Periksa RLS dan konfigurasi.';
+    console.error('Load wishes error:', error);
+    return;
+  }
+
+  box.replaceChildren();
+
+  if (!data || data.length === 0) {
+    box.textContent =
+      'Belum ada ucapan. Jadilah yang pertama!';
+    return;
+  }
+
+  data.forEach(w => {
+    const card = document.createElement('article');
+    card.className = 'wish';
+
+    const title = document.createElement('strong');
+    title.textContent = w.guest_name;
+
+    const meta = document.createElement('small');
+
+    // Tidak hadir tetap ditampilkan dengan 0 tamu
+    meta.textContent =
+      `${w.attendance} · ${w.guest_count} tamu`;
+
+    const message = document.createElement('p');
+    message.textContent = w.message;
+
+    card.append(title, meta, message);
+    box.append(card);
+  });
+}
+
+
+// 5. SUBMIT RSVP AND WISHES
+wishForm.addEventListener('submit', async event => {
+  event.preventDefault();
+
+  if (!db) {
+    statusBox.textContent =
+      'Hubungkan Supabase terlebih dahulu.';
+    return;
+  }
+
+  // Ambil status kehadiran
+  const attendance = attendanceInput.value;
+
+  // Jika tidak hadir, jumlah tamu wajib 0
+  const guest_count =
+    attendance === 'Tidak hadir'
+      ? 0
+      : Number(countInput.value);
+
+  // Siapkan data
+  const payload = {
+    guest_name: nameInput.value.trim(),
+    attendance: attendance,
+    guest_count: guest_count,
+    message: messageInput.value.trim()
+  };
+
+  // Validasi
+  if (!payload.guest_name || !payload.message) {
+    statusBox.textContent =
+      'Nama dan ucapan wajib diisi.';
+    return;
+  }
+
+  if (
+    attendance === 'Hadir' &&
+    (guest_count < 1 || guest_count > 4)
+  ) {
+    statusBox.textContent =
+      'Jumlah tamu harus antara 1 sampai 4.';
+    return;
+  }
+
+  if (
+    attendance === 'Tidak hadir' &&
+    guest_count !== 0
+  ) {
+    statusBox.textContent =
+      'Jumlah tamu tidak hadir harus 0.';
+    return;
+  }
+
+  // Kirim ke Supabase
+  submitButton.disabled = true;
+  statusBox.textContent = 'Mengirim ucapan...';
+
+  try {
+    const { error } = await db
+      .from('wedding_wishes')
+      .insert(payload);
+
+    if (error) {
+      console.error('Submit error:', error);
+      statusBox.textContent =
+        'Gagal mengirim. Periksa koneksi dan database.';
+      return;
+    }
+
+    statusBox.textContent =
+      'Terima kasih, ucapan berhasil dikirim!';
+
+    // Reset form
+    wishForm.reset();
+
+    // Pulihkan nama tamu dari URL setelah reset
+    const params = new URLSearchParams(
+      window.location.search
+    );
+
+    const guest = (params.get('to') || '').trim();
+
+    if (guest) {
+      nameInput.value = guest.slice(0, 100);
+    }
+
+    // Pulihkan kondisi jumlah tamu
+    updateGuestCount();
+
+    // Perbarui daftar ucapan
+    await loadWishes();
+
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    statusBox.textContent =
+      'Terjadi kesalahan. Silakan coba kembali.';
+
+  } finally {
+    submitButton.disabled = false;
+  }
+});
+
+
+// 6. INITIALIZE
+loadWishes();
