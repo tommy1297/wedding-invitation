@@ -16,6 +16,37 @@ if (el('name') && guest) {
   el('name').value = guestName;
 }
 
+
+// =====================================
+// RSVP ATTENDANCE & GUEST COUNT
+// =====================================
+
+const attendanceInput = el('attendance');
+const countInput = el('count');
+
+function updateGuestCount() {
+  if (!attendanceInput || !countInput) return;
+
+  const notAttending = attendanceInput.value === 'Tidak hadir';
+
+  if (notAttending) {
+    countInput.value = '0';
+    countInput.disabled = true;
+  } else {
+    countInput.disabled = false;
+
+    if (countInput.value === '0') {
+      countInput.value = '1';
+    }
+  }
+}
+
+attendanceInput.addEventListener('change', updateGuestCount);
+
+// Set kondisi awal
+updateGuestCount();
+
+
 // =====================================
 // 2. OPEN INVITATION + MUSIC
 // =====================================
