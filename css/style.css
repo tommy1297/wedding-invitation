@@ -561,7 +561,20 @@
   z-index: 2;
 }
 
+.cover-ornament.top {
+  display: none !important;
+  content: none !important;
+}
 
+.cover-eyebrow {
+  position: relative !important;
+  display: block !important;
+  margin: 15px 0 35px !important;
+  padding: 0 !important;
+  line-height: 2.2 !important;
+  transform: none !important;
+  z-index: 10 !important;
+}
 
 
 
