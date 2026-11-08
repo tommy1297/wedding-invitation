@@ -1068,7 +1068,84 @@ html {
 }
 ```
 
+```css
+/* =========================================
+   FULL SCREEN PRESENTATION MODE
+========================================= */
 
+/* Cegah browser menggulir seluruh halaman */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Main menjadi wadah slide */
+#content {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  scroll-padding: 0;
+
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Tetap sembunyikan main sebelum undangan dibuka */
+#content[hidden] {
+  display: none !important;
+}
+
+/* Setiap section menjadi satu slide */
+#content > section {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  box-sizing: border-box;
+  margin: 0 !important;
+
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  /* Konten panjang tetap dapat diakses */
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Footer menjadi bagian dari slide penutup */
+#content > section.closing {
+  position: relative;
+}
+
+/* Animasi perpindahan */
+#content {
+  scroll-behavior: smooth;
+}
+
+/* Layar HP */
+@media (max-width: 600px) {
+  #content > section {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+}
+```
 
 
 
