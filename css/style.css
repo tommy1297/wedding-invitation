@@ -1107,3 +1107,170 @@ form button:disabled {
     filter: none !important;
   }
 }
+
+
+
+/* =========================================
+   LOVE STORY — HORIZONTAL TIMELINE
+========================================= */
+
+section.paper.section:has(.timeline) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 65px 6vw;
+}
+
+section.paper.section:has(.timeline) .inner {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+section.paper.section:has(.timeline) .eyebrow {
+  text-align: center;
+  margin-bottom: 22px;
+  letter-spacing: 2px;
+}
+
+section.paper.section:has(.timeline) .heading {
+  text-align: center;
+  margin: 0 auto 85px;
+  font-size: clamp(42px, 5vw, 58px);
+}
+
+/* Timeline layout */
+.timeline {
+  position: relative;
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 38px;
+}
+
+/* Horizontal connector */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 25px;
+  left: 16.5%;
+  right: 16.5%;
+  height: 1px;
+  background: #c9b895;
+}
+
+/* Each milestone */
+.timeline article {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 25px;
+  min-width: 0;
+}
+
+/* Number circle */
+.timeline article > span {
+  position: relative;
+  z-index: 1;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #c9b895;
+  border-radius: 50%;
+  background: #f7f0e8;
+  color: #48483f;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+/* Text area */
+.timeline article > div {
+  width: 100%;
+  max-width: 290px;
+}
+
+.timeline article h3 {
+  margin: 0 0 18px;
+  font-size: clamp(23px, 2.4vw, 30px);
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.timeline article p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.9;
+  color: #666158;
+}
+
+/* Tablet portrait and mobile */
+@media (max-width: 700px) {
+  section.paper.section:has(.timeline) {
+    padding: 55px 24px;
+  }
+
+  section.paper.section:has(.timeline) .heading {
+    margin-bottom: 50px;
+    font-size: 38px;
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
+    max-width: 440px;
+  }
+
+  .timeline::before {
+    top: 25px;
+    bottom: 25px;
+    left: 25px;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+
+  .timeline article {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: 22px;
+  }
+
+  .timeline article > div {
+    max-width: none;
+    padding-top: 5px;
+  }
+
+  .timeline article h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .timeline article p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
