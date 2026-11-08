@@ -164,4 +164,369 @@
 
 
 
+/* =========================================
+   ROYAL WEDDING OPENING
+========================================= */
+
+#cover.cover {
+  min-height: 100svh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 24px 18px;
+  color: #f8f1e5;
+  text-align: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(13, 27, 21, .92),
+      rgba(29, 47, 37, .84),
+      rgba(10, 20, 16, .96)
+    ),
+    url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1400&q=85')
+    center / cover;
+}
+
+/* Soft golden light */
+#cover.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 15%,
+      rgba(0, 0, 0, .35) 100%
+    );
+}
+
+/* Decorative frame */
+.cover-frame {
+  position: relative;
+  width: min(100%, 450px);
+  min-height: min(760px, 94svh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 35px 18px;
+  border: 1px solid rgba(207, 181, 126, .7);
+  outline: 1px solid rgba(207, 181, 126, .25);
+  outline-offset: 8px;
+  animation: royalFrameIn 1.5s ease both;
+}
+
+.cover-frame::before,
+.cover-frame::after {
+  content: "";
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  border-color: #c9ad79;
+  border-style: solid;
+  opacity: .75;
+  pointer-events: none;
+}
+
+.cover-frame::before {
+  top: 12px;
+  left: 12px;
+  border-width: 1px 0 0 1px;
+}
+
+.cover-frame::after {
+  right: 12px;
+  bottom: 12px;
+  border-width: 0 1px 1px 0;
+}
+
+.cover-card {
+  width: 100%;
+  min-height: 620px;
+  border: 0;
+  outline: 0;
+  padding: 35px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ornamental decoration */
+.cover-ornament {
+  position: absolute;
+  z-index: 2;
+  color: #c9ad79;
+  font: 65px 'Cormorant Garamond', serif;
+  opacity: .85;
+  animation: ornamentIn 2s ease both;
+}
+
+.cover-ornament.top {
+  top: 12px;
+  transform: rotate(180deg);
+}
+
+.cover-ornament.bottom {
+  bottom: 12px;
+}
+
+/* Opening typography */
+.cover-eyebrow {
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: #d5bd8e;
+  margin: 0 0 20px;
+  animation: royalFadeUp 1.1s .3s both;
+}
+
+.cover-names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.cover-names .script {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(65px, 17vw, 94px);
+  font-weight: 400;
+  line-height: .95;
+  margin: 0;
+  color: #f7eddb;
+  text-shadow: 0 4px 25px #0006;
+}
+
+.cover-names .script:first-child {
+  animation: royalFadeUp 1.3s .5s both;
+}
+
+.cover-names .script:last-child {
+  animation: royalFadeUp 1.3s .9s both;
+}
+
+.cover-ampersand {
+  font: italic 35px 'Cormorant Garamond', serif;
+  color: #c9ad79;
+  margin: 5px 0;
+  animation: royalFadeUp 1.2s .7s both;
+}
+
+.cover-divider {
+  width: 150px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #c9ad79,
+    transparent
+  );
+  margin: 28px 0 23px;
+  position: relative;
+  animation: royalFadeIn 1.5s 1s both;
+}
+
+.cover-divider span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #20352a;
+  color: #d6bd8b;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.cover-date {
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: #d5bd8e;
+  margin: 0 0 9px;
+  animation: royalFadeUp 1s 1.1s both;
+}
+
+.cover-date-number {
+  font: 23px 'Cormorant Garamond', serif;
+  letter-spacing: 4px;
+  margin: 0;
+  animation: royalFadeUp 1s 1.2s both;
+}
+
+/* Guest information */
+.cover-guest {
+  margin-top: 42px;
+  animation: royalFadeUp 1.2s 1.4s both;
+}
+
+.cover-guest > p {
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: #d5bd8e;
+  margin-bottom: 8px;
+}
+
+.cover-guest h2 {
+  font: 29px 'Cormorant Garamond', serif;
+  font-weight: 500;
+  color: #fff8eb;
+  margin: 0 0 10px;
+  overflow-wrap: anywhere;
+}
+
+.cover-guest small {
+  display: block;
+  font-size: 9px;
+  line-height: 1.5;
+  color: #d4d0c3;
+}
+
+/* Open invitation button */
+.open-button {
+  margin-top: 35px;
+  min-width: 205px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+
+  color: #f8f1e5;
+  background: rgba(201, 173, 121, .08);
+  border: 1px solid #c9ad79;
+
+  font-size: 9px;
+  letter-spacing: 3px;
+  transition: all .4s ease;
+  animation: royalFadeUp 1.2s 1.7s both;
+}
+
+.open-button:hover {
+  background: #c9ad79;
+  color: #17271f;
+  box-shadow: 0 0 30px #c9ad7940;
+  transform: translateY(-3px);
+}
+
+.open-arrow {
+  font-size: 15px;
+}
+
+.cover-footer {
+  font-size: 8px;
+  letter-spacing: 4px;
+  color: #c9ad79;
+  margin-top: 32px;
+  animation: royalFadeIn 1.5s 2s both;
+}
+
+/* Entrance animations */
+@keyframes royalFrameIn {
+  from {
+    opacity: 0;
+    transform: scale(.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes royalFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes royalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ornamentIn {
+  from {
+    opacity: 0;
+    transform: scale(.7);
+  }
+  to {
+    opacity: .85;
+    transform: scale(1);
+  }
+}
+
+/* Opening transition */
+#cover.is-opening .cover-frame {
+  animation: invitationOpen .9s ease forwards;
+}
+
+@keyframes invitationOpen {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.04);
+    filter: brightness(1.3);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.12);
+    filter: brightness(1.5);
+  }
+}
+
+@media(max-height: 700px) {
+  .cover-frame {
+    min-height: 580px;
+  }
+
+  .cover-card {
+    min-height: 540px;
+    padding: 20px 10px;
+  }
+
+  .cover-guest {
+    margin-top: 25px;
+  }
+
+  .open-button {
+    margin-top: 23px;
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  .cover-frame,
+  .cover-ornament,
+  .cover-card *,
+  .cover-card {
+    animation: none !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
