@@ -515,6 +515,33 @@
 }
 
 
+/* FIX: SPACING THE WEDDING OF */
+.cover-eyebrow {
+  display: block;
+  position: relative;
+  width: 100%;
+  margin: 0 0 32px !important;
+  padding: 0 5px;
+  line-height: 1.8;
+  letter-spacing: 5px;
+  font-size: 10px;
+  white-space: nowrap;
+  z-index: 3;
+}
+
+.cover-names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.cover-names .script {
+  line-height: 1.15;
+  margin: 0;
+}
+
 
 
 
