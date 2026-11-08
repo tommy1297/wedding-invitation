@@ -86,6 +86,7 @@ function initializeScrollReveal() {
             img.classList.add('visible');
           });
         }
+
       } else {
         target.classList.remove('visible');
 
@@ -102,6 +103,7 @@ function initializeScrollReveal() {
         }
       }
     });
+
   }, {
     root: content,
     threshold: 0.15,
@@ -113,7 +115,8 @@ function initializeScrollReveal() {
 }
 
 /* =====================================
-   4. POWERPOINT-STYLE SLIDE NAVIGATION
+   4. SLIDE NAVIGATION
+   Native scroll-snap handles wheel and touch.
 ===================================== */
 
 let slideNavigationInitialized = false;
@@ -123,27 +126,24 @@ function initializeSlideNavigation() {
 
   if (!content || slideNavigationInitialized) return;
 
-  const slides = Array.from(content.children).filter(item => {
-    return item.tagName === 'SECTION';
-  });
+  const slides = Array.from(content.children).filter(item =>
+    item.tagName === 'SECTION'
+  );
 
   if (!slides.length) return;
 
   slideNavigationInitialized = true;
 
-  let currentSlide = 0;
-  let isMoving = false;
-  let unlockTimer = null;
-  let touchStartY = 0;
-
-  function updateCurrentSlide() {
-    const scrollPosition = content.scrollTop;
+  function getSlideIndex() {
+    const contentTop = content.getBoundingClientRect().top;
 
     let nearestIndex = 0;
     let nearestDistance = Infinity;
 
     slides.forEach((slide, index) => {
-      const distance = Math.abs(slide.offsetTop - scrollPosition);
+      const distance = Math.abs(
+        slide.getBoundingClientRect().top - contentTop
+      );
 
       if (distance < nearestDistance) {
         nearestDistance = distance;
@@ -151,90 +151,59 @@ function initializeSlideNavigation() {
       }
     });
 
-    currentSlide = nearestIndex;
+    return nearestIndex;
   }
 
   function goToSlide(index) {
-    if (isMoving) return;
-
-    const nextIndex = Math.max(
+    const safeIndex = Math.max(
       0,
       Math.min(index, slides.length - 1)
     );
 
-    if (nextIndex === currentSlide) return;
-
-    currentSlide = nextIndex;
-    isMoving = true;
-
-    content.scrollTo({
-      top: slides[nextIndex].offsetTop,
-      behavior: 'smooth'
+    slides[safeIndex].scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
     });
-
-    clearTimeout(unlockTimer);
-
-    unlockTimer = setTimeout(() => {
-      isMoving = false;
-      updateCurrentSlide();
-    }, 900);
   }
 
-  // Mouse wheel: one wheel gesture = one slide.
-  content.addEventListener('wheel', event => {
-    if (event.ctrlKey) return;
-
-    const interactive = event.target.closest(
-      'input, textarea, select, button, a, #lightbox'
-    );
-
-    if (interactive) return;
-
-    event.preventDefault();
-
-    if (isMoving || Math.abs(event.deltaY) < 12) return;
-
-    goToSlide(
-      currentSlide + (event.deltaY > 0 ? 1 : -1)
-    );
-  }, { passive: false });
-
-  // Mobile swipe.
-  content.addEventListener('touchstart', event => {
-    touchStartY = event.touches[0].clientY;
-  }, { passive: true });
-
-  content.addEventListener('touchend', event => {
-    const touchEndY = event.changedTouches[0].clientY;
-    const distance = touchStartY - touchEndY;
-
-    if (Math.abs(distance) < 55) return;
-
-    goToSlide(
-      currentSlide + (distance > 0 ? 1 : -1)
-    );
-  }, { passive: true });
-
-  // Keyboard navigation.
   document.addEventListener('keydown', event => {
     if (content.hidden) return;
 
-    if (event.target.matches(
-      'input, textarea, select, button, a'
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+
+    const target = event.target;
+
+    if (target && target.matches(
+      'input, textarea, select, button, a, [contenteditable="true"]'
     )) return;
 
-    if (event.key === 'ArrowDown' || event.key === 'PageDown') {
+    if (
+      event.key === 'ArrowDown' ||
+      event.key === 'PageDown'
+    ) {
       event.preventDefault();
-      goToSlide(currentSlide + 1);
+      goToSlide(getSlideIndex() + 1);
     }
 
-    if (event.key === 'ArrowUp' || event.key === 'PageUp') {
+    if (
+      event.key === 'ArrowUp' ||
+      event.key === 'PageUp'
+    ) {
       event.preventDefault();
-      goToSlide(currentSlide - 1);
+      goToSlide(getSlideIndex() - 1);
+    }
+
+    if (event.key === 'Home') {
+      event.preventDefault();
+      goToSlide(0);
+    }
+
+    if (event.key === 'End') {
+      event.preventDefault();
+      goToSlide(slides.length - 1);
     }
   });
 
-  // Links inside the invitation.
   content.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', event => {
       const targetId = link.getAttribute('href').slice(1);
@@ -243,22 +212,14 @@ function initializeSlideNavigation() {
       if (!target) return;
 
       const targetSlide = target.closest('#content > section');
+
       if (!targetSlide) return;
 
       event.preventDefault();
 
-      const targetIndex = slides.indexOf(targetSlide);
-
-      if (targetIndex !== -1) {
-        goToSlide(targetIndex);
-      }
+      goToSlide(slides.indexOf(targetSlide));
     });
   });
-
-  // Keep slide index synchronized with manual scrolling.
-  content.addEventListener('scroll', () => {
-    if (!isMoving) updateCurrentSlide();
-  }, { passive: true });
 }
 
 /* =====================================
@@ -268,7 +229,9 @@ function initializeSlideNavigation() {
 const openButton = el('open');
 
 if (openButton) {
+
   openButton.addEventListener('click', async event => {
+
     event.preventDefault();
     event.stopPropagation();
 
@@ -285,16 +248,19 @@ if (openButton) {
     let musicPromise = Promise.resolve(false);
 
     if (audio) {
+
       audio.loop = true;
       audio.volume = 0.8;
 
       try {
+
         musicPromise = audio.play()
           .then(() => true)
           .catch(error => {
             console.warn('Music playback failed:', error);
             return false;
           });
+
       } catch (error) {
         console.warn('Music playback failed:', error);
       }
@@ -315,6 +281,11 @@ if (openButton) {
     content.hidden = false;
     content.scrollTop = 0;
 
+    // Start at the first slide after the container becomes visible.
+    requestAnimationFrame(() => {
+      content.scrollTop = 0;
+    });
+
     if (musicButton) {
       musicButton.hidden = false;
     }
@@ -330,6 +301,7 @@ if (openButton) {
     }
 
     openButton.disabled = false;
+
   });
 }
 
@@ -338,6 +310,7 @@ if (openButton) {
 ===================================== */
 
 function tick() {
+
   if (!window.WEDDING || !WEDDING.date) return;
 
   const difference = Math.max(
@@ -353,9 +326,11 @@ function tick() {
   ];
 
   ['days', 'hours', 'minutes', 'seconds'].forEach((id, index) => {
+
     if (el(id)) {
       el(id).textContent = String(values[index]).padStart(2, '0');
     }
+
   });
 }
 
@@ -367,8 +342,10 @@ setInterval(tick, 1000);
 ===================================== */
 
 if (el('calendar') && window.WEDDING) {
+
   el('calendar').href =
     `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(WEDDING.title)}&dates=${WEDDING.calendarStartUTC}/${WEDDING.calendarEndUTC}&location=${encodeURIComponent(WEDDING.venue)}`;
+
 }
 
 /* =====================================
@@ -378,7 +355,9 @@ if (el('calendar') && window.WEDDING) {
 let toastTimer;
 
 function toast(message) {
+
   const toastElement = el('toast');
+
   if (!toastElement) return;
 
   toastElement.textContent = message;
@@ -389,6 +368,7 @@ function toast(message) {
   toastTimer = setTimeout(() => {
     toastElement.classList.remove('show');
   }, 2800);
+
 }
 
 /* =====================================
@@ -396,22 +376,31 @@ function toast(message) {
 ===================================== */
 
 if (el('copyAccount')) {
+
   el('copyAccount').addEventListener('click', async event => {
+
     event.preventDefault();
 
     const account = el('account');
+
     if (!account) return;
 
     try {
+
       await navigator.clipboard.writeText(
         account.textContent.trim()
       );
 
       toast('Nomor rekening disalin');
+
     } catch (error) {
+
       toast('Silakan salin nomor secara manual');
+
     }
+
   });
+
 }
 
 /* =====================================
@@ -422,34 +411,50 @@ const audio = el('audio');
 const musicButton = el('music');
 
 if (audio) {
+
   audio.addEventListener('ended', () => {
+
     audio.play().catch(error => {
       console.warn('Audio replay failed:', error);
     });
+
   });
 
   audio.addEventListener('error', () => {
     console.error('Audio file could not be loaded:', audio.error);
   });
+
 }
 
 if (musicButton && audio) {
+
   musicButton.addEventListener('click', async event => {
+
     event.preventDefault();
 
     if (audio.paused) {
+
       try {
+
         await audio.play();
         musicButton.classList.add('playing');
+
       } catch (error) {
+
         console.error('Music playback failed:', error);
         toast('Musik tidak dapat diputar');
+
       }
+
     } else {
+
       audio.pause();
       musicButton.classList.remove('playing');
+
     }
+
   });
+
 }
 
 /* =====================================
@@ -457,7 +462,9 @@ if (musicButton && audio) {
 ===================================== */
 
 document.querySelectorAll('.gallery button').forEach(button => {
+
   button.addEventListener('click', event => {
+
     event.preventDefault();
 
     const image = button.querySelector('img');
@@ -468,23 +475,33 @@ document.querySelectorAll('.gallery button').forEach(button => {
 
     fullPhoto.src = image.src;
     lightbox.hidden = false;
+
   });
+
 });
 
 if (el('closePhoto')) {
+
   el('closePhoto').addEventListener('click', event => {
+
     event.preventDefault();
 
     if (el('lightbox')) {
       el('lightbox').hidden = true;
     }
+
   });
+
 }
 
 if (el('lightbox')) {
+
   el('lightbox').addEventListener('click', event => {
+
     if (event.target.id === 'lightbox') {
       el('lightbox').hidden = true;
     }
+
   });
+
 }
