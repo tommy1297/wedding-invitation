@@ -1070,24 +1070,29 @@ html {
 
 ```css
 /* =========================================
-   FULL SCREEN PRESENTATION MODE
+   FIXED FULLSCREEN PRESENTATION SCROLL
 ========================================= */
 
-/* Cegah browser menggulir seluruh halaman */
 html,
 body {
   width: 100%;
   height: 100%;
   margin: 0;
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
-/* Main menjadi wadah slide */
+/* Main invitation becomes the ONLY scroll container */
 #content {
-  display: block;
+  position: fixed;
+  inset: 0;
+
   width: 100%;
   height: 100vh;
   height: 100dvh;
+
+  display: block;
+  box-sizing: border-box;
+
   overflow-x: hidden;
   overflow-y: auto;
 
@@ -1099,46 +1104,45 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Tetap sembunyikan main sebelum undangan dibuka */
+/* Keep invitation hidden before opening */
 #content[hidden] {
   display: none !important;
 }
 
-/* Setiap section menjadi satu slide */
+/* Each section is one presentation page */
 #content > section {
+  position: relative;
+
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
   min-height: 100vh;
   min-height: 100dvh;
 
+  height: auto;
   box-sizing: border-box;
   margin: 0 !important;
 
   scroll-snap-align: start;
   scroll-snap-stop: always;
 
-  /* Konten panjang tetap dapat diakses */
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior-y: contain;
+  /* IMPORTANT: no nested scrolling */
+  overflow: visible !important;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-/* Footer menjadi bagian dari slide penutup */
-#content > section.closing {
-  position: relative;
-}
-
-/* Animasi perpindahan */
+/* Hide scrollbar without disabling scrolling */
 #content {
-  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/* Layar HP */
+#content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile layout */
 @media (max-width: 600px) {
   #content > section {
     padding-top: 25px;
