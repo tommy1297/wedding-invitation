@@ -577,7 +577,34 @@
 }
 
 
+/* RESTORE TOP FLORAL ORNAMENT */
+.cover-floral-top {
+  position: relative;
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 55px;
+  line-height: 1;
+  height: 65px;
+  margin: 0 auto 12px;
+  color: #c9ad79;
+  text-align: center;
+  animation: ornamentIn 1.8s ease both;
+  z-index: 2;
+}
 
+/* Keep heading below ornament */
+.cover-eyebrow {
+  display: block;
+  position: relative;
+  margin: 0 0 30px !important;
+  line-height: 2;
+  z-index: 3;
+}
+
+/* Keep bottom ornament */
+.cover-ornament.bottom {
+  display: block !important;
+}
 
 
 
