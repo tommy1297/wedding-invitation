@@ -1,6 +1,67 @@
 
 const el = id => document.getElementById(id);
 
+
+/* =====================================
+   SCROLL REVEAL SYSTEM
+===================================== */
+
+function initializeScrollReveal() {
+  const content = el('content');
+
+  if (!content) return;
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        const target = entry.target;
+
+        if (entry.isIntersecting) {
+          target.classList.add('visible');
+
+          // Reveal gallery images
+          if (target.classList.contains('gallery')) {
+            target.querySelectorAll('button').forEach(button => {
+              button.classList.add('visible');
+            });
+          }
+
+          // Reveal couple images
+          if (target.classList.contains('couple-grid')) {
+            target.querySelectorAll('img').forEach(img => {
+              img.classList.add('visible');
+            });
+          }
+
+        } else {
+          // Reset when scrolling away
+          target.classList.remove('visible');
+
+          if (target.classList.contains('gallery')) {
+            target.querySelectorAll('button').forEach(button => {
+              button.classList.remove('visible');
+            });
+          }
+
+          if (target.classList.contains('couple-grid')) {
+            target.querySelectorAll('img').forEach(img => {
+              img.classList.remove('visible');
+            });
+          }
+        }
+      });
+    },
+    {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    }
+  );
+
+  content.querySelectorAll('.reveal, .gallery, .couple-grid')
+    .forEach(element => observer.observe(element));
+}
+
+
 // =====================================
 // 1. GUEST NAME
 // =====================================
@@ -73,13 +134,7 @@ el('open').addEventListener('click', async () => {
   content.hidden = false;
   content.style.display = 'block';
   content.style.visibility = 'visible';
-
-  content.querySelectorAll('.reveal').forEach(node => {
-    node.classList.add('visible');
-    node.style.opacity = '1';
-    node.style.visibility = 'visible';
-    node.style.transform = 'none';
-  });
+  initializeScrollReveal();
 
   music.hidden = false;
   window.scrollTo(0, 0);
