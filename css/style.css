@@ -1261,6 +1261,123 @@ section.paper.section:has(.timeline) .heading {
 }
 
 
+/* LOVE STORY - DEFINITIVE LAYOUT FIX */
+
+.love-story-section {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 55px 7vw !important;
+}
+
+.love-story-inner {
+  width: 100% !important;
+  max-width: 1100px !important;
+  margin: auto !important;
+}
+
+.love-story-inner > .reveal {
+  text-align: center;
+}
+
+.love-story-inner .heading {
+  font-size: clamp(42px, 5vw, 60px);
+  margin-bottom: 75px;
+}
+
+.love-story-inner .timeline {
+  width: 100%;
+  max-width: 1000px !important;
+  margin: 0 auto !important;
+  padding: 0;
+  border: none !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 35px;
+  text-align: center;
+}
+
+.love-story-inner .timeline article {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
+  padding: 0 12px 20px !important;
+  transform: none !important;
+}
+
+.love-story-inner .timeline article > span {
+  width: 54px;
+  height: 54px;
+  margin: 0;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--gold);
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+}
+
+.love-story-inner .timeline article > div {
+  max-width: 280px;
+}
+
+.love-story-inner .timeline h3 {
+  font-size: 29px;
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.love-story-inner .timeline p {
+  font-size: 17px;
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .love-story-section {
+    padding: 50px 25px !important;
+  }
+
+  .love-story-inner .heading {
+    margin-bottom: 45px;
+  }
+
+  .love-story-inner .timeline {
+    display: flex !important;
+    flex-direction: column;
+    max-width: 430px !important;
+    gap: 30px;
+  }
+
+  .love-story-inner .timeline article {
+    flex-direction: row;
+    text-align: left;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 0 !important;
+  }
+
+  .love-story-inner .timeline article > span {
+    flex-shrink: 0;
+  }
+
+  .love-story-inner .timeline article > div {
+    max-width: none;
+    padding-top: 5px;
+  }
+
+  .love-story-inner .timeline h3 {
+    font-size: 24px;
+  }
+
+  .love-story-inner .timeline p {
+    font-size: 15px;
+  }
+}
+
 
 
 
