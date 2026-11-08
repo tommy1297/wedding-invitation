@@ -1036,3 +1036,26 @@ footer {
     filter: none !important;
   }
 }
+
+/* FIX: Pastikan foto pasangan dan galeri tampil */
+.couple-grid img,
+.gallery button,
+.gallery button img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
