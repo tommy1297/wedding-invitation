@@ -4,18 +4,36 @@
 // =====================================
 
 // 1. SUPABASE CONNECTION
-const ready =
-  WEDDING.supabaseUrl.startsWith('https://') &&
-  !WEDDING.supabasePublishableKey.includes('PASTE_') &&
-  !!window.supabase;
 
-const db = ready
-  ? window.supabase.createClient(
-      WEDDING.supabaseUrl,
-      WEDDING.supabasePublishableKey
-    )
-  : null;
+// =====================================
+// SUPABASE CONNECTION
+// =====================================
 
+const supabaseUrl = window.WEDDING?.supabaseUrl;
+const supabaseKey = window.WEDDING?.supabasePublishableKey;
+
+let db = null;
+
+if (
+  supabaseUrl &&
+  supabaseUrl.startsWith('https://') &&
+  supabaseKey &&
+  window.supabase &&
+  typeof window.supabase.createClient === 'function'
+) {
+  db = window.supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+  );
+
+  console.log('Supabase client initialized');
+} else {
+  console.error('Supabase configuration error:', {
+    urlAvailable: !!supabaseUrl,
+    keyAvailable: !!supabaseKey,
+    libraryAvailable: !!window.supabase
+  });
+}
 
 // 2. ELEMENT REFERENCES
 const wishForm = el('wishForm');
