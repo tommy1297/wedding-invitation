@@ -67,10 +67,8 @@ a {
   margin: 0;
   padding: 12px 18px;
   overflow: hidden;
-
   display: grid;
   place-items: center;
-
   color: #f8f1e5;
   text-align: center;
 
@@ -107,11 +105,9 @@ a {
   border: 1px solid rgba(207,181,126,.7);
   outline: 1px solid rgba(207,181,126,.25);
   outline-offset: 5px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   animation: royalFrameIn 1.5s ease both;
 }
 
@@ -147,7 +143,6 @@ a {
   min-height: 0;
   max-height: 100%;
   padding: 8px 10px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -338,11 +333,13 @@ a {
     transform: scale(1);
     filter: brightness(1);
   }
+
   40% {
     opacity: 1;
     transform: scale(1.04);
     filter: brightness(1.3);
   }
+
   100% {
     opacity: 0;
     transform: scale(1.12);
@@ -351,23 +348,49 @@ a {
 }
 
 @keyframes royalFrameIn {
-  from { opacity: 0; transform: scale(.94); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes royalFadeUp {
-  from { opacity: 0; transform: translateY(22px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes royalFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes ornamentIn {
-  from { opacity: 0; transform: scale(.7); }
-  to { opacity: .85; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(.7);
+  }
+
+  to {
+    opacity: .85;
+    transform: scale(1);
+  }
 }
 
 /* =========================================
@@ -409,17 +432,15 @@ main#content {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
   min-height: 100vh;
   min-height: 100dvh;
   margin: 0 !important;
   padding: clamp(22px, 5vh, 55px) clamp(18px, 4vw, 35px);
   box-sizing: border-box;
-  overflow-x: hidden;
-  overflow-y: auto;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .inner {
@@ -925,7 +946,9 @@ form button:disabled {
 }
 
 @keyframes vinylSpin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* =========================================
@@ -979,6 +1002,7 @@ form button:disabled {
 ========================================= */
 
 @media (max-width: 700px) {
+
   #content > section {
     padding: 24px 20px;
   }
@@ -1018,6 +1042,7 @@ form button:disabled {
 }
 
 @media (max-height: 700px) {
+
   #cover.cover {
     padding: 7px 14px;
   }
@@ -1061,6 +1086,7 @@ form button:disabled {
 }
 
 @media (max-width: 390px) {
+
   .cover-eyebrow {
     letter-spacing: 3px;
   }
@@ -1090,6 +1116,7 @@ form button:disabled {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -1108,170 +1135,24 @@ form button:disabled {
   }
 }
 
+/* FINAL SLIDE SAFETY */
 
-
-/* =========================================
-   LOVE STORY — HORIZONTAL TIMELINE
-========================================= */
-
-section.paper.section:has(.timeline) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 65px 6vw;
+#content > section > .inner {
+  flex: 0 0 auto;
 }
 
-section.paper.section:has(.timeline) .inner {
-  width: 100%;
-  max-width: 1120px;
-  margin: 0 auto;
+#content > section .timeline {
+  display: block;
 }
 
-section.paper.section:has(.timeline) .eyebrow {
-  text-align: center;
-  margin-bottom: 22px;
-  letter-spacing: 2px;
-}
-
-section.paper.section:has(.timeline) .heading {
-  text-align: center;
-  margin: 0 auto 85px;
-  font-size: clamp(42px, 5vw, 58px);
-}
-
-/* Timeline layout */
-.timeline {
-  position: relative;
-  width: 100%;
-  max-width: 1050px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 38px;
-}
-
-/* Horizontal connector */
-.timeline::before {
-  content: "";
-  position: absolute;
-  top: 25px;
-  left: 16.5%;
-  right: 16.5%;
-  height: 1px;
-  background: #c9b895;
-}
-
-/* Each milestone */
-.timeline article {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 25px;
-  min-width: 0;
-}
-
-/* Number circle */
-.timeline article > span {
-  position: relative;
-  z-index: 1;
-  width: 52px;
-  height: 52px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #c9b895;
-  border-radius: 50%;
-  background: #f7f0e8;
-  color: #48483f;
-  font-family: inherit;
-  font-size: 14px;
-}
-
-/* Text area */
-.timeline article > div {
-  width: 100%;
-  max-width: 290px;
-}
-
-.timeline article h3 {
-  margin: 0 0 18px;
-  font-size: clamp(23px, 2.4vw, 30px);
-  font-weight: 400;
-  line-height: 1.3;
-}
-
-.timeline article p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.9;
-  color: #666158;
-}
-
-/* Tablet portrait and mobile */
 @media (max-width: 700px) {
-  section.paper.section:has(.timeline) {
-    padding: 55px 24px;
+
+  #content {
+    scroll-snap-type: y mandatory;
   }
 
-  section.paper.section:has(.timeline) .heading {
-    margin-bottom: 50px;
-    font-size: 38px;
-  }
-
-  .timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 38px;
-    max-width: 440px;
-  }
-
-  .timeline::before {
-    top: 25px;
-    bottom: 25px;
-    left: 25px;
-    right: auto;
-    width: 1px;
-    height: auto;
-  }
-
-  .timeline article {
-    flex-direction: row;
-    align-items: flex-start;
-    text-align: left;
-    gap: 22px;
-  }
-
-  .timeline article > div {
-    max-width: none;
-    padding-top: 5px;
-  }
-
-  .timeline article h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-
-  .timeline article p {
-    font-size: 15px;
-    line-height: 1.8;
+  #content > section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
