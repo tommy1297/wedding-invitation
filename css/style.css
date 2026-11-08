@@ -1049,6 +1049,83 @@ footer {
 
 
 
+```css
+/* =========================================
+   FULL SCREEN SECTION + SCROLL SNAP
+========================================= */
+
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 0;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* Setiap section utama memenuhi tinggi layar */
+#content > section {
+  min-height: 100vh;
+  min-height: 100svh;
+  width: 100%;
+  box-sizing: border-box;
+
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin: 0;
+}
+
+/* Hilangkan potensi garis atau celah antar-section */
+#content > section + section {
+  border-top: none;
+  margin-top: 0;
+}
+
+/* Konten tetap proporsional di layar kecil */
+#content > section .inner {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Hindari section terpotong pada layar pendek */
+@media (max-height: 650px) {
+  #content > section {
+    min-height: 100svh;
+    height: auto;
+    padding-top: 45px;
+    padding-bottom: 45px;
+  }
+}
+
+/* Pengguna yang memilih mengurangi animasi */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
