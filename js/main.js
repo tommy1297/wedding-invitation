@@ -52,9 +52,10 @@ function initializeScrollReveal() {
       });
     },
     {
-      threshold: 0.15,
-      rootMargin: '0px 0px -50px 0px'
-    }
+  root: content,
+  threshold: 0.15,
+  rootMargin: '0px 0px -50px 0px'
+}
   );
 
   content.querySelectorAll('.reveal, .gallery, .couple-grid')
@@ -134,8 +135,8 @@ el('open').addEventListener('click', async () => {
   content.hidden = false;
   content.style.display = 'block';
   content.style.visibility = 'visible';
+  content.scrollTop = 0;
   initializeScrollReveal();
-  initializeSlideScroll();
    
   music.hidden = false;
   window.scrollTo(0, 0);
@@ -257,95 +258,7 @@ if (el('lightbox')) {
 
 
 
-```javascript
-/* =====================================
-   POWERPOINT-LIKE PAGE TRANSITION
-===================================== */
 
-function initializeSlideScroll() {
-  const content = el('content');
-
-  if (!content) return;
-
-  const sections = Array.from(content.children).filter(section =>
-    section.tagName === 'SECTION'
-  );
-
-  if (sections.length < 2) {
-    console.warn('Slide sections not found. Check HTML structure.');
-    return;
-  }
-
-  let currentSlide = 0;
-  let isAnimating = false;
-  let touchStartY = 0;
-
-  function goToSlide(index) {
-    if (isAnimating) return;
-
-    const nextSlide = Math.max(
-      0,
-      Math.min(index, sections.length - 1)
-    );
-
-    if (nextSlide === currentSlide) return;
-
-    currentSlide = nextSlide;
-    isAnimating = true;
-
-    sections[currentSlide].scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-
-    setTimeout(() => {
-      isAnimating = false;
-    }, 1100);
-  }
-
-  // Mouse wheel
-  window.addEventListener('wheel', event => {
-    if (event.target.closest(
-      'input, textarea, select, button, a, #lightbox'
-    )) return;
-
-    event.preventDefault();
-
-    if (isAnimating || Math.abs(event.deltaY) < 10) return;
-
-    goToSlide(currentSlide + (event.deltaY > 0 ? 1 : -1));
-  }, { passive: false });
-
-  // Keyboard
-  window.addEventListener('keydown', event => {
-    if (event.target.matches('input, textarea, select')) return;
-
-    if (['ArrowDown', 'PageDown'].includes(event.key)) {
-      event.preventDefault();
-      goToSlide(currentSlide + 1);
-    }
-
-    if (['ArrowUp', 'PageUp'].includes(event.key)) {
-      event.preventDefault();
-      goToSlide(currentSlide - 1);
-    }
-  });
-
-  // Touch / mobile swipe
-  window.addEventListener('touchstart', event => {
-    touchStartY = event.touches[0].clientY;
-  }, { passive: true });
-
-  window.addEventListener('touchend', event => {
-    const touchEndY = event.changedTouches[0].clientY;
-    const difference = touchStartY - touchEndY;
-
-    if (Math.abs(difference) < 50) return;
-
-    goToSlide(currentSlide + (difference > 0 ? 1 : -1));
-  }, { passive: true });
-}
-```
 
 
 
