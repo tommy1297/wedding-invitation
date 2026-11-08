@@ -5,35 +5,48 @@
 
 // 1. SUPABASE CONNECTION
 
+
 // =====================================
-// SUPABASE CONNECTION
+// SUPABASE CONNECTION DIAGNOSTIC
 // =====================================
 
-const supabaseUrl = window.WEDDING?.supabaseUrl;
-const supabaseKey = window.WEDDING?.supabasePublishableKey;
+const config = window.WEDDING;
 
 let db = null;
+let connectionProblem = '';
 
-if (
-  supabaseUrl &&
-  supabaseUrl.startsWith('https://') &&
-  supabaseKey &&
-  window.supabase &&
-  typeof window.supabase.createClient === 'function'
-) {
-  db = window.supabase.createClient(
-    supabaseUrl,
-    supabaseKey
-  );
-
-  console.log('Supabase client initialized');
+if (!config) {
+  connectionProblem = 'config.js tidak berhasil dimuat.';
+} else if (!config.supabaseUrl) {
+  connectionProblem = 'Supabase URL kosong.';
+} else if (!config.supabasePublishableKey) {
+  connectionProblem = 'Supabase Publishable Key kosong.';
+} else if (!window.supabase) {
+  connectionProblem = 'Library Supabase tidak berhasil dimuat.';
+} else if (typeof window.supabase.createClient !== 'function') {
+  connectionProblem = 'Supabase createClient tidak tersedia.';
 } else {
-  console.error('Supabase configuration error:', {
-    urlAvailable: !!supabaseUrl,
-    keyAvailable: !!supabaseKey,
-    libraryAvailable: !!window.supabase
-  });
+  try {
+    db = window.supabase.createClient(
+      config.supabaseUrl,
+      config.supabasePublishableKey
+    );
+
+    console.log('Supabase client initialized successfully.');
+  } catch (error) {
+    connectionProblem = error.message;
+    console.error('Supabase initialization error:', error);
+  }
 }
+
+console.log('Supabase diagnostic:', {
+  configLoaded: !!config,
+  urlAvailable: !!config?.supabaseUrl,
+  keyAvailable: !!config?.supabasePublishableKey,
+  libraryAvailable: !!window.supabase,
+  clientAvailable: !!db,
+  problem: connectionProblem
+});
 
 // 2. ELEMENT REFERENCES
 const wishForm = el('wishForm');
