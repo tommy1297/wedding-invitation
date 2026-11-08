@@ -1,84 +1,7 @@
 const el = id => document.getElementById(id);
 
 /* =====================================
-   1. SCROLL REVEAL SYSTEM
-===================================== */
-
-let revealObserver = null;
-
-function initializeScrollReveal() {
-  const content = el('content');
-
-  if (!content) return;
-
-  if (!('IntersectionObserver' in window)) {
-    content.querySelectorAll('.reveal').forEach(node => {
-      node.classList.add('visible');
-    });
-
-    content.querySelectorAll('.couple-grid img, .gallery button').forEach(node => {
-      node.classList.add('visible');
-    });
-
-    return;
-  }
-
-  if (revealObserver) {
-    revealObserver.disconnect();
-  }
-
-  revealObserver = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        const target = entry.target;
-
-        if (entry.isIntersecting) {
-          target.classList.add('visible');
-
-          if (target.classList.contains('gallery')) {
-            target.querySelectorAll('button').forEach(button => {
-              button.classList.add('visible');
-            });
-          }
-
-          if (target.classList.contains('couple-grid')) {
-            target.querySelectorAll('img').forEach(img => {
-              img.classList.add('visible');
-            });
-          }
-        } else {
-          target.classList.remove('visible');
-
-          if (target.classList.contains('gallery')) {
-            target.querySelectorAll('button').forEach(button => {
-              button.classList.remove('visible');
-            });
-          }
-
-          if (target.classList.contains('couple-grid')) {
-            target.querySelectorAll('img').forEach(img => {
-              img.classList.remove('visible');
-            });
-          }
-        }
-      });
-    },
-    {
-      root: content,
-      threshold: 0.15,
-      rootMargin: '0px 0px -40px 0px'
-    }
-  );
-
-  content.querySelectorAll('.reveal, .gallery, .couple-grid')
-    .forEach(element => {
-      revealObserver.observe(element);
-    });
-}
-
-
-/* =====================================
-   2. GUEST NAME
+   1. GUEST NAME
 ===================================== */
 
 const params = new URLSearchParams(window.location.search);
@@ -93,9 +16,8 @@ if (el('name') && guest) {
   el('name').value = guestName;
 }
 
-
 /* =====================================
-   3. RSVP ATTENDANCE & GUEST COUNT
+   2. RSVP ATTENDANCE
 ===================================== */
 
 const attendanceInput = el('attendance');
@@ -104,9 +26,7 @@ const countInput = el('count');
 function updateGuestCount() {
   if (!attendanceInput || !countInput) return;
 
-  const notAttending = attendanceInput.value === 'Tidak hadir';
-
-  if (notAttending) {
+  if (attendanceInput.value === 'Tidak hadir') {
     countInput.value = '0';
     countInput.disabled = true;
   } else {
@@ -123,9 +43,77 @@ if (attendanceInput) {
   updateGuestCount();
 }
 
+/* =====================================
+   3. SCROLL REVEAL
+===================================== */
+
+let revealObserver = null;
+
+function initializeScrollReveal() {
+  const content = el('content');
+  if (!content) return;
+
+  if (revealObserver) {
+    revealObserver.disconnect();
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    content.querySelectorAll('.reveal').forEach(item => {
+      item.classList.add('visible');
+    });
+
+    content.querySelectorAll('.couple-grid img, .gallery button')
+      .forEach(item => item.classList.add('visible'));
+
+    return;
+  }
+
+  revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const target = entry.target;
+
+      if (entry.isIntersecting) {
+        target.classList.add('visible');
+
+        if (target.classList.contains('gallery')) {
+          target.querySelectorAll('button').forEach(button => {
+            button.classList.add('visible');
+          });
+        }
+
+        if (target.classList.contains('couple-grid')) {
+          target.querySelectorAll('img').forEach(img => {
+            img.classList.add('visible');
+          });
+        }
+      } else {
+        target.classList.remove('visible');
+
+        if (target.classList.contains('gallery')) {
+          target.querySelectorAll('button').forEach(button => {
+            button.classList.remove('visible');
+          });
+        }
+
+        if (target.classList.contains('couple-grid')) {
+          target.querySelectorAll('img').forEach(img => {
+            img.classList.remove('visible');
+          });
+        }
+      }
+    });
+  }, {
+    root: content,
+    threshold: 0.15,
+    rootMargin: '0px 0px -30px 0px'
+  });
+
+  content.querySelectorAll('.reveal, .gallery, .couple-grid')
+    .forEach(item => revealObserver.observe(item));
+}
 
 /* =====================================
-   4. POWERPOINT-LIKE SLIDE NAVIGATION
+   4. POWERPOINT-STYLE SLIDE NAVIGATION
 ===================================== */
 
 let slideNavigationInitialized = false;
@@ -135,16 +123,11 @@ function initializeSlideNavigation() {
 
   if (!content || slideNavigationInitialized) return;
 
-  // Each section is one slide.
-  // Footer is also treated as the final slide.
-  const slides = Array.from(content.children).filter(element => {
-    return element.tagName === 'SECTION' || element.tagName === 'FOOTER';
+  const slides = Array.from(content.children).filter(item => {
+    return item.tagName === 'SECTION';
   });
 
-  if (slides.length < 2) {
-    console.warn('Slide navigation: not enough sections found.');
-    return;
-  }
+  if (!slides.length) return;
 
   slideNavigationInitialized = true;
 
@@ -152,6 +135,24 @@ function initializeSlideNavigation() {
   let isMoving = false;
   let unlockTimer = null;
   let touchStartY = 0;
+
+  function updateCurrentSlide() {
+    const scrollPosition = content.scrollTop;
+
+    let nearestIndex = 0;
+    let nearestDistance = Infinity;
+
+    slides.forEach((slide, index) => {
+      const distance = Math.abs(slide.offsetTop - scrollPosition);
+
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearestIndex = index;
+      }
+    });
+
+    currentSlide = nearestIndex;
+  }
 
   function goToSlide(index) {
     if (isMoving) return;
@@ -175,16 +176,19 @@ function initializeSlideNavigation() {
 
     unlockTimer = setTimeout(() => {
       isMoving = false;
-    }, 1000);
+      updateCurrentSlide();
+    }, 900);
   }
 
-  // Mouse wheel: one gesture moves one slide.
+  // Mouse wheel: one wheel gesture = one slide.
   content.addEventListener('wheel', event => {
-    if (event.target.closest(
+    if (event.ctrlKey) return;
+
+    const interactive = event.target.closest(
       'input, textarea, select, button, a, #lightbox'
-    )) {
-      return;
-    }
+    );
+
+    if (interactive) return;
 
     event.preventDefault();
 
@@ -217,44 +221,45 @@ function initializeSlideNavigation() {
 
     if (event.target.matches(
       'input, textarea, select, button, a'
-    )) {
-      return;
-    }
+    )) return;
 
-    if (['ArrowDown', 'PageDown'].includes(event.key)) {
+    if (event.key === 'ArrowDown' || event.key === 'PageDown') {
       event.preventDefault();
       goToSlide(currentSlide + 1);
     }
 
-    if (['ArrowUp', 'PageUp'].includes(event.key)) {
+    if (event.key === 'ArrowUp' || event.key === 'PageUp') {
       event.preventDefault();
       goToSlide(currentSlide - 1);
     }
   });
 
-  // Internal links, for example SCROLL TO EXPLORE.
+  // Links inside the invitation.
   content.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', event => {
-      const targetId = link.getAttribute('href').substring(1);
+      const targetId = link.getAttribute('href').slice(1);
       const target = document.getElementById(targetId);
 
       if (!target) return;
 
       const targetSlide = target.closest('#content > section');
-
       if (!targetSlide) return;
 
       event.preventDefault();
 
       const targetIndex = slides.indexOf(targetSlide);
 
-      if (targetIndex >= 0) {
+      if (targetIndex !== -1) {
         goToSlide(targetIndex);
       }
     });
   });
-}
 
+  // Keep slide index synchronized with manual scrolling.
+  content.addEventListener('scroll', () => {
+    if (!isMoving) updateCurrentSlide();
+  }, { passive: true });
+}
 
 /* =====================================
    5. OPEN INVITATION + MUSIC
@@ -263,17 +268,20 @@ function initializeSlideNavigation() {
 const openButton = el('open');
 
 if (openButton) {
-  openButton.addEventListener('click', async () => {
+  openButton.addEventListener('click', async event => {
+    event.preventDefault();
+    event.stopPropagation();
+
     const cover = el('cover');
     const content = el('content');
-    const musicButton = el('music');
     const audio = el('audio');
+    const musicButton = el('music');
 
     if (!cover || !content || openButton.disabled) return;
 
     openButton.disabled = true;
 
-    // Start audio immediately from the user's click.
+    // Start music directly during the click interaction.
     let musicPromise = Promise.resolve(false);
 
     if (audio) {
@@ -299,25 +307,22 @@ if (openButton) {
       setTimeout(resolve, 900);
     });
 
-    // Hide opening cover.
+    // Hide opening page.
     cover.hidden = true;
     cover.classList.remove('is-opening');
 
-    // Show invitation.
+    // Show main invitation.
     content.hidden = false;
-    content.style.display = 'block';
-    content.style.visibility = 'visible';
     content.scrollTop = 0;
 
     if (musicButton) {
       musicButton.hidden = false;
     }
 
-    // Initialize scroll and reveal systems.
+    // Initialize slide and reveal systems.
     initializeScrollReveal();
     initializeSlideNavigation();
 
-    // Update music button state.
     const musicStarted = await musicPromise;
 
     if (musicStarted && musicButton) {
@@ -328,7 +333,6 @@ if (openButton) {
   });
 }
 
-
 /* =====================================
    6. COUNTDOWN
 ===================================== */
@@ -336,16 +340,16 @@ if (openButton) {
 function tick() {
   if (!window.WEDDING || !WEDDING.date) return;
 
-  const diff = Math.max(
+  const difference = Math.max(
     0,
     new Date(WEDDING.date).getTime() - Date.now()
   );
 
   const values = [
-    Math.floor(diff / 86400000),
-    Math.floor(diff / 3600000) % 24,
-    Math.floor(diff / 60000) % 60,
-    Math.floor(diff / 1000) % 60
+    Math.floor(difference / 86400000),
+    Math.floor(difference / 3600000) % 24,
+    Math.floor(difference / 60000) % 60,
+    Math.floor(difference / 1000) % 60
   ];
 
   ['days', 'hours', 'minutes', 'seconds'].forEach((id, index) => {
@@ -358,7 +362,6 @@ function tick() {
 tick();
 setInterval(tick, 1000);
 
-
 /* =====================================
    7. GOOGLE CALENDAR
 ===================================== */
@@ -368,7 +371,6 @@ if (el('calendar') && window.WEDDING) {
     `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(WEDDING.title)}&dates=${WEDDING.calendarStartUTC}/${WEDDING.calendarEndUTC}&location=${encodeURIComponent(WEDDING.venue)}`;
 }
 
-
 /* =====================================
    8. TOAST
 ===================================== */
@@ -377,7 +379,6 @@ let toastTimer;
 
 function toast(message) {
   const toastElement = el('toast');
-
   if (!toastElement) return;
 
   toastElement.textContent = message;
@@ -390,15 +391,15 @@ function toast(message) {
   }, 2800);
 }
 
-
 /* =====================================
    9. COPY BANK ACCOUNT
 ===================================== */
 
 if (el('copyAccount')) {
-  el('copyAccount').addEventListener('click', async () => {
-    const account = el('account');
+  el('copyAccount').addEventListener('click', async event => {
+    event.preventDefault();
 
+    const account = el('account');
     if (!account) return;
 
     try {
@@ -407,13 +408,11 @@ if (el('copyAccount')) {
       );
 
       toast('Nomor rekening disalin');
-
     } catch (error) {
       toast('Silakan salin nomor secara manual');
     }
   });
 }
-
 
 /* =====================================
    10. MUSIC CONTROL
@@ -430,25 +429,22 @@ if (audio) {
   });
 
   audio.addEventListener('error', () => {
-    console.error(
-      'Audio file could not be loaded:',
-      audio.error
-    );
+    console.error('Audio file could not be loaded:', audio.error);
   });
 }
 
 if (musicButton && audio) {
-  musicButton.addEventListener('click', async () => {
+  musicButton.addEventListener('click', async event => {
+    event.preventDefault();
+
     if (audio.paused) {
       try {
         await audio.play();
         musicButton.classList.add('playing');
-
       } catch (error) {
         console.error('Music playback failed:', error);
         toast('Musik tidak dapat diputar');
       }
-
     } else {
       audio.pause();
       musicButton.classList.remove('playing');
@@ -456,13 +452,14 @@ if (musicButton && audio) {
   });
 }
 
-
 /* =====================================
    11. PHOTO GALLERY
 ===================================== */
 
 document.querySelectorAll('.gallery button').forEach(button => {
-  button.addEventListener('click', () => {
+  button.addEventListener('click', event => {
+    event.preventDefault();
+
     const image = button.querySelector('img');
     const fullPhoto = el('fullPhoto');
     const lightbox = el('lightbox');
@@ -475,7 +472,9 @@ document.querySelectorAll('.gallery button').forEach(button => {
 });
 
 if (el('closePhoto')) {
-  el('closePhoto').addEventListener('click', () => {
+  el('closePhoto').addEventListener('click', event => {
+    event.preventDefault();
+
     if (el('lightbox')) {
       el('lightbox').hidden = true;
     }
