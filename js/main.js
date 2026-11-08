@@ -113,50 +113,50 @@ updateGuestCount();
 // =====================================
 // 2. OPEN INVITATION + MUSIC
 // =====================================
+const openButton = el('open');
 
-el('open').addEventListener('click', async () => {
-  const cover = el('cover');
-  const content = el('content');
-  const music = el('music');
-  const audio = el('audio');
-  const openButton = el('open');
+if (openButton) {
+  openButton.addEventListener('click', async () => {
+    const cover = el('cover');
+    const content = el('content');
+    const music = el('music');
+    const audio = el('audio');
 
-  if (cover.classList.contains('is-opening')) return;
+    if (!cover || !content || !audio) return;
+    if (openButton.disabled) return;
 
-  openButton.disabled = true;
-  cover.classList.add('is-opening');
+    openButton.disabled = true;
 
-  // IMPORTANT: Start audio immediately during user click
-  audio.loop = true;
-  audio.volume = 0.8;
+    // Start music directly from user interaction
+    audio.loop = true;
+    audio.volume = 0.8;
 
-  const musicPromise = audio.play();
+    const musicPromise = audio.play();
 
-  // Opening animation
-  await new Promise(resolve => setTimeout(resolve, 900));
+    cover.classList.add('is-opening');
 
-  cover.hidden = true;
-  cover.classList.remove('is-opening');
+    await new Promise(resolve => setTimeout(resolve, 900));
 
-  content.hidden = false;
-  content.style.display = 'block';
-  content.style.visibility = 'visible';
-  content.scrollTop = 0;
+    cover.hidden = true;
+    cover.classList.remove('is-opening');
 
-  initializeScrollReveal();
+    content.hidden = false;
+    content.style.display = 'block';
+    content.style.visibility = 'visible';
+    content.scrollTop = 0;
 
-  music.hidden = false;
-  window.scrollTo(0, 0);
+    initializeScrollReveal();
 
-  try {
-    await musicPromise;
-    music.classList.add('playing');
-    console.log('Music playing successfully');
-  } catch (error) {
-    console.error('Music playback failed:', error);
-    toast('Tekan tombol musik untuk memutar lagu');
-  }
-});
+    if (music) music.hidden = false;
+
+    try {
+      await musicPromise;
+      if (music) music.classList.add('playing');
+    } catch (error) {
+      console.error('Music playback failed:', error);
+    }
+  });
+}
 ```
 
 // =====================================
