@@ -1050,44 +1050,21 @@ footer {
 
 
 ```css
-/* FULL SCREEN SCROLL SNAP - REVISION */
+/* POWERPOINT-LIKE PRESENTATION MODE */
 
 html {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: none !important;
   scroll-behavior: smooth;
-  scroll-padding: 0;
 }
 
-body {
-  margin: 0;
-  overflow-x: hidden;
-}
-
-/* Semua section, termasuk yang berada di dalam wrapper */
-#content section {
+#content > section {
+  height: 100vh;
   min-height: 100vh;
   min-height: 100svh;
   box-sizing: border-box;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  margin-block: 0;
-}
-
-/* Hilangkan garis pemisah */
-#content section {
-  border-top: none;
-  border-bottom: none;
-}
-
-/* Pastikan tidak ada jarak antar-section */
-#content section + section {
-  margin-top: 0;
-}
-
-/* Jangan memotong konten yang lebih panjang dari layar */
-#content section {
-  height: auto;
-  overflow: visible;
+  overflow-y: auto;
+  scroll-snap-align: none;
+  margin: 0 !important;
 }
 ```
 
