@@ -81,8 +81,8 @@ a {
   transform: scale(1.12);
 
   transition:
-    opacity 2s ease-in-out,
-    transform 6s ease-out;
+    opacity 2.5s ease-in-out,
+    transform 10s ease-out;
 
   will-change: opacity, transform;
 }
