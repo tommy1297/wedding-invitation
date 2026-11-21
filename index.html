@@ -650,39 +650,45 @@
       slideA.classList.add('active');
 
       if (images.length < 2) return;
+      
+function changeBackground() {
+  if (isChanging) return;
 
-      function changeBackground() {
-        if (isChanging) return;
+  isChanging = true;
 
-        isChanging = true;
+  const nextIndex = (currentIndex + 1) % images.length;
+  const nextSlide = showingA ? slideB : slideA;
+  const currentSlide = showingA ? slideA : slideB;
 
-        const nextIndex = (currentIndex + 1) % images.length;
-        const nextSlide = showingA ? slideB : slideA;
-        const currentSlide = showingA ? slideA : slideB;
+  // Siapkan foto berikutnya dalam keadaan tersembunyi
+  nextSlide.classList.remove('active');
+  nextSlide.style.transition = 'none';
+  nextSlide.style.opacity = '0';
+  nextSlide.style.transform = 'scale(1.12)';
+  nextSlide.src = images[nextIndex];
 
-        // Prepare next image at enlarged starting scale
-        nextSlide.src = images[nextIndex];
-        nextSlide.style.transition = 'none';
-        nextSlide.style.opacity = '0';
-        nextSlide.style.transform = 'scale(1.12)';
+  // Pastikan browser menerapkan kondisi awal
+  void nextSlide.offsetWidth;
 
-        // Force browser to apply initial state
-        void nextSlide.offsetWidth;
+  // Hapus inline style agar CSS mengambil alih kembali
+  nextSlide.style.removeProperty('opacity');
+  nextSlide.style.removeProperty('transform');
+  nextSlide.style.removeProperty('transition');
 
-        // Restore transitions and activate next image
-        nextSlide.style.transition = '';
-        nextSlide.classList.add('active');
+  // Aktifkan foto berikutnya
+  void nextSlide.offsetWidth;
+  nextSlide.classList.add('active');
 
-        // Fade out previous image simultaneously
-        currentSlide.classList.remove('active');
+  // Hilangkan foto sebelumnya secara bersamaan
+  currentSlide.classList.remove('active');
 
-        currentIndex = nextIndex;
-        showingA = !showingA;
+  currentIndex = nextIndex;
+  showingA = !showingA;
 
-        setTimeout(() => {
-          isChanging = false;
-        }, 2200);
-      }
+  setTimeout(() => {
+    isChanging = false;
+  }, 2600);
+}
 
       // Change every 6 seconds
       setInterval(changeBackground, 10000);
