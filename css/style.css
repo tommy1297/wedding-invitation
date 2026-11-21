@@ -76,27 +76,30 @@ a {
   height: 100%;
   object-fit: cover;
   object-position: center;
+
   opacity: 0;
-  transform: scale(1);
-  transition: opacity 1.2s ease-in-out;
+  transform: scale(1.12);
+
+  transition:
+    opacity 2s ease-in-out,
+    transform 6s ease-out;
+
   will-change: opacity, transform;
 }
 
 .global-slideshow .background-slide.active {
   opacity: 1;
-  animation: elegantSlowZoom 3.6s ease-out forwards;
+  transform: scale(1.22);
 }
 
-@keyframes elegantSlowZoom {
-  from {
-    transform: scale(1);
-  }
-
-  to {
-    transform: scale(1.12);
-  }
+.global-slideshow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: rgba(13, 25, 19, 0.38);
+  pointer-events: none;
 }
-
 /* Lapisan gelap agar teks tetap terbaca */
 .global-slideshow::after {
   content: "";
