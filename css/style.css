@@ -22,6 +22,7 @@ html {
 }
 
 body {
+  position: relative;
   margin: 0;
   width: 100%;
   height: 100%;
@@ -53,7 +54,61 @@ a {
 }
 
 /* =========================================
-   2. OPENING COVER
+   2. GLOBAL CINEMATIC BACKGROUND SLIDESHOW
+========================================= */
+
+.global-slideshow {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--deep);
+}
+
+.global-slideshow .background-slide {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transform: scale(1);
+  transition: opacity 1.2s ease-in-out;
+  will-change: opacity, transform;
+}
+
+.global-slideshow .background-slide.active {
+  opacity: 1;
+  animation: elegantSlowZoom 3.6s ease-out forwards;
+}
+
+@keyframes elegantSlowZoom {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.12);
+  }
+}
+
+/* Lapisan gelap agar teks tetap terbaca */
+.global-slideshow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: rgba(13, 25, 19, 0.38);
+  pointer-events: none;
+}
+
+/* =========================================
+   3. OPENING COVER
 ========================================= */
 
 #cover.cover {
@@ -71,16 +126,7 @@ a {
   place-items: center;
   color: #f8f1e5;
   text-align: center;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(13,27,21,.92),
-      rgba(29,47,37,.84),
-      rgba(10,20,16,.96)
-    ),
-    url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1400&q=85')
-    center / cover;
+  background: transparent !important;
 }
 
 #cover.cover::before {
@@ -90,8 +136,8 @@ a {
   pointer-events: none;
   background: radial-gradient(
     ellipse at center,
-    transparent 15%,
-    rgba(0,0,0,.35) 100%
+    rgba(0, 0, 0, 0.08) 10%,
+    rgba(0, 0, 0, 0.42) 100%
   );
 }
 
@@ -394,7 +440,7 @@ a {
 }
 
 /* =========================================
-   3. MAIN SLIDE CONTAINER
+   4. MAIN SLIDE CONTAINER
 ========================================= */
 
 main#content {
@@ -415,6 +461,7 @@ main#content {
   scrollbar-width: none;
   -ms-overflow-style: none;
   box-shadow: none;
+  background: transparent;
 }
 
 #content::-webkit-scrollbar {
@@ -441,6 +488,7 @@ main#content {
   scroll-snap-stop: always;
   overflow-x: hidden;
   overflow-y: auto;
+  background-color: transparent;
 }
 
 .inner {
@@ -463,7 +511,7 @@ main#content {
 
 .hero {
   position: relative;
-  background: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1300&q=85') center/cover;
+  background: transparent !important;
   color: white;
   text-align: center;
 }
@@ -471,7 +519,8 @@ main#content {
 .veil {
   position: absolute;
   inset: 0;
-  background: #17271fd0;
+  background: rgba(15, 30, 22, 0.38);
+  pointer-events: none;
 }
 
 .hero .inner {
@@ -509,13 +558,17 @@ main#content {
 }
 
 .paper {
-  background: var(--paper);
+  background: rgba(246, 241, 233, 0.91) !important;
   color: var(--ink);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 
 .green {
-  background: var(--green);
+  background: rgba(36, 54, 47, 0.89) !important;
   color: var(--paper);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 
 .quote {
@@ -533,7 +586,7 @@ main#content {
 }
 
 /* =========================================
-   4. COUPLE
+   5. COUPLE
 ========================================= */
 
 .couple-grid {
@@ -580,7 +633,7 @@ main#content {
 }
 
 /* =========================================
-   5. LOVE STORY
+   6. LOVE STORY
 ========================================= */
 
 .timeline {
@@ -629,14 +682,11 @@ main#content {
 }
 
 /* =========================================
-   6. COUNTDOWN
+   7. COUNTDOWN
 ========================================= */
 
 .photo-section {
-  background:
-    linear-gradient(#19291fd9,#19291fe6),
-    url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200&q=85')
-    center/cover;
+  background: transparent !important;
   color: white;
 }
 
@@ -651,6 +701,7 @@ main#content {
   width: 76px;
   padding: 13px 5px;
   border: 1px solid #bda77d99;
+  background: rgba(23, 39, 31, 0.35);
 }
 
 .countdown b {
@@ -676,7 +727,7 @@ main#content {
 }
 
 /* =========================================
-   7. EVENTS
+   8. EVENTS
 ========================================= */
 
 .events {
@@ -701,7 +752,7 @@ main#content {
 }
 
 /* =========================================
-   8. GALLERY
+   9. GALLERY
 ========================================= */
 
 .gallery {
@@ -750,7 +801,7 @@ main#content {
 }
 
 /* =========================================
-   9. WEDDING GIFT
+   10. WEDDING GIFT
 ========================================= */
 
 .bank {
@@ -768,7 +819,7 @@ main#content {
 }
 
 /* =========================================
-   10. RSVP
+   11. RSVP
 ========================================= */
 
 form {
@@ -821,29 +872,18 @@ form button:disabled {
 
 #wishes {
   text-align: left;
-
-  /* Tampilkan sekitar 3 wishes */
   height: 540px;
   max-height: 540px;
-
-  /* Scroll hanya pada daftar wishes */
   overflow-y: auto;
   overflow-x: hidden;
-
-  /* Scroll behavior */
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-
-  /* Spacing */
   padding: 0 12px 0 0;
   margin-top: 20px;
-
-  /* Firefox scrollbar */
   scrollbar-width: thin;
   scrollbar-color: var(--gold) transparent;
 }
 
-/* Chrome, Edge, Android */
 #wishes::-webkit-scrollbar {
   width: 6px;
 }
@@ -857,7 +897,6 @@ form button:disabled {
   border-radius: 10px;
 }
 
-/* Wish item */
 #wishes .wish {
   padding: 18px 0;
   border-top: 1px solid #667c6c;
@@ -867,6 +906,7 @@ form button:disabled {
 #wishes .wish:last-child {
   border-bottom: 1px solid #667c6c;
 }
+
 .wish {
   padding: 15px 0;
   border-top: 1px solid #667c6c;
@@ -887,10 +927,11 @@ form button:disabled {
 }
 
 /* =========================================
-   11. CLOSING AND FOOTER
+   12. CLOSING AND FOOTER
 ========================================= */
 
 .closing {
+  background: transparent !important;
   background-position: center;
 }
 
@@ -907,7 +948,7 @@ form button:disabled {
 }
 
 /* =========================================
-   12. SCROLL REVEAL
+   13. SCROLL REVEAL
 ========================================= */
 
 #content .reveal {
@@ -942,7 +983,7 @@ form button:disabled {
 }
 
 /* =========================================
-   13. MUSIC BUTTON
+   14. MUSIC BUTTON
 ========================================= */
 
 .music {
@@ -1000,7 +1041,7 @@ form button:disabled {
 }
 
 /* =========================================
-   14. LIGHTBOX AND TOAST
+   15. LIGHTBOX AND TOAST
 ========================================= */
 
 .lightbox:not([hidden]) {
@@ -1046,7 +1087,7 @@ form button:disabled {
 }
 
 /* =========================================
-   15. RESPONSIVE
+   16. RESPONSIVE
 ========================================= */
 
 @media (max-width: 700px) {
@@ -1163,10 +1204,14 @@ form button:disabled {
   }
 }
 
+/* =========================================
+   17. REDUCED MOTION
+========================================= */
+
 @media (prefers-reduced-motion: reduce) {
 
-  *,
-  *::before,
+  *, 
+  *::before, 
   *::after {
     animation: none !important;
     transition: none !important;
@@ -1181,9 +1226,20 @@ form button:disabled {
     transform: none !important;
     filter: none !important;
   }
+
+  .global-slideshow .background-slide.active {
+    animation: none !important;
+    transform: scale(1) !important;
+  }
+
+  .global-slideshow .background-slide {
+    transition: none !important;
+  }
 }
 
-/* FINAL SLIDE SAFETY */
+/* =========================================
+   18. FINAL SLIDE SAFETY
+========================================= */
 
 #content > section > .inner {
   flex: 0 0 auto;
@@ -1202,5 +1258,15 @@ form button:disabled {
   #content > section {
     scroll-snap-align: start;
     scroll-snap-stop: always;
+  }
+}
+
+/* =========================================
+   19. GLOBAL SLIDESHOW MOBILE TUNING
+========================================= */
+
+@media (max-width: 700px) {
+  .global-slideshow .background-slide {
+    object-position: center center;
   }
 }
