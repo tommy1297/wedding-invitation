@@ -614,17 +614,22 @@
 
   if (!slideA || !slideB) return;
 
+  const IMAGE_INTERVAL = 10000; // 10 detik per foto
+
   let images = [];
   let currentIndex = 0;
   let showingA = true;
-  let isChanging = false;
+  let timer = null;
 
-  function loadImage(src) {
+  function preloadImage(src) {
     return new Promise(resolve => {
       const img = new Image();
 
       img.onload = () => resolve(src);
-      img.onerror = () => resolve(null);
+      img.onerror = () => {
+        console.error('Image failed:', src);
+        resolve(null);
+      };
 
       img.src = src;
     });
@@ -633,69 +638,78 @@
   async function startSlideshow() {
     try {
       const response = await fetch('./images.json');
-      if (!response.ok) throw new Error('images.json not found');
+
+      if (!response.ok) {
+        throw new Error('Cannot load images.json');
+      }
 
       const files = await response.json();
 
-      const results = await Promise.all(
-        files.map(file => loadImage('./' + file))
+      // Load images in the exact JSON order
+      const loaded = await Promise.all(
+        files.map(file => preloadImage('./' + file))
       );
 
-      images = results.filter(Boolean);
+      images = loaded.filter(src => src !== null);
 
-      if (images.length === 0) return;
+      if (images.length === 0) {
+        throw new Error('No images loaded');
+      }
 
-      // Initial background
+      // Reset both slides
+      slideA.classList.remove('active');
+      slideB.classList.remove('active');
+
       slideA.src = images[0];
+      slideB.src = images.length > 1 ? images[1] : images[0];
+
+      // Show first image
+      void slideA.offsetWidth;
       slideA.classList.add('active');
 
+      currentIndex = 0;
+      showingA = true;
+
       if (images.length < 2) return;
-      
-function changeBackground() {
-  if (isChanging) return;
 
-  isChanging = true;
-
-  const nextIndex = (currentIndex + 1) % images.length;
-  const nextSlide = showingA ? slideB : slideA;
-  const currentSlide = showingA ? slideA : slideB;
-
-  // Siapkan foto berikutnya dalam keadaan tersembunyi
-  nextSlide.classList.remove('active');
-  nextSlide.style.transition = 'none';
-  nextSlide.style.opacity = '0';
-  nextSlide.style.transform = 'scale(1.12)';
-  nextSlide.src = images[nextIndex];
-
-  // Pastikan browser menerapkan kondisi awal
-  void nextSlide.offsetWidth;
-
-  // Hapus inline style agar CSS mengambil alih kembali
-  nextSlide.style.removeProperty('opacity');
-  nextSlide.style.removeProperty('transform');
-  nextSlide.style.removeProperty('transition');
-
-  // Aktifkan foto berikutnya
-  void nextSlide.offsetWidth;
-  nextSlide.classList.add('active');
-
-  // Hilangkan foto sebelumnya secara bersamaan
-  currentSlide.classList.remove('active');
-
-  currentIndex = nextIndex;
-  showingA = !showingA;
-
-  setTimeout(() => {
-    isChanging = false;
-  }, 2600);
-}
-
-      // Change every 6 seconds
-      setInterval(changeBackground, 10000);
+      // Start one sequential timer
+      scheduleNextImage();
 
     } catch (error) {
       console.error('Slideshow error:', error);
     }
+  }
+
+  function scheduleNextImage() {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      changeBackground();
+    }, IMAGE_INTERVAL);
+  }
+
+  function changeBackground() {
+    // Determine the next image strictly by sequence
+    const nextIndex = (currentIndex + 1) % images.length;
+
+    const nextSlide = showingA ? slideB : slideA;
+    const currentSlide = showingA ? slideA : slideB;
+
+    // Assign the next image
+    nextSlide.src = images[nextIndex];
+
+    // Show next image and fade out current image
+    nextSlide.classList.add('active');
+    currentSlide.classList.remove('active');
+
+    // Update sequence
+    currentIndex = nextIndex;
+    showingA = !showingA;
+
+    console.log('Now showing:', images[currentIndex]);
+
+    // Schedule next change only after this change
+    scheduleNextImage();
   }
 
   startSlideshow();
