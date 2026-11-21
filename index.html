@@ -608,76 +608,95 @@
 
   <!-- GLOBAL BACKGROUND SLIDESHOW SCRIPT -->
   <script>   
-
 (function () {
   const slideA = document.getElementById('backgroundSlideA');
   const slideB = document.getElementById('backgroundSlideB');
 
-  if (!slideA || !slideB) return;
+  if (!slideA || !slideB) {
+    console.error('Slideshow elements not found');
+    return;
+  }
 
-  const folder = './';
   let images = [];
   let currentIndex = 0;
   let showingA = true;
 
-  fetch('./images.json')
-    .then(response => {
+  // Load satu gambar dan tunggu sampai selesai
+  function loadImage(src) {
+    return new Promise(resolve => {
+      const img = new Image();
+
+      img.onload = () => resolve(src);
+      img.onerror = () => {
+        console.error('Failed to load:', src);
+        resolve(null);
+      };
+
+      img.src = src;
+    });
+  }
+
+  async function startSlideshow() {
+    try {
+      // Baca daftar foto
+      const response = await fetch('./images.json');
+
       if (!response.ok) {
-        throw new Error('Cannot load images.json');
+        throw new Error('images.json tidak ditemukan');
       }
-      return response.json();
-    })
-    .then(files => {
-      images = files
-        .filter(file => typeof file === 'string')
-        .map(file => folder + file);
 
-      if (images.length === 0) return;
+      const files = await response.json();
 
-      const loadedImages = images.map(src => {
-        const img = new Image();
-        img.src = src;
-        return img;
-      });
+      // Load seluruh foto
+      const results = await Promise.all(
+        files.map(file => loadImage('./' + file))
+      );
 
+      // Hanya gunakan foto yang berhasil dimuat
+      images = results.filter(Boolean);
+
+      console.log('Background images loaded:', images);
+
+      if (images.length === 0) {
+        throw new Error('Tidak ada foto background yang berhasil dimuat');
+      }
+
+      // Tampilkan foto pertama
       slideA.src = images[0];
       slideA.classList.add('active');
       slideB.classList.remove('active');
 
-      if (images.length < 2) return;
-
-      function changeBackground() {
-        const nextIndex = (currentIndex + 1) % images.length;
-        const nextSlide = showingA ? slideB : slideA;
-        const currentSlide = showingA ? slideA : slideB;
-        const nextImage = loadedImages[nextIndex];
-
-        function activate() {
-          nextImage.onload = null;
-
-          nextSlide.src = nextImage.src;
-          nextSlide.classList.remove('active');
-          void nextSlide.offsetWidth;
-          nextSlide.classList.add('active');
-          currentSlide.classList.remove('active');
-
-          currentIndex = nextIndex;
-          showingA = !showingA;
-        }
-
-        if (nextImage.complete && nextImage.naturalWidth > 0) {
-          activate();
-        } else {
-          nextImage.onload = activate;
-        }
+      if (images.length < 2) {
+        console.warn('Minimal perlu 2 foto untuk slideshow');
+        return;
       }
 
-      // Change background every 4 seconds
-      setInterval(changeBackground, 4000);
-    })
-    .catch(error => {
-      console.error('Background slideshow error:', error);
-    });
+      // Pergantian foto
+      setInterval(() => {
+        const nextIndex = (currentIndex + 1) % images.length;
+
+        const nextSlide = showingA ? slideB : slideA;
+        const currentSlide = showingA ? slideA : slideB;
+
+        nextSlide.src = images[nextIndex];
+
+        nextSlide.classList.remove('active');
+        void nextSlide.offsetWidth;
+        nextSlide.classList.add('active');
+
+        currentSlide.classList.remove('active');
+
+        currentIndex = nextIndex;
+        showingA = !showingA;
+
+      }, 4000);
+
+    } catch (error) {
+      console.error('Slideshow error:', error);
+    }
+  }
+
+  startSlideshow();
 })();
   </script>
 
