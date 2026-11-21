@@ -1,8 +1,8 @@
 // Ganti tanggal, lokasi, dan kredensial Supabase Anda di sini.
 window.WEDDING = {
-  date: '2027-06-20T08:00:00+07:00',
-  calendarStartUTC: '20270620T010000Z',
-  calendarEndUTC: '20270620T060000Z',
+  date: '2026-12-20T08:00:00+07:00',
+  calendarStartUTC: '20261220T010000Z',
+  calendarEndUTC: '20261220T060000Z',
   title: 'The Wedding of Tommy & Wini',
   venue: 'Star Hotel, Pontianak',
   supabaseUrl: 'https://pztwbekzaturtnzjxsct.supabase.co',
