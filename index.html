@@ -612,25 +612,19 @@
   const slideA = document.getElementById('backgroundSlideA');
   const slideB = document.getElementById('backgroundSlideB');
 
-  if (!slideA || !slideB) {
-    console.error('Slideshow elements not found');
-    return;
-  }
+  if (!slideA || !slideB) return;
 
   let images = [];
   let currentIndex = 0;
   let showingA = true;
+  let isChanging = false;
 
-  // Load satu gambar dan tunggu sampai selesai
   function loadImage(src) {
     return new Promise(resolve => {
       const img = new Image();
 
       img.onload = () => resolve(src);
-      img.onerror = () => {
-        console.error('Failed to load:', src);
-        resolve(null);
-      };
+      img.onerror = () => resolve(null);
 
       img.src = src;
     });
@@ -638,58 +632,60 @@
 
   async function startSlideshow() {
     try {
-      // Baca daftar foto
       const response = await fetch('./images.json');
-
-      if (!response.ok) {
-        throw new Error('images.json tidak ditemukan');
-      }
+      if (!response.ok) throw new Error('images.json not found');
 
       const files = await response.json();
 
-      // Load seluruh foto
       const results = await Promise.all(
         files.map(file => loadImage('./' + file))
       );
 
-      // Hanya gunakan foto yang berhasil dimuat
       images = results.filter(Boolean);
 
-      console.log('Background images loaded:', images);
+      if (images.length === 0) return;
 
-      if (images.length === 0) {
-        throw new Error('Tidak ada foto background yang berhasil dimuat');
-      }
-
-      // Tampilkan foto pertama
+      // Initial background
       slideA.src = images[0];
       slideA.classList.add('active');
-      slideB.classList.remove('active');
 
-      if (images.length < 2) {
-        console.warn('Minimal perlu 2 foto untuk slideshow');
-        return;
-      }
+      if (images.length < 2) return;
 
-      // Pergantian foto
-      setInterval(() => {
+      function changeBackground() {
+        if (isChanging) return;
+
+        isChanging = true;
+
         const nextIndex = (currentIndex + 1) % images.length;
-
         const nextSlide = showingA ? slideB : slideA;
         const currentSlide = showingA ? slideA : slideB;
 
+        // Prepare next image at enlarged starting scale
         nextSlide.src = images[nextIndex];
+        nextSlide.style.transition = 'none';
+        nextSlide.style.opacity = '0';
+        nextSlide.style.transform = 'scale(1.12)';
 
-        nextSlide.classList.remove('active');
+        // Force browser to apply initial state
         void nextSlide.offsetWidth;
+
+        // Restore transitions and activate next image
+        nextSlide.style.transition = '';
         nextSlide.classList.add('active');
 
+        // Fade out previous image simultaneously
         currentSlide.classList.remove('active');
 
         currentIndex = nextIndex;
         showingA = !showingA;
 
-      }, 4000);
+        setTimeout(() => {
+          isChanging = false;
+        }, 2200);
+      }
+
+      // Change every 6 seconds
+      setInterval(changeBackground, 6000);
 
     } catch (error) {
       console.error('Slideshow error:', error);
