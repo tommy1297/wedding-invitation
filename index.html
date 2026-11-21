@@ -15,10 +15,26 @@
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="css/style.css?v=35">
+  <link rel="stylesheet" href="css/style.css?v=36">
 </head>
 
 <body>
+
+  <!-- GLOBAL BACKGROUND SLIDESHOW -->
+  <div class="global-slideshow" aria-hidden="true">
+    <img
+      id="backgroundSlideA"
+      class="background-slide active"
+      src="assets/images/gallery-1.jpg"
+      alt=""
+    >
+    <img
+      id="backgroundSlideB"
+      class="background-slide"
+      src="assets/images/gallery-2.jpg"
+      alt=""
+    >
+  </div>
 
   <!-- OPENING INVITATION -->
   <div id="cover" class="cover">
@@ -588,6 +604,71 @@
         rsvpName.setAttribute('value', guestName);
       }
 
+    })();
+  </script>
+
+  <!-- GLOBAL BACKGROUND SLIDESHOW SCRIPT -->
+  <script>
+    (function () {
+      const slideA = document.getElementById('backgroundSlideA');
+      const slideB = document.getElementById('backgroundSlideB');
+
+      if (!slideA || !slideB) return;
+
+      const images = [
+        'assets/images/gallery-1.jpg',
+        'assets/images/gallery-2.jpg',
+        'assets/images/gallery-3.jpg',
+        'assets/images/gallery-4.jpg',
+        'assets/images/bride.jpg',
+        'assets/images/groom.jpg'
+      ];
+
+      let currentIndex = 0;
+      let showingA = true;
+
+      // Preload semua gambar agar pergantian lebih halus
+      images.forEach(function (src) {
+        const image = new Image();
+        image.src = src;
+      });
+
+      function changeBackground() {
+        const nextIndex = (currentIndex + 1) % images.length;
+        const nextSlide = showingA ? slideB : slideA;
+        const currentSlide = showingA ? slideA : slideB;
+
+        const nextImage = new Image();
+
+        nextImage.onload = function () {
+          nextSlide.src = images[nextIndex];
+
+          // Restart animasi zoom
+          nextSlide.classList.remove('active');
+          void nextSlide.offsetWidth;
+
+          nextSlide.classList.add('active');
+          currentSlide.classList.remove('active');
+
+          currentIndex = nextIndex;
+          showingA = !showingA;
+        };
+
+        nextImage.onerror = function () {
+          // Lewati gambar yang gagal dimuat
+          currentIndex = nextIndex;
+        };
+
+        nextImage.src = images[nextIndex];
+
+        // Jika gambar sudah ada di cache, jalankan pergantian
+        if (nextImage.complete && nextImage.naturalWidth > 0) {
+          nextImage.onload();
+        }
+      }
+
+      // Ganti foto setiap 3 detik
+      setInterval(changeBackground, 3000);
     })();
   </script>
 
