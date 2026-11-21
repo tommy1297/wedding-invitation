@@ -609,67 +609,80 @@
 
   <!-- GLOBAL BACKGROUND SLIDESHOW SCRIPT -->
   <script>
-    (function () {
-      const slideA = document.getElementById('backgroundSlideA');
-      const slideB = document.getElementById('backgroundSlideB');
+    
+(function () {
+  const slideA = document.getElementById('backgroundSlideA');
+  const slideB = document.getElementById('backgroundSlideB');
 
-      if (!slideA || !slideB) return;
+  if (!slideA || !slideB) return;
 
-      const images = [
-        'assets/images/gallery-1.jpg',
-        'assets/images/gallery-2.jpg',
-        'assets/images/gallery-3.jpg',
-        'assets/images/gallery-4.jpg',
-        'assets/images/bride.jpg',
-        'assets/images/groom.jpg'
-      ];
+  const folder = 'assets/backgrounds/';
+  let images = [];
+  let currentIndex = 0;
+  let showingA = true;
 
-      let currentIndex = 0;
-      let showingA = true;
+  // Ambil daftar gambar dari images.json
+  fetch(folder + 'images.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Gagal membaca images.json');
+      }
+      return response.json();
+    })
+    .then(files => {
+      images = files
+        .filter(file => typeof file === 'string')
+        .map(file => folder + file);
 
-      // Preload semua gambar agar pergantian lebih halus
-      images.forEach(function (src) {
-        const image = new Image();
-        image.src = src;
+      if (images.length === 0) return;
+
+      // Preload semua gambar
+      const loadedImages = images.map(src => {
+        const img = new Image();
+        img.src = src;
+        return img;
       });
+
+      // Gunakan gambar pertama
+      slideA.src = images[0];
+      slideA.classList.add('active');
+      slideB.classList.remove('active');
+
+      if (images.length < 2) return;
 
       function changeBackground() {
         const nextIndex = (currentIndex + 1) % images.length;
         const nextSlide = showingA ? slideB : slideA;
         const currentSlide = showingA ? slideA : slideB;
 
-        const nextImage = new Image();
+        const nextImage = loadedImages[nextIndex];
 
-        nextImage.onload = function () {
-          nextSlide.src = images[nextIndex];
-
-          // Restart animasi zoom
+        function activate() {
+          nextSlide.src = nextImage.src;
           nextSlide.classList.remove('active');
           void nextSlide.offsetWidth;
-
           nextSlide.classList.add('active');
           currentSlide.classList.remove('active');
 
           currentIndex = nextIndex;
           showingA = !showingA;
-        };
+        }
 
-        nextImage.onerror = function () {
-          // Lewati gambar yang gagal dimuat
-          currentIndex = nextIndex;
-        };
-
-        nextImage.src = images[nextIndex];
-
-        // Jika gambar sudah ada di cache, jalankan pergantian
         if (nextImage.complete && nextImage.naturalWidth > 0) {
-          nextImage.onload();
+          activate();
+        } else {
+          nextImage.onload = activate;
         }
       }
 
-      // Ganti foto setiap 3 detik
-      setInterval(changeBackground, 3000);
-    })();
+      // Ganti background setiap 4 detik
+      setInterval(changeBackground, 4000);
+    })
+    .catch(error => {
+      console.error('Background slideshow error:', error);
+    });
+})();
+
   </script>
 
 </body>
