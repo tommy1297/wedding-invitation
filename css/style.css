@@ -2087,4 +2087,51 @@ form button:disabled {
 
 
 
+/* =========================================
+   FULLSCREEN PAGE - NO INTERNAL SCROLL
+   ========================================= */
+
+/* Area utama yang menampung seluruh halaman */
+#content {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+}
+
+/* Setiap halaman wajib tepat satu layar */
+#content > section {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  max-height: 100vh;
+  max-height: 100dvh;
+  box-sizing: border-box;
+
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Pastikan elemen halaman tidak membuat tinggi bertambah */
+#content > section * {
+  box-sizing: border-box;
+}
+
+/* Penyesuaian untuk layar HP */
+@media (max-width: 600px) {
+  #content > section {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
+
+
+
+
 
