@@ -1281,3 +1281,329 @@ form button:disabled {
     object-position: center center;
   }
 }
+
+
+
+/* =========================================
+   CINEMATIC WEDDING OPENING
+========================================= */
+
+#cover.cover {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #101914;
+  color: #fff;
+}
+
+/* INTRO SCREEN */
+
+#cover .opening-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+
+  background:
+    linear-gradient(
+      rgba(8, 15, 12, 0.88),
+      rgba(8, 15, 12, 0.94)
+    ),
+    url("../bg-1.jpg") center / cover;
+
+  animation: introFadeOut 1.2s ease forwards;
+  animation-delay: 2.7s;
+  pointer-events: none;
+}
+
+#cover .intro-eyebrow {
+  margin: 0 0 20px;
+  color: #c7b28b;
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  letter-spacing: 5px;
+  animation: introTextReveal 1.2s ease both;
+}
+
+#cover .opening-intro h2 {
+  margin: 0;
+  color: #f8f3e9;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(38px, 9vw, 66px);
+  font-weight: 400;
+  letter-spacing: 2px;
+  animation: introNameReveal 1.5s ease both;
+  animation-delay: 0.6s;
+}
+
+#cover .opening-intro h2 span {
+  color: #c7b28b;
+  font-style: italic;
+}
+
+#cover .intro-line {
+  width: 0;
+  height: 1px;
+  margin-top: 22px;
+  background: #c7b28b;
+  animation: introLineReveal 1.2s ease forwards;
+  animation-delay: 1.2s;
+}
+
+/* MAIN PHOTO SCENE */
+
+#cover .cover-scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  padding:
+    max(65px, env(safe-area-inset-top))
+    24px
+    max(45px, env(safe-area-inset-bottom));
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(8, 17, 13, 0.45) 0%,
+      rgba(8, 17, 13, 0.12) 38%,
+      rgba(8, 17, 13, 0.25) 65%,
+      rgba(8, 17, 13, 0.75) 100%
+    ),
+    url("../bg-1.jpg") center center / cover no-repeat;
+
+  opacity: 0;
+  animation: sceneReveal 1.8s ease forwards;
+  animation-delay: 2.6s;
+}
+
+/* TOP TYPOGRAPHY */
+
+#cover .cover-top {
+  width: 100%;
+  max-width: 500px;
+  animation: contentReveal 1.5s ease both;
+  animation-delay: 3.1s;
+}
+
+#cover .scene-eyebrow {
+  margin: 0 0 12px;
+  color: #d5c29e;
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  letter-spacing: 5px;
+}
+
+#cover .cover-top h1 {
+  margin: 0;
+  color: #fffaf0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(64px, 15vw, 104px);
+  line-height: 0.78;
+  font-weight: 400;
+  letter-spacing: -3px;
+}
+
+#cover .cover-top h1 span {
+  display: block;
+  margin: 8px 0;
+  color: #d0b98e;
+  font-size: 0.55em;
+  font-style: italic;
+  line-height: 0.9;
+}
+
+#cover .scene-date {
+  margin-top: 24px;
+  color: #e5d6b9;
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+/* GUEST AND OPEN BUTTON */
+
+#cover .cover-bottom {
+  width: 100%;
+  max-width: 440px;
+  margin-top: auto;
+  animation: contentReveal 1.5s ease both;
+  animation-delay: 3.5s;
+}
+
+#cover .scene-dear {
+  margin: 0 0 3px;
+  color: #e7dfd0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 19px;
+}
+
+#cover .cover-bottom h2 {
+  margin: 0;
+  color: #fff;
+  font-family: "DM Sans", sans-serif;
+  font-size: 23px;
+  font-weight: 500;
+}
+
+#cover .scene-note {
+  margin: 13px 0 20px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.4);
+  color: #eee8dc;
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  font-style: italic;
+}
+
+#cover .open-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  min-width: 220px;
+  min-height: 48px;
+  padding: 13px 24px;
+
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 5px;
+
+  background: #c5ad83;
+  color: #fff;
+
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+#cover .open-button:hover {
+  background: #ad9368;
+  transform: translateY(-2px);
+}
+
+#cover .envelope-icon {
+  font-size: 16px;
+}
+
+/* ANIMATIONS */
+
+@keyframes introTextReveal {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes introNameReveal {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes introLineReveal {
+  from { width: 0; }
+  to { width: 80px; }
+}
+
+@keyframes introFadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes sceneReveal {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes contentReveal {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* OPENING CLOSE */
+
+#cover.cover.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+  #cover .cover-scene {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  #cover .cover-top h1 {
+    font-size: clamp(62px, 17vw, 82px);
+  }
+
+  #cover .cover-bottom h2 {
+    font-size: 21px;
+  }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  #cover .opening-intro,
+  #cover .opening-intro *,
+  #cover .cover-scene,
+  #cover .cover-top,
+  #cover .cover-bottom {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+  }
+}
+
+
+
+
+
