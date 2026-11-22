@@ -1690,4 +1690,401 @@ form button:disabled {
 
 
 
+/* =========================================
+   NEW TRANSPARENT WEDDING SLIDES
+========================================= */
+
+#content {
+  height: 100svh;
+  max-width: 640px;
+  margin: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  background: transparent;
+  position: relative;
+  isolation: isolate;
+}
+
+#content > section {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  height: 100svh;
+  padding: 55px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  background: transparent !important;
+  color: #fffaf0;
+  text-align: center;
+}
+
+/* Transparent overlay: keep slideshow visible */
+#content > section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(12, 25, 19, 0.48);
+  pointer-events: none;
+}
+
+#content .inner {
+  width: 100%;
+  max-width: 520px;
+  position: relative;
+  z-index: 1;
+  margin: auto;
+}
+
+#content .eyebrow {
+  color: #d5bd8e;
+  letter-spacing: 4px;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+#content .heading {
+  color: #fffaf0;
+  font-size: clamp(34px, 8vw, 46px);
+  margin: 12px 0 25px;
+}
+
+#content .script {
+  color: #fffaf0;
+}
+
+#content .scroll {
+  display: inline-block;
+  margin-top: 45px;
+  color: #e5d2ad;
+  letter-spacing: 2px;
+  font-size: 11px;
+}
+
+/* Verse page */
+.verse-page {
+  max-width: 460px !important;
+}
+
+.bible-verse {
+  margin: 25px auto;
+  padding: 0 8px;
+  color: #fffaf0;
+  font: italic clamp(17px, 4.4vw, 21px)/1.8
+    'Cormorant Garamond', serif;
+  text-align: center;
+}
+
+.verse-signature {
+  position: absolute;
+  right: 0;
+  bottom: -110px;
+  text-align: right;
+}
+
+.verse-signature p {
+  margin: 0;
+  font: 32px 'Great Vibes', cursive;
+  color: #e2c99a;
+}
+
+.verse-signature p span {
+  color: #fff;
+}
+
+.verse-signature small {
+  display: block;
+  margin-top: 5px;
+  color: #e2c99a;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+/* Groom and bride pages */
+.profile-page {
+  max-width: 430px !important;
+}
+
+.profile-photo {
+  width: min(48vw, 190px);
+  height: min(48vw, 190px);
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  padding: 5px;
+  margin: 12px auto 18px;
+}
+
+.profile-role {
+  margin: 0 0 8px;
+  color: #d5bd8e;
+  font-size: 10px;
+  letter-spacing: 4px;
+}
+
+.profile-first-name {
+  margin: 0;
+  color: #fffaf0;
+  font: clamp(48px, 12vw, 68px) 'Great Vibes', cursive;
+}
+
+.profile-full-name {
+  margin: 5px 0 15px;
+  color: #e4d2ae;
+  font: 21px 'Cormorant Garamond', serif;
+  font-weight: 500;
+}
+
+.profile-family {
+  margin: 0 auto 22px;
+  color: #fffaf0;
+  font: 17px/1.7 'Cormorant Garamond', serif;
+}
+
+/* Buttons */
+.instagram-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 43px;
+  padding: 12px 22px;
+  border: 1px solid var(--gold);
+  background: rgba(20, 35, 27, 0.45);
+  color: #fffaf0;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+.instagram-button:hover {
+  background: var(--gold);
+  color: #17271f;
+}
+
+/* Love story */
+#love-story .timeline {
+  margin: 30px auto 0;
+  border-left-color: var(--gold);
+}
+
+#love-story .timeline article {
+  color: #fffaf0;
+}
+
+#love-story .timeline span {
+  background: rgba(23, 39, 31, 0.85);
+  color: #e4d2ae;
+}
+
+#love-story .timeline h3 {
+  color: #e4d2ae;
+}
+
+#love-story .timeline p {
+  color: #fffaf0;
+}
+
+/* Wedding information */
+.wedding-date {
+  color: #e4d2ae;
+  font: 19px/1.7 'Cormorant Garamond', serif;
+  letter-spacing: 2px;
+}
+
+.wedding-date strong {
+  font-size: 25px;
+}
+
+#content .countdown {
+  margin: 20px 0;
+  gap: 7px;
+}
+
+#content .countdown div {
+  width: 70px;
+  padding: 12px 5px;
+  background: rgba(15, 29, 22, 0.45);
+  border-color: #bda77d99;
+}
+
+#content .countdown b {
+  color: #fffaf0;
+  font-size: 29px;
+}
+
+#content .countdown span {
+  color: #e4d2ae;
+}
+
+.venue-card {
+  margin: 16px auto;
+  padding: 17px 12px;
+  max-width: 430px;
+  border: 1px solid rgba(189, 167, 125, 0.65);
+  background: rgba(15, 29, 22, 0.55);
+}
+
+.venue-card h3 {
+  margin: 5px 0 10px;
+  color: #e4d2ae;
+  font: 27px 'Cormorant Garamond', serif;
+}
+
+.venue-card p:not(.eyebrow) {
+  color: #fffaf0;
+  font: 15px/1.6 'Cormorant Garamond', serif;
+}
+
+/* RSVP */
+#rsvp form {
+  margin: 18px auto;
+  max-width: 420px;
+}
+
+#rsvp form label {
+  color: #fffaf0;
+  text-align: left;
+}
+
+#rsvp form input,
+#rsvp form select,
+#rsvp form textarea {
+  background: rgba(20, 39, 29, 0.85);
+  border-color: #bda77d99;
+}
+
+#rsvp .wishes-heading {
+  color: #e4d2ae;
+  margin-top: 25px;
+}
+
+#rsvp #wishes {
+  max-height: 150px;
+  overflow-y: auto;
+  padding-right: 8px;
+  color: #fffaf0;
+}
+
+#rsvp .wish {
+  border-color: #bda77d80;
+}
+
+/* Gallery */
+#gallery .gallery {
+  max-width: 440px;
+  margin: 20px auto 0;
+}
+
+#gallery .gallery button {
+  height: clamp(130px, 27vw, 190px);
+}
+
+/* Thank you and bank */
+.thank-you-names {
+  font-size: clamp(55px, 13vw, 78px);
+  margin: 5px 0 0;
+}
+
+.thank-you-message {
+  max-width: 390px;
+  margin: 0 auto 20px;
+  color: #fffaf0;
+  font: 18px/1.7 'Cormorant Garamond', serif;
+}
+
+#thank-you .bank {
+  max-width: 340px;
+  margin: 20px auto;
+  padding: 20px 12px;
+  background: rgba(15, 29, 22, 0.72);
+  border: 1px solid var(--gold);
+  color: #fffaf0;
+}
+
+#thank-you .bank h3 {
+  color: #e4d2ae;
+}
+
+#thank-you .bank p {
+  color: #fffaf0;
+}
+
+.hashtag {
+  color: #e4d2ae;
+  letter-spacing: 2px;
+  font-size: 12px;
+}
+
+#thank-you footer {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  color: #e4d2ae;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  #content > section {
+    padding: 42px 20px;
+  }
+
+  .bible-verse {
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .verse-signature {
+    bottom: -100px;
+  }
+
+  .profile-photo {
+    width: 155px;
+    height: 155px;
+  }
+
+  #content .countdown div {
+    width: 62px;
+  }
+
+  #content .countdown b {
+    font-size: 25px;
+  }
+
+  .venue-card {
+    padding: 13px 9px;
+  }
+}
+
+/* Short screens */
+@media (max-height: 720px) {
+  #content > section {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  .profile-photo {
+    width: 125px;
+    height: 125px;
+  }
+
+  .verse-signature {
+    bottom: -85px;
+  }
+
+  #rsvp #wishes {
+    max-height: 100px;
+  }
+}
+
+
+
+
 
