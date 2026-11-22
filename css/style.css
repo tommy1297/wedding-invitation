@@ -68,6 +68,7 @@ a {
   background: var(--deep);
 }
 
+
 .global-slideshow .background-slide {
   position: absolute;
   inset: 0;
@@ -79,16 +80,24 @@ a {
   opacity: 0;
   transform: scale(1.12);
 
-  transition:
-    opacity 2.5s ease-in-out,
-    transform 10s ease-out;
+  /* Hanya transisi opacity, tidak ada zoom-out */
+  transition: opacity 0.8s ease-in-out;
 
   will-change: opacity, transform;
 }
 
 .global-slideshow .background-slide.active {
   opacity: 1;
-  transform: scale(1.22);
+  animation: backgroundZoomIn 3s ease-out forwards;
+}
+
+@keyframes backgroundZoomIn {
+  from {
+    transform: scale(1.12);
+  }
+  to {
+    transform: scale(1.22);
+  }
 }
 
 .global-slideshow::after {
