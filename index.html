@@ -688,29 +688,37 @@
     }, IMAGE_INTERVAL);
   }
 
-  function changeBackground() {
-    // Determine the next image strictly by sequence
-    const nextIndex = (currentIndex + 1) % images.length;
+  
+function changeBackground() {
+  const nextIndex = (currentIndex + 1) % images.length;
 
-    const nextSlide = showingA ? slideB : slideA;
-    const currentSlide = showingA ? slideA : slideB;
+  const nextSlide = showingA ? slideB : slideA;
+  const currentSlide = showingA ? slideA : slideB;
 
-    // Assign the next image
-    nextSlide.src = images[nextIndex];
+  // Pertahankan ukuran terakhir foto sebelumnya
+  const currentTransform = getComputedStyle(currentSlide).transform;
+  currentSlide.style.transform = currentTransform;
 
-    // Show next image and fade out current image
-    nextSlide.classList.add('active');
-    currentSlide.classList.remove('active');
+  // Siapkan foto berikutnya
+  nextSlide.classList.remove('active');
+  nextSlide.style.transform = '';
+  nextSlide.src = images[nextIndex];
 
-    // Update sequence
-    currentIndex = nextIndex;
-    showingA = !showingA;
+  // Aktifkan foto berikutnya
+  void nextSlide.offsetWidth;
+  nextSlide.classList.add('active');
 
-    console.log('Now showing:', images[currentIndex]);
+  // Foto lama hanya menghilang, tanpa zoom-out
+  currentSlide.classList.remove('active');
 
-    // Schedule next change only after this change
-    scheduleNextImage();
-  }
+  currentIndex = nextIndex;
+  showingA = !showingA;
+
+  console.log('Now showing:', images[currentIndex]);
+
+  // Jadwalkan pergantian berikutnya
+  scheduleNextImage();
+}
 
   startSlideshow();
 })();
