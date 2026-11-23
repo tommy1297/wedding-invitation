@@ -2531,6 +2531,41 @@ form button:disabled {
 
 
 
+/* TWO WEDDING GIFT ACCOUNTS */
+
+.bank-account {
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 10px;
+  padding: 18px 14px;
+  margin-top: 18px;
+  background: rgba(255,255,255,0.06);
+}
+
+.bank-owner {
+  font-size: 11px;
+  letter-spacing: 2px;
+  opacity: 0.75;
+  margin-bottom: 10px;
+}
+
+.bank-name {
+  letter-spacing: 2px;
+  font-size: 12px;
+}
+
+.bank-account h3 {
+  font-size: clamp(20px, 5vw, 26px);
+  letter-spacing: 2px;
+  margin: 10px 0;
+  overflow-wrap: anywhere;
+}
+
+.bank-account .instagram-button {
+  margin-top: 12px;
+}
+
+
+
 
 
 
