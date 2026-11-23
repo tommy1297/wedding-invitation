@@ -2564,6 +2564,68 @@ form button:disabled {
   margin-top: 12px;
 }
 
+/* WEDDING GIFT - COMPACT TWO COLUMN LAYOUT */
+.bank-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+  max-width: 650px;
+  margin: 18px auto 0;
+  align-items: stretch;
+}
+
+.bank-grid .bank {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 18px 12px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.bank-grid .bank h3 {
+  font-size: clamp(16px, 2.5vw, 22px);
+  overflow-wrap: anywhere;
+  margin: 10px 0;
+}
+
+.bank-grid .bank p {
+  margin: 6px 0;
+  font-size: 13px;
+}
+
+.bank-grid .bank button {
+  margin-top: 10px;
+  padding: 10px 12px;
+  font-size: 10px;
+  white-space: normal;
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+  .bank-grid {
+    gap: 8px;
+  }
+
+  .bank-grid .bank {
+    padding: 14px 8px;
+  }
+
+  .bank-grid .bank h3 {
+    font-size: 15px;
+  }
+
+  .bank-grid .bank p {
+    font-size: 11px;
+  }
+
+  .bank-grid .bank button {
+    font-size: 9px;
+    padding: 9px 6px;
+  }
+}
+
 
 
 
