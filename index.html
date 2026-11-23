@@ -371,15 +371,51 @@
 
       </form>
 
-      <h3 class="wishes-heading">Wishes from our loved ones</h3>
-
-      <div id="wishes">
-        <p>Memuat ucapan...</p>
-      </div>
-
     </div>
   </section>
+  
+<!-- 8. WISHES FROM OUR LOVED ONES -->
+<section class="section transparent-page" id="wishesPage">
 
+  <div class="inner reveal">
+
+    <p class="eyebrow">WITH LOVE & GRATITUDE</p>
+
+    <h2 class="heading">Your Warm Wishes</h2>
+
+    <div id="wishes">
+      <p>Memuat ucapan...</p>
+    </div>
+
+    <div class="wishes-pagination">
+
+      <button
+        id="wishesPrev"
+        class="wishes-page-button"
+        type="button"
+        disabled
+      >
+        ← Prev
+      </button>
+
+      <span id="wishesPageInfo" class="wishes-page-info">
+        1 / 1
+      </span>
+
+      <button
+        id="wishesNext"
+        class="wishes-page-button"
+        type="button"
+        disabled
+      >
+        Next →
+      </button>
+
+    </div>
+
+  </div>
+</section>
+  
   <!-- 8. PRE-WEDDING GALLERY -->
   <section class="section transparent-page" id="gallery">
     <div class="inner reveal">
@@ -503,57 +539,40 @@
   <script src="js/wishes.js?v=1"></script>
 
   
+
 <script>
 (function () {
-  const wishesContainer = document.getElementById('wishes');
-  if (!wishesContainer) return;
+  const container = document.getElementById('wishes');
+  const prevButton = document.getElementById('wishesPrev');
+  const nextButton = document.getElementById('wishesNext');
+  const pageInfo = document.getElementById('wishesPageInfo');
 
-  const ITEMS_PER_PAGE = 2;
+  if (!container || !prevButton || !nextButton || !pageInfo) return;
+
+  const ITEMS_PER_PAGE = 3;
   let currentPage = 0;
-  let wishItems = [];
-
-  const pagination = document.createElement('div');
-  pagination.className = 'wishes-pagination';
-
-  const prevButton = document.createElement('button');
-  prevButton.type = 'button';
-  prevButton.textContent = '← Prev';
-  prevButton.className = 'wishes-page-button';
-
-  const pageInfo = document.createElement('span');
-  pageInfo.className = 'wishes-page-info';
-
-  const nextButton = document.createElement('button');
-  nextButton.type = 'button';
-  nextButton.textContent = 'Next →';
-  nextButton.className = 'wishes-page-button';
-
-  pagination.append(prevButton, pageInfo, nextButton);
-  wishesContainer.insertAdjacentElement('afterend', pagination);
 
   function updatePagination() {
-    wishItems = Array.from(wishesContainer.children);
+    const items = Array.from(container.children);
 
     const totalPages = Math.max(
       1,
-      Math.ceil(wishItems.length / ITEMS_PER_PAGE)
+      Math.ceil(items.length / ITEMS_PER_PAGE)
     );
 
     currentPage = Math.min(currentPage, totalPages - 1);
 
-    wishItems.forEach((item, index) => {
+    items.forEach((item, index) => {
       const start = currentPage * ITEMS_PER_PAGE;
       const end = start + ITEMS_PER_PAGE;
 
-      item.hidden = !(index >= start && index < end);
+      item.hidden = index < start || index >= end;
     });
 
     pageInfo.textContent = `${currentPage + 1} / ${totalPages}`;
 
     prevButton.disabled = currentPage === 0;
     nextButton.disabled = currentPage >= totalPages - 1;
-
-    pagination.hidden = wishItems.length <= ITEMS_PER_PAGE;
   }
 
   prevButton.addEventListener('click', function () {
@@ -564,8 +583,9 @@
   });
 
   nextButton.addEventListener('click', function () {
-    const totalPages = Math.ceil(
-      wishItems.length / ITEMS_PER_PAGE
+    const totalPages = Math.max(
+      1,
+      Math.ceil(container.children.length / ITEMS_PER_PAGE)
     );
 
     if (currentPage < totalPages - 1) {
@@ -579,7 +599,7 @@
     updatePagination();
   });
 
-  observer.observe(wishesContainer, {
+  observer.observe(container, {
     childList: true
   });
 
