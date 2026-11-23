@@ -2404,5 +2404,69 @@ form button:disabled {
 
 
 
+/* =================================
+   WISHES PAGINATION
+================================= */
+
+#wishes {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  scrollbar-width: none;
+}
+
+#wishes::-webkit-scrollbar {
+  display: none;
+}
+
+#wishes-pagination {
+  display: none;
+}
+
+.wishes-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 22px auto 0;
+  width: 100%;
+}
+
+.wishes-pagination[hidden] {
+  display: none !important;
+}
+
+.wishes-page-button {
+  padding: 8px 16px;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 5px;
+  background: transparent;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.wishes-page-button:hover:not(:disabled) {
+  background: rgba(255,255,255,0.15);
+}
+
+.wishes-page-button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.wishes-page-info {
+  color: #fff;
+  font-size: 14px;
+  min-width: 42px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+
+
+
 
 
