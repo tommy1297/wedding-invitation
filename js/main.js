@@ -360,8 +360,7 @@ function toast(message) {
 /* =====================================
    9. COPY BANK ACCOUNT
 ===================================== */
-
-async function copyBankAccount(accountId) {
+async function copyBankAccount(accountId, showNotification = true) {
   const account = el(accountId);
 
   if (!account) return;
@@ -371,10 +370,14 @@ async function copyBankAccount(accountId) {
       account.textContent.trim()
     );
 
-    toast('Nomor rekening disalin');
+    if (showNotification) {
+      toast('Nomor rekening disalin');
+    }
 
   } catch (error) {
-    toast('Silakan salin nomor secara manual');
+    if (showNotification) {
+      toast('Silakan salin nomor secara manual');
+    }
   }
 }
 
@@ -385,10 +388,11 @@ if (el('copyAccount')) {
   });
 }
 
-// Wini
+// Wini - copy without popup
 if (el('copyAccountWini')) {
-  el('copyAccountWini').addEventListener('click', () => {
-    copyBankAccount('accountWini');
+  el('copyAccountWini').addEventListener('click', event => {
+    event.preventDefault();
+    copyBankAccount('accountWini', false);
   });
 }
 
