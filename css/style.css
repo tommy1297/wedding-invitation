@@ -2525,5 +2525,12 @@ form button:disabled {
 
 
 
+#wishes > .wish[hidden] {
+  display: none !important;
+}
+
+
+
+
 
 
