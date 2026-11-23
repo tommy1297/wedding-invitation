@@ -375,32 +375,35 @@ function toast(message) {
    9. COPY BANK ACCOUNT
 ===================================== */
 
+async function copyBankAccount(accountId) {
+  const account = el(accountId);
+
+  if (!account) return;
+
+  try {
+    await navigator.clipboard.writeText(
+      account.textContent.trim()
+    );
+
+    toast('Nomor rekening disalin');
+
+  } catch (error) {
+    toast('Silakan salin nomor secara manual');
+  }
+}
+
+// Tommy
 if (el('copyAccount')) {
-
-  el('copyAccount').addEventListener('click', async event => {
-
-    event.preventDefault();
-
-    const account = el('account');
-
-    if (!account) return;
-
-    try {
-
-      await navigator.clipboard.writeText(
-        account.textContent.trim()
-      );
-
-      toast('Nomor rekening disalin');
-
-    } catch (error) {
-
-      toast('Silakan salin nomor secara manual');
-
-    }
-
+  el('copyAccount').addEventListener('click', () => {
+    copyBankAccount('account');
   });
+}
 
+// Wini
+if (el('copyAccountWini')) {
+  el('copyAccountWini').addEventListener('click', () => {
+    copyBankAccount('accountWini');
+  });
 }
 
 /* =====================================
