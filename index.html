@@ -502,6 +502,91 @@
   <script src="js/main.js?v=1"></script>
   <script src="js/wishes.js?v=1"></script>
 
+  
+<script>
+(function () {
+  const wishesContainer = document.getElementById('wishes');
+  if (!wishesContainer) return;
+
+  const ITEMS_PER_PAGE = 2;
+  let currentPage = 0;
+  let wishItems = [];
+
+  const pagination = document.createElement('div');
+  pagination.className = 'wishes-pagination';
+
+  const prevButton = document.createElement('button');
+  prevButton.type = 'button';
+  prevButton.textContent = '← Prev';
+  prevButton.className = 'wishes-page-button';
+
+  const pageInfo = document.createElement('span');
+  pageInfo.className = 'wishes-page-info';
+
+  const nextButton = document.createElement('button');
+  nextButton.type = 'button';
+  nextButton.textContent = 'Next →';
+  nextButton.className = 'wishes-page-button';
+
+  pagination.append(prevButton, pageInfo, nextButton);
+  wishesContainer.insertAdjacentElement('afterend', pagination);
+
+  function updatePagination() {
+    wishItems = Array.from(wishesContainer.children);
+
+    const totalPages = Math.max(
+      1,
+      Math.ceil(wishItems.length / ITEMS_PER_PAGE)
+    );
+
+    currentPage = Math.min(currentPage, totalPages - 1);
+
+    wishItems.forEach((item, index) => {
+      const start = currentPage * ITEMS_PER_PAGE;
+      const end = start + ITEMS_PER_PAGE;
+
+      item.hidden = !(index >= start && index < end);
+    });
+
+    pageInfo.textContent = `${currentPage + 1} / ${totalPages}`;
+
+    prevButton.disabled = currentPage === 0;
+    nextButton.disabled = currentPage >= totalPages - 1;
+
+    pagination.hidden = wishItems.length <= ITEMS_PER_PAGE;
+  }
+
+  prevButton.addEventListener('click', function () {
+    if (currentPage > 0) {
+      currentPage--;
+      updatePagination();
+    }
+  });
+
+  nextButton.addEventListener('click', function () {
+    const totalPages = Math.ceil(
+      wishItems.length / ITEMS_PER_PAGE
+    );
+
+    if (currentPage < totalPages - 1) {
+      currentPage++;
+      updatePagination();
+    }
+  });
+
+  const observer = new MutationObserver(function () {
+    currentPage = 0;
+    updatePagination();
+  });
+
+  observer.observe(wishesContainer, {
+    childList: true
+  });
+
+  updatePagination();
+})();
+</script>
+
   <!-- PERSONALIZED GUEST NAME -->
   <script>
     (function () {
