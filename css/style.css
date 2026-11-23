@@ -2467,6 +2467,63 @@ form button:disabled {
 
 
 
+/* WISHES PAGE */
+
+#wishesPage .inner {
+  width: 100%;
+  max-width: 650px;
+}
+
+#wishes {
+  width: 100%;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  scrollbar-width: none;
+}
+
+#wishes::-webkit-scrollbar {
+  display: none;
+}
+
+#wishes > [hidden] {
+  display: none !important;
+}
+
+.wishes-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.wishes-page-button {
+  padding: 8px 16px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 5px;
+  background: transparent;
+  color: white;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.wishes-page-button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.wishes-page-info {
+  min-width: 42px;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+
+
 
 
 
