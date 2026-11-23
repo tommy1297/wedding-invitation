@@ -457,43 +457,49 @@
         dari hari istimewa kami.
       </p>
 
-      <div class="bank">
-        <p class="eyebrow">WEDDING GIFT</p>
+      
+<div class="bank">
+  <p class="eyebrow">WEDDING GIFT</p>
 
-        <p>BANK CENTRAL ASIA</p>
+  <p>YOUR BLESSING MEANS THE WORLD TO US</p>
 
-        <h3 id="account">1710955260</h3>
+  <!-- TOMMY ACCOUNT -->
+  <div class="bank-account">
+    <p class="bank-owner">ACCOUNT 01 · TOMMY</p>
+    <p class="bank-name">BANK CENTRAL ASIA</p>
 
-        <p>a/n. Tommy William</p>
+    <h3 id="account">1710955260</h3>
 
-        <button
-          id="copyAccount"
-          class="instagram-button"
-          type="button"
-        >
-          COPY ACCOUNT NUMBER
-        </button>
-      </div>
+    <p>a.n. Tommy William</p>
 
-      <div class="bank">
-        <p class="eyebrow">WEDDING GIFT</p>
+    <button
+      id="copyAccount"
+      class="instagram-button"
+      type="button"
+    >
+      COPY ACCOUNT NUMBER
+    </button>
+  </div>
 
-        <p>BANK CENTRAL ASIA</p>
+  <!-- WINI ACCOUNT -->
+  <div class="bank-account">
+    <p class="bank-owner">ACCOUNT 02 · WINI</p>
+    <p class="bank-name">BANK CENTRAL ASIA</p>
 
-        <h3 id="account">7155049111</h3>
+    <h3 id="accountWini">7155049111</h3>
 
-        <p>a/n. Wini Megasari</p>
+    <p>a.n. Wini Megasari</p>
 
-        <button
-          id="copyAccount"
-          class="instagram-button"
-          type="button"
-        >
-          COPY ACCOUNT NUMBER
-        </button>
-      </div>
+    <button
+      id="copyAccountWini"
+      class="instagram-button"
+      type="button"
+    >
+      COPY ACCOUNT NUMBER
+    </button>
+  </div>
 
-
+</div>
       <p class="caps">20 DECEMBER 2026 · PONTIANAK</p>
 
       <p class="hashtag">#ToWinMyHeart</p>
@@ -549,7 +555,6 @@
   <script src="js/main.js?v=1"></script>
   <script src="js/wishes.js?v=1"></script>
 
-  
 
 <script>
 (function () {
@@ -616,6 +621,24 @@
 
   updatePagination();
 })();
+</script>
+
+<script>
+document.getElementById('copyAccountWini')?.addEventListener('click', async function () {
+  const account = document.getElementById('accountWini').textContent.trim();
+
+  if (!account || account === 'ISI_NOMOR_REKENING_WINI') {
+    alert('Nomor rekening Wini belum diisi.');
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(account);
+    alert('Nomor rekening Wini berhasil disalin.');
+  } catch (error) {
+    alert('Gagal menyalin nomor rekening.');
+  }
+});
 </script>
 
   <!-- PERSONALIZED GUEST NAME -->
