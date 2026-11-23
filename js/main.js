@@ -391,8 +391,7 @@ if (el('copyAccount')) {
 // Wini - copy without popup
 if (el('copyAccountWini')) {
   el('copyAccountWini').addEventListener('click', event => {
-    event.preventDefault();
-    copyBankAccount('accountWini', false);
+    copyBankAccount('accountWini');
   });
 }
 
