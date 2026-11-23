@@ -44,8 +44,6 @@
     return;
   }
 
-  box.textContent = 'Supabase berhasil diinisialisasi. Memuat ucapan...';
-
   // =====================================
   // 3. ELEMENT REFERENCES
   // =====================================
@@ -59,14 +57,75 @@
   const statusBox = el('status');
   const submitButton = el('submitWish');
 
+  const prevButton = el('wishesPrev');
+  const nextButton = el('wishesNext');
+  const pageInfo = el('wishesPageInfo');
+
   if (!wishForm || !nameInput || !attendanceInput ||
       !countInput || !messageInput || !submitButton) {
     box.textContent = 'ERROR: Ada elemen form RSVP yang tidak ditemukan.';
     return;
   }
 
+  if (!prevButton || !nextButton || !pageInfo) {
+    box.textContent = 'ERROR: Tombol pagination Wishes tidak ditemukan.';
+    return;
+  }
+
   // =====================================
-  // 4. GUEST COUNT
+  // 4. PAGINATION SETTINGS
+  // =====================================
+  const ITEMS_PER_PAGE = 3;
+  let currentPage = 0;
+
+  function updatePagination() {
+    const items = Array.from(box.querySelectorAll(':scope > .wish'));
+
+    const totalPages = Math.max(
+      1,
+      Math.ceil(items.length / ITEMS_PER_PAGE)
+    );
+
+    currentPage = Math.min(currentPage, totalPages - 1);
+
+    items.forEach((item, index) => {
+      const start = currentPage * ITEMS_PER_PAGE;
+      const end = start + ITEMS_PER_PAGE;
+
+      item.hidden = index < start || index >= end;
+    });
+
+    pageInfo.textContent =
+      `${currentPage + 1} / ${totalPages}`;
+
+    prevButton.disabled = currentPage === 0;
+    nextButton.disabled = currentPage >= totalPages - 1;
+  }
+
+  prevButton.addEventListener('click', () => {
+    if (currentPage > 0) {
+      currentPage--;
+      updatePagination();
+    }
+  });
+
+  nextButton.addEventListener('click', () => {
+    const totalPages = Math.max(
+      1,
+      Math.ceil(
+        box.querySelectorAll(':scope > .wish').length /
+        ITEMS_PER_PAGE
+      )
+    );
+
+    if (currentPage < totalPages - 1) {
+      currentPage++;
+      updatePagination();
+    }
+  });
+
+  // =====================================
+  // 5. GUEST COUNT
   // =====================================
   function updateGuestCount() {
     if (attendanceInput.value === 'Tidak hadir') {
@@ -89,7 +148,7 @@
   updateGuestCount();
 
   // =====================================
-  // 5. LOAD WISHES
+  // 6. LOAD WISHES
   // =====================================
   async function loadWishes() {
     box.textContent = 'Menghubungi database...';
@@ -113,6 +172,8 @@
 
       if (!data || data.length === 0) {
         box.textContent = 'Belum ada ucapan. Jadilah yang pertama!';
+        currentPage = 0;
+        updatePagination();
         return;
       }
 
@@ -133,6 +194,9 @@
         box.appendChild(card);
       });
 
+      currentPage = 0;
+      updatePagination();
+
     } catch (error) {
       console.error('Load error:', error);
       box.textContent = 'CONNECTION ERROR: ' + error.message;
@@ -140,7 +204,7 @@
   }
 
   // =====================================
-  // 6. SUBMIT RSVP
+  // 7. SUBMIT RSVP
   // =====================================
   wishForm.addEventListener('submit', async event => {
     event.preventDefault();
@@ -205,7 +269,7 @@
   });
 
   // =====================================
-  // 7. START
+  // 8. START
   // =====================================
   loadWishes();
 
