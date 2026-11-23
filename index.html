@@ -611,24 +611,6 @@
 })();
 </script>
 
-<script>
-document.getElementById('copyAccountWini')?.addEventListener('click', async function () {
-  const account = document.getElementById('accountWini').textContent.trim();
-
-  if (!account || account === 'ISI_NOMOR_REKENING_WINI') {
-    alert('Nomor rekening Wini belum diisi.');
-    return;
-  }
-
-  try {
-    await navigator.clipboard.writeText(account);
-    alert('Nomor rekening Wini berhasil disalin.');
-  } catch (error) {
-    alert('Gagal menyalin nomor rekening.');
-  }
-});
-</script>
-
   <!-- PERSONALIZED GUEST NAME -->
   <script>
     (function () {
