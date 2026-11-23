@@ -69,40 +69,26 @@ function initializeScrollReveal() {
   }
 
   revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      const target = entry.target;
+    
+entries.forEach(entry => {
+  const target = entry.target;
 
-      if (entry.isIntersecting) {
-        target.classList.add('visible');
+  if (entry.isIntersecting) {
+    target.classList.add('visible');
 
-        if (target.classList.contains('gallery')) {
-          target.querySelectorAll('button').forEach(button => {
-            button.classList.add('visible');
-          });
-        }
+    if (target.classList.contains('gallery')) {
+      target.querySelectorAll('button').forEach(button => {
+        button.classList.add('visible');
+      });
+    }
 
-        if (target.classList.contains('couple-grid')) {
-          target.querySelectorAll('img').forEach(img => {
-            img.classList.add('visible');
-          });
-        }
-
-      } else {
-        target.classList.remove('visible');
-
-        if (target.classList.contains('gallery')) {
-          target.querySelectorAll('button').forEach(button => {
-            button.classList.remove('visible');
-          });
-        }
-
-        if (target.classList.contains('couple-grid')) {
-          target.querySelectorAll('img').forEach(img => {
-            img.classList.remove('visible');
-          });
-        }
-      }
-    });
+    if (target.classList.contains('couple-grid')) {
+      target.querySelectorAll('img').forEach(img => {
+        img.classList.add('visible');
+      });
+    }
+  }
+});
 
   }, {
     root: content,
