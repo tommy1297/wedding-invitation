@@ -2723,6 +2723,93 @@ form button:disabled {
 
 
 
+/* =====================================
+   FINAL FIX - FULL SCREEN GROOM & BRIDE
+   Place this at the VERY END of style.css
+===================================== */
+
+/* Groom */
+#content > section#groom.profile-hero {
+  background-image: url("../groom.JPG") !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-color: transparent !important;
+}
+
+/* Bride */
+#content > section#bride.profile-hero {
+  background-image: url("../bride.jpg") !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-color: transparent !important;
+}
+
+/* Full viewport profile slides */
+#content > section#groom.profile-hero,
+#content > section#bride.profile-hero {
+  width: 100% !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+
+  overflow: hidden !important;
+  text-align: left !important;
+}
+
+/* Text position */
+#content > section.profile-hero .profile-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 640px;
+  padding: 0 28px 75px;
+  margin: 0;
+  text-align: left;
+}
+
+/* Dark gradient */
+#content > section.profile-hero .profile-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.02) 10%,
+    rgba(0,0,0,0.12) 40%,
+    rgba(0,0,0,0.85) 100%
+  );
+  pointer-events: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
