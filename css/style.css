@@ -2791,7 +2791,22 @@ form button:disabled {
   pointer-events: none;
 }
 
+#content > section#bride {
+  background-image: url("../bride.jpg") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
 
+  width: 100% !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
 
 
 
