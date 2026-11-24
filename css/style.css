@@ -1754,45 +1754,155 @@ form button:disabled {
   letter-spacing: 2px;
 }
 
-/* Groom and bride pages */
-.profile-page {
-  max-width: 430px !important;
-}
 
-.profile-photo {
-  width: min(48vw, 190px);
-  height: min(48vw, 190px);
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid var(--gold);
-  padding: 5px;
-  margin: 12px auto 18px;
-}
+/* =====================================
+   FULL SCREEN BRIDE & GROOM PROFILE
+===================================== */
 
-.profile-role {
-  margin: 0 0 8px;
-  color: #d5bd8e;
-  font-size: 10px;
-  letter-spacing: 4px;
-}
+.profile-hero {
+  position: relative !important;
 
-.profile-first-name {
+  width: 100%;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+
+  padding: 0 !important;
   margin: 0;
+
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: flex-start !important;
+
+  overflow: hidden !important;
+  text-align: left !important;
   color: #fffaf0;
-  font: clamp(48px, 12vw, 68px) 'Great Vibes', cursive;
+
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
 }
 
-.profile-full-name {
-  margin: 5px 0 15px;
-  color: #e4d2ae;
-  font: 21px 'Cormorant Garamond', serif;
+/* Groom photo */
+#groom.profile-hero {
+  background-image: url("../groom.JPG");
+  background-position: center 30%;
+}
+
+/* Bride photo */
+#bride.profile-hero {
+  background-image: url("../bride.JPG");
+  background-position: center 30%;
+}
+
+/* Dark gradient */
+.profile-hero .profile-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.03) 15%,
+    rgba(0,0,0,0.08) 40%,
+    rgba(0,0,0,0.45) 70%,
+    rgba(0,0,0,0.85) 100%
+  );
+
+  pointer-events: none;
+}
+
+/* Text container */
+.profile-hero .profile-content {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 640px;
+
+  margin: 0;
+  padding: 0 36px 90px;
+
+  text-align: left;
+}
+
+/* Eyebrow */
+.profile-hero .profile-eyebrow {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: #c6ad85;
+  margin: 0 0 18px;
+}
+
+/* Large first name */
+.profile-hero .profile-first-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(76px, 15vw, 112px);
+  font-weight: 400;
+  line-height: 0.85;
+  color: #fff;
+
+  margin: 0 0 18px;
+}
+
+/* Full name */
+.profile-hero .profile-full-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(25px, 5vw, 34px);
   font-weight: 500;
+  color: #fff;
+
+  margin: 0 0 20px;
 }
 
-.profile-family {
-  margin: 0 auto 22px;
-  color: #fffaf0;
-  font: 17px/1.7 'Cormorant Garamond', serif;
+/* Family information */
+.profile-hero .profile-family {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.65;
+
+  color: rgba(255,255,255,0.95);
+  margin: 0 0 25px;
+}
+
+/* Instagram button */
+.profile-hero .profile-instagram {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 13px 25px;
+  border-radius: 40px;
+
+  background: #b99b75;
+  color: #fff;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+
+  .profile-hero .profile-content {
+    padding: 0 28px 75px;
+  }
+
+  .profile-hero .profile-first-name {
+    font-size: 82px;
+  }
+
+  #groom.profile-hero {
+    background-position: center 30%;
+  }
+
+  #bride.profile-hero {
+    background-position: center 30%;
+  }
+
 }
 
 /* Buttons */
