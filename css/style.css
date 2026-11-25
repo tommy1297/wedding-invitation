@@ -3535,6 +3535,35 @@ form button:disabled {
 }
 
 
+/* MOMENTS GALLERY - KEEP BACKGROUND DARK, PHOTOS ORIGINAL */
+
+#content > section#gallery.moments-gallery {
+  background: transparent !important;
+  isolation: auto !important;
+}
+
+/* Preserve dark background overlay */
+#content > section#gallery.moments-gallery::before,
+#content > section#gallery.moments-gallery::after {
+  display: block !important;
+}
+
+/* Remove dark effect from gallery photos only */
+#gallery .gallery-row img,
+#gallery .gallery-track img {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Ensure photo containers do not add dark effects */
+#gallery .gallery-row button,
+#gallery .gallery-track button {
+  filter: none !important;
+  opacity: 1 !important;
+  background: transparent !important;
+}
+
 
 
 
