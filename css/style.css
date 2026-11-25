@@ -3566,6 +3566,35 @@ form button:disabled {
 
 
 
+/* =========================================
+   GLOBAL DARK OVERLAY - DEEP NAVY BLUE
+========================================= */
+
+/* Global slideshow overlay */
+.global-slideshow::after {
+  background: rgba(8, 20, 42, 0.38) !important;
+}
+
+/* Hero veil */
+.veil {
+  background: rgba(8, 20, 42, 0.38) !important;
+}
+
+/* Overlay seluruh halaman */
+#content > section::before {
+  background: rgba(8, 20, 42, 0.48) !important;
+}
+
+/* Keep gallery photos in original colors */
+#gallery .gallery-row img,
+#gallery .gallery-track img {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+
+
 
 
 
