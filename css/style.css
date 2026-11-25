@@ -3480,6 +3480,62 @@ form button:disabled {
 
 
 
+/* GALLERY - PRESERVE ORIGINAL PHOTO RATIO */
+
+.moments-gallery .gallery-row {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+}
+
+.moments-gallery .gallery-track {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  padding: 0 12px;
+}
+
+.moments-gallery .gallery-track button {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  overflow: visible;
+}
+
+.moments-gallery .gallery-track img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 210px;
+  max-width: 75vw;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (min-width: 768px) {
+  .moments-gallery .gallery-track img {
+    max-height: 260px;
+    max-width: 500px;
+  }
+}
+
+
+
 
 
 
