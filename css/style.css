@@ -2809,19 +2809,19 @@ form button:disabled {
 }
 
 
-/* =========================================
-   FINAL FONT FIX - MEET THE GROOM & BRIDE
-========================================= */
+
+/* MATCH FONT WITH OPENING PAGE - TOMMY & WINI */
 
 #content #groom .profile-first-name,
-#content #bride .profile-first-name,
-#content #groom .profile-page h1,
-#content #bride .profile-page h1 {
-  font-family: 'Cormorant Garamond', serif !important;
+#content #bride .profile-first-name {
+  font-family: 'Great Vibes', cursive !important;
   font-weight: 400 !important;
   font-style: normal !important;
-  line-height: 0.85 !important;
+  line-height: 1.15 !important;
+  font-size: clamp(64px, 13vw, 92px) !important;
+  letter-spacing: 0 !important;
 }
+
 
 
 
