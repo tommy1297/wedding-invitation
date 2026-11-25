@@ -1442,15 +1442,6 @@ form button:disabled {
   transition: background 0.3s ease, transform 0.3s ease;
 }
 
-#cover .open-button:hover {
-  background: #ad9368;
-  transform: translateY(-2px);
-}
-
-#cover .envelope-icon {
-  font-size: 16px;
-}
-
 /* ANIMATIONS */
 
 @keyframes introTextReveal {
@@ -1608,16 +1599,25 @@ form button:disabled {
   white-space: nowrap;
 }
 
-/* ENVELOPE ICON */
-#cover .envelope-icon {
+/* FIX ENVELOPE ICON */
+#cover .open-button {
   display: inline-flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: 23px;
-  line-height: 1;
-  flex-shrink: 0;
+  gap: 14px;
 }
 
+#cover .envelope-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  flex: 0 0 20px;
+  font-size: initial;
+  line-height: 1;
+  overflow: visible;
+}
 /* MOBILE */
 @media (max-width: 480px) {
   #cover .cover-bottom {
