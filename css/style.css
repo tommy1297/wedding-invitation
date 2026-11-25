@@ -3349,6 +3349,109 @@ form button:disabled {
 }
 
 
+/* =========================================
+   MOMENTS GALLERY - RESPONSIVE FIX
+========================================= */
+
+.moments-gallery {
+  justify-content: flex-start !important;
+  gap: 25px;
+  padding-top: 55px;
+  padding-bottom: 55px;
+}
+
+.prewed-heading {
+  width: 100%;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.prewed-heading h2 {
+  margin: 10px 0 0;
+  font: 400 clamp(35px, 7vw, 48px)
+        'Cormorant Garamond', serif;
+}
+
+.moments-gallery .gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.moments-gallery .gallery button {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+
+  border: 1px solid var(--gold);
+  background: transparent;
+
+  opacity: 1;
+  transform: none;
+  transition: transform .3s ease;
+}
+
+.moments-gallery .gallery button img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .5s ease;
+}
+
+.moments-gallery .gallery button:hover img {
+  transform: scale(1.04);
+}
+
+.prewed-quote {
+  width: 100%;
+  max-width: 600px;
+  margin: 10px auto 0;
+  text-align: center;
+  font: italic 20px/1.5
+        'Cormorant Garamond', serif;
+}
+
+.prewed-quote span {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+  .moments-gallery .gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 360px) {
+  .moments-gallery .gallery {
+    gap: 8px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
