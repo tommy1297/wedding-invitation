@@ -3149,6 +3149,202 @@ form button:disabled {
 
 
 
+/* =========================================
+   RSVP - ELEGANT DARK EDITORIAL DESIGN
+========================================= */
+
+#content > section#rsvp.rsvp-page {
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  padding: 85px 30px 45px !important;
+  overflow-y: auto !important;
+}
+
+#rsvp .inner {
+  width: 100%;
+  max-width: 750px;
+  margin: 35px auto auto;
+  text-align: center;
+}
+
+/* RSVP eyebrow */
+#rsvp .eyebrow {
+  color: #e9bb91;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  margin: 0 0 32px;
+}
+
+/* Main title */
+#rsvp .heading {
+  color: #fff;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(42px, 8vw, 52px);
+  font-weight: 500;
+  margin: 0 0 28px;
+}
+
+/* Description */
+#rsvp .rsvp-description {
+  color: rgba(255,255,255,.92);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.7;
+  margin: 0 0 28px;
+}
+
+/* Form */
+#rsvp form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  text-align: left;
+}
+
+/* Labels */
+#rsvp form label {
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .5px;
+  margin: 0 0 8px;
+}
+
+/* Input and textarea */
+#rsvp form input,
+#rsvp form textarea,
+#rsvp form select:not(#attendance) {
+  display: block;
+  width: 100%;
+  margin: 0 0 14px;
+  padding: 13px 17px;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 0;
+  outline: none;
+  background: rgba(0,0,0,.12);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  box-shadow: none;
+}
+
+#rsvp form input {
+  height: 52px;
+}
+
+#rsvp form textarea {
+  min-height: 124px;
+  resize: vertical;
+}
+
+#rsvp form input::placeholder,
+#rsvp form textarea::placeholder {
+  color: rgba(255,255,255,.58);
+}
+
+#rsvp form select:not(#attendance) {
+  height: 48px;
+  color-scheme: dark;
+}
+
+/* Attendance buttons */
+#rsvp .attendance-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 0 0 18px;
+}
+
+#rsvp .attendance-button {
+  min-height: 54px;
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .5px;
+}
+
+#rsvp .attendance-button.active {
+  border-color: #f2c294;
+  background: rgba(242,194,148,.16);
+  color: #f2c294;
+}
+
+/* Submit button */
+#rsvp form button[type="submit"] {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 12px;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 50px;
+  background: #f2c294;
+  color: #171717;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: .3px;
+}
+
+#rsvp form button[type="submit"]:disabled {
+  opacity: .6;
+}
+
+/* Status */
+#rsvp #status {
+  color: #f2c294;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  #content > section#rsvp.rsvp-page {
+    padding: 75px 22px 35px !important;
+  }
+
+  #rsvp .inner {
+    margin-top: 25px;
+  }
+
+  #rsvp .eyebrow {
+    margin-bottom: 26px;
+  }
+
+  #rsvp .heading {
+    font-size: 42px;
+    margin-bottom: 25px;
+  }
+
+  #rsvp .rsvp-description {
+    font-size: 15px;
+    margin-bottom: 25px;
+  }
+
+  #rsvp .attendance-options {
+    gap: 10px;
+  }
+
+  #rsvp .attendance-button {
+    min-height: 52px;
+    font-size: 12px;
+  }
+}
+
+
+
+
 
 
 
