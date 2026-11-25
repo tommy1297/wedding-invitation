@@ -3666,9 +3666,10 @@ form button:disabled {
     url("../bg-1.jpg") center / cover !important;
 }
 
-/* 5. OPEN INVITATION COVER - NAVY TONE */
+
+/* OPEN INVITATION COVER - KEEP BACKGROUND IMAGE VISIBLE */
 #cover.cover {
-  background: #08142a !important;
+  background: transparent !important;
   color: #f8f3e9;
 }
 
