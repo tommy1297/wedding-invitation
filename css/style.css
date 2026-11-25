@@ -2822,6 +2822,12 @@ form button:disabled {
   letter-spacing: 0 !important;
 }
 
+.hero .script,
+#content #groom .profile-first-name,
+#content #bride .profile-first-name {
+  font-family: 'Great Vibes', cursive !important;
+  font-weight: 400 !important;
+}
 
 
 
