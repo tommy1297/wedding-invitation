@@ -3632,6 +3632,54 @@ form button:disabled {
 
 
 
+/* =========================================
+   FINAL COLOR & TRANSPARENCY REFINEMENT
+========================================= */
+
+/* 1. MOMENTS IN TIME - GOLD TITLE */
+#gallery .prewed-heading h2 {
+  color: #d5bd8e !important;
+}
+
+/* 2. A NEW CHAPTER BEGINS - SHOW MORE BACKGROUND */
+#content > section#hero::before {
+  background: rgba(8, 20, 42, 0.25) !important;
+}
+
+/* Keep the other invitation pages at the existing navy transparency */
+#content > section:not(#hero)::before {
+  background: rgba(8, 20, 42, 0.48) !important;
+}
+
+/* 3. GLOBAL BACKGROUND - CHANGE GREEN TONE TO NAVY BLUE */
+.global-slideshow::after {
+  background: rgba(8, 20, 42, 0.38) !important;
+}
+
+/* 4. OPENING INTRO - REPLACE GREEN OVERLAY WITH NAVY */
+#cover .opening-intro {
+  background:
+    linear-gradient(
+      rgba(8, 20, 42, 0.88),
+      rgba(8, 20, 42, 0.94)
+    ),
+    url("../bg-1.jpg") center / cover !important;
+}
+
+/* 5. OPEN INVITATION COVER - NAVY TONE */
+#cover.cover {
+  background: #08142a !important;
+  color: #f8f3e9;
+}
+
+#cover.cover::before {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(8, 20, 42, 0.08) 10%,
+    rgba(8, 20, 42, 0.42) 100%
+  ) !important;
+}
+
 
 
 
