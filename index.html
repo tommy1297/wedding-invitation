@@ -789,5 +789,26 @@ function changeBackground() {
 })();
   </script>
 
+  
+/* RSVP ATTENDANCE BUTTONS */
+document.querySelectorAll('#rsvp .attendance-button').forEach(button => {
+  button.addEventListener('click', function () {
+    const value = this.dataset.value;
+
+    document.getElementById('attendance').value = value;
+
+    document.querySelectorAll('#rsvp .attendance-button')
+      .forEach(item => item.classList.remove('active'));
+
+    this.classList.add('active');
+
+    // Jika tidak hadir, jumlah tamu otomatis 0? 
+    // Nilai 1 tetap dipertahankan untuk kompatibilitas database.
+    if (value === 'Tidak hadir') {
+      document.getElementById('count').value = '1';
+    }
+  });
+});
+
 </body>
 </html>
