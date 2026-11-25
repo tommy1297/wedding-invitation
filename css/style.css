@@ -4014,6 +4014,185 @@ form button:disabled {
 
 
 
+/* =========================================
+   THE WEDDING DAY - ELEGANT HORIZONTAL LAYOUT
+========================================= */
+
+/* Main section */
+#content > section#wedding-info::before {
+  background: rgba(8, 20, 42, 0.30) !important;
+}
+
+#wedding-info .inner {
+  width: min(92%, 900px);
+  max-width: 900px;
+  margin: auto;
+  padding: 12px 20px;
+  text-align: center;
+}
+
+/* Heading */
+#wedding-info .eyebrow {
+  color: #d8bd83 !important;
+  font-size: 9px;
+  letter-spacing: 4px;
+  margin-bottom: 5px;
+}
+
+#wedding-info .heading {
+  color: #f5ead4 !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(35px, 5vw, 48px);
+  font-weight: 400;
+  margin: 0 0 5px;
+}
+
+/* Date */
+#wedding-info .wedding-date {
+  color: #e8d5ad !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  margin: 5px 0 12px;
+}
+
+#wedding-info .wedding-date strong {
+  font-size: 21px;
+  font-weight: 500;
+}
+
+/* Countdown - compact */
+#wedding-info #countdown {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px auto 18px !important;
+}
+
+#wedding-info #countdown div {
+  width: 65px;
+  padding: 8px 5px;
+  border: 1px solid rgba(216, 189, 131, 0.45);
+  border-radius: 3px;
+  background: rgba(8, 20, 42, 0.48) !important;
+}
+
+#wedding-info #countdown b {
+  display: block;
+  color: #fff3dc !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+#wedding-info #countdown span {
+  color: #d8bd83 !important;
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+
+/* Two venue cards side by side */
+#wedding-info .venue-card {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  vertical-align: top;
+  width: calc(50% - 10px);
+  max-width: none;
+  min-height: 190px;
+  margin: 0 4px;
+  padding: 17px 14px;
+  box-sizing: border-box;
+
+  border: 1px solid rgba(216, 189, 131, 0.58);
+  border-radius: 4px;
+  background: rgba(8, 20, 42, 0.58) !important;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Venue title */
+#wedding-info .venue-card .eyebrow {
+  color: #d8bd83 !important;
+  font-size: 8px;
+  letter-spacing: 2px;
+  margin: 0 0 5px;
+}
+
+#wedding-info .venue-card h3 {
+  color: #f5ead4 !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 3px 0 8px;
+}
+
+/* Venue details */
+#wedding-info .venue-card p:not(.eyebrow) {
+  color: #eee5d7 !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+
+/* Map button */
+#wedding-info .venue-card .instagram-button {
+  align-self: center;
+  min-height: 32px;
+  padding: 8px 18px;
+  border: 1px solid rgba(216, 189, 131, 0.8);
+  border-radius: 2px;
+  background: transparent !important;
+  color: #e8d5ad !important;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  #wedding-info .inner {
+    width: 96%;
+    padding: 8px 5px;
+  }
+
+  #wedding-info .venue-card {
+    width: calc(50% - 8px);
+    min-height: 190px;
+    padding: 13px 7px;
+    margin: 0 2px;
+  }
+
+  #wedding-info .venue-card h3 {
+    font-size: 21px;
+  }
+
+  #wedding-info .venue-card p:not(.eyebrow) {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  #wedding-info .venue-card .eyebrow {
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+
+  #wedding-info .venue-card .instagram-button {
+    padding: 8px 10px;
+    font-size: 7px;
+  }
+
+  #wedding-info #countdown {
+    gap: 6px;
+    margin-bottom: 14px !important;
+  }
+
+  #wedding-info #countdown div {
+    width: 58px;
+  }
+}
+
 
 
 
