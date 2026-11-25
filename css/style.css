@@ -4195,6 +4195,187 @@ form button:disabled {
 
 
 
+/* =========================================
+   THE WEDDING DAY - EDITORIAL LAYOUT
+========================================= */
+
+/* Background tetap transparan agar slideshow terlihat */
+#content > section#wedding-info::before {
+  background: rgba(8, 20, 42, 0.28) !important;
+}
+
+/* Overall layout */
+#wedding-info .inner {
+  width: min(88%, 900px);
+  max-width: 900px;
+  padding: 12px 0;
+  margin: auto;
+}
+
+/* Heading */
+#wedding-info .eyebrow {
+  color: #d8bd83 !important;
+  font-size: 9px;
+  letter-spacing: 4px;
+  margin-bottom: 5px;
+}
+
+#wedding-info .heading {
+  color: #f5ead4 !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 48px);
+  font-weight: 400;
+  margin: 0 0 5px;
+}
+
+/* Wedding date */
+#wedding-info .wedding-date {
+  color: #fff !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  margin: 5px 0 12px;
+}
+
+#wedding-info .wedding-date strong {
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff !important;
+}
+
+/* Countdown: plain text, no boxes */
+#wedding-info #countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(18px, 4vw, 38px);
+  margin: 12px auto 20px !important;
+}
+
+#wedding-info #countdown div {
+  width: auto !important;
+  min-width: 0;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#wedding-info #countdown b {
+  display: block;
+  color: #fff !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(25px, 4vw, 32px);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+#wedding-info #countdown span {
+  display: block;
+  color: #fff !important;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  margin-top: 4px;
+}
+
+/* Venue: remove card appearance */
+#wedding-info .venue-card {
+  display: block;
+  width: 72%;
+  max-width: 620px;
+  min-height: 0;
+  padding: 10px 0;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Pemberkatan: upper right, right aligned */
+#wedding-info .venue-card:nth-of-type(1) {
+  margin: 12px 0 65px auto;
+  text-align: right;
+}
+
+/* Resepsi: lower left, left aligned */
+#wedding-info .venue-card:nth-of-type(2) {
+  margin: 0 auto 0 0;
+  text-align: left;
+}
+
+/* Venue labels */
+#wedding-info .venue-card .eyebrow {
+  color: #e3c18e !important;
+  font-size: 9px;
+  letter-spacing: 2px;
+  margin: 0 0 5px;
+}
+
+/* Venue names */
+#wedding-info .venue-card h3 {
+  color: #fff !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(25px, 4vw, 34px);
+  font-weight: 400;
+  margin: 3px 0 8px;
+}
+
+/* Venue details */
+#wedding-info .venue-card p:not(.eyebrow) {
+  color: #fff !important;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.7;
+  margin: 0 0 13px;
+}
+
+/* Map buttons */
+#wedding-info .venue-card .instagram-button {
+  display: inline-flex;
+  min-height: 34px;
+  padding: 8px 20px;
+  border: 1px solid #d8bd83;
+  border-radius: 30px;
+  background: transparent !important;
+  color: #e8d5ad !important;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+/* Mobile adjustment */
+@media (max-width: 480px) {
+  #wedding-info .inner {
+    width: 90%;
+  }
+
+  #wedding-info .venue-card {
+    width: 88%;
+  }
+
+  #wedding-info .venue-card:nth-of-type(1) {
+    margin-bottom: 35px;
+  }
+
+  #wedding-info .venue-card p:not(.eyebrow) {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  #wedding-info #countdown {
+    gap: 15px;
+  }
+
+  #wedding-info #countdown b {
+    font-size: 24px;
+  }
+}
+
 
 
 
