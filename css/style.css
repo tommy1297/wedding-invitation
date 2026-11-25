@@ -3594,6 +3594,42 @@ form button:disabled {
 }
 
 
+/* MOMENTS GALLERY - REMOVE DARK OVERLAY FROM PHOTOS ONLY */
+
+/* Keep the dark blue overlay on the gallery background,
+   but place it behind the gallery content */
+#content > section#gallery.moments-gallery::before {
+  z-index: 0 !important;
+  background: rgba(8, 20, 42, 0.48) !important;
+}
+
+/* Put gallery content above the background overlay */
+#gallery .gallery,
+#gallery .gallery-row,
+#gallery .gallery-track,
+#gallery .gallery-track button {
+  position: relative;
+  z-index: 1;
+}
+
+/* Original photo colors */
+#gallery .gallery-track img {
+  position: relative;
+  z-index: 2;
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Keep heading and quote above overlay */
+#gallery .prewed-heading,
+#gallery .prewed-quote,
+#gallery .gallery-heading,
+#gallery .gallery-quote {
+  position: relative;
+  z-index: 2;
+}
+
 
 
 
