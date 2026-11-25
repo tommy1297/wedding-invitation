@@ -3682,6 +3682,336 @@ form button:disabled {
 }
 
 
+/* =========================================
+   THE WEDDING DAY - ROYAL NAVY REFINEMENT
+========================================= */
+
+/* Transparent navy background */
+#content > section#wedding-info::before {
+  background: rgba(8, 20, 42, 0.34) !important;
+}
+
+/* Main layout */
+#wedding-info .inner {
+  width: 100%;
+  max-width: 540px;
+  padding: 24px 18px;
+  margin: auto;
+}
+
+/* Section eyebrow */
+#wedding-info .eyebrow {
+  color: #d8bd83 !important;
+  letter-spacing: 4px;
+  font-size: 10px;
+}
+
+/* Main heading */
+#wedding-info .heading {
+  color: #f5ead4 !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(38px, 9vw, 52px);
+  font-weight: 400;
+  margin: 8px 0 12px;
+}
+
+/* Wedding date */
+#wedding-info .wedding-date {
+  color: #e6d5b5 !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  letter-spacing: 4px;
+  line-height: 1.8;
+  margin: 8px 0 18px;
+}
+
+#wedding-info .wedding-date strong {
+  display: inline-block;
+  color: #d8bd83 !important;
+  font-size: clamp(21px, 5vw, 27px);
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+/* Countdown - elegant glass panels */
+#wedding-info .countdown {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin: 18px 0 24px;
+}
+
+#wedding-info .countdown div {
+  width: 68px;
+  padding: 12px 4px;
+  border: 1px solid rgba(216, 189, 131, 0.55);
+  border-radius: 4px;
+  background: rgba(8, 20, 42, 0.48) !important;
+  backdrop-filter: blur(5px);
+}
+
+#wedding-info .countdown b {
+  color: #f5ead4 !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 29px;
+  font-weight: 500;
+}
+
+#wedding-info .countdown span {
+  color: #d8bd83 !important;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+}
+
+/* Venue cards */
+#wedding-info .venue-card {
+  position: relative;
+  margin: 12px auto;
+  padding: 18px 16px;
+  max-width: 100%;
+  border: 1px solid rgba(216, 189, 131, 0.52);
+  border-radius: 5px;
+  background: rgba(8, 20, 42, 0.58) !important;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Gold accent line */
+#wedding-info .venue-card::before {
+  content: "";
+  display: block;
+  width: 38px;
+  height: 1px;
+  margin: 0 auto 12px;
+  background: #d8bd83;
+}
+
+#wedding-info .venue-card h3 {
+  color: #e5c994 !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 29px;
+  font-weight: 400;
+  margin: 5px 0 10px;
+}
+
+#wedding-info .venue-card p:not(.eyebrow) {
+  color: #f5eee2 !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* Map buttons */
+#wedding-info .venue-card .instagram-button {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 9px 20px;
+  border: 1px solid #d8bd83;
+  border-radius: 3px;
+  color: #e8d4ad !important;
+  background: transparent !important;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+/* Mobile spacing */
+@media (max-width: 480px) {
+  #wedding-info .inner {
+    padding: 18px 12px;
+  }
+
+  #wedding-info .venue-card {
+    padding: 14px 10px;
+    margin: 10px auto;
+  }
+
+  #wedding-info .countdown {
+    gap: 6px;
+  }
+
+  #wedding-info .countdown div {
+    width: 62px;
+    padding: 10px 3px;
+  }
+}
+
+
+
+/* =========================================
+   FINAL PAGE - ROYAL NAVY WEDDING GIFT
+========================================= */
+
+/* Transparent navy overlay */
+#content > section#thank-you::before {
+  background: rgba(8, 20, 42, 0.34) !important;
+}
+
+/* Main content */
+#thank-you .inner {
+  width: 100%;
+  max-width: 520px;
+  padding: 20px 16px 30px;
+  margin: auto;
+}
+
+/* Eyebrow */
+#thank-you .eyebrow {
+  color: #d8bd83 !important;
+  letter-spacing: 4px;
+  font-size: 10px;
+}
+
+/* Couple names */
+#thank-you .thank-you-names {
+  color: #f5ead4 !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 12vw, 68px);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 8px 0 12px;
+}
+
+#thank-you .thank-you-names small {
+  color: #d8bd83 !important;
+  font-style: italic;
+}
+
+/* Thank you message */
+#thank-you .thank-you-message {
+  max-width: 390px;
+  margin: 0 auto 20px;
+  color: #f2eadc !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* Bank account layout */
+#thank-you .bank-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  margin: 20px auto;
+}
+
+/* Individual bank card */
+#thank-you .bank-grid .bank {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  padding: 20px 10px 17px;
+  border: 1px solid rgba(216, 189, 131, 0.65);
+  border-radius: 5px;
+  background: rgba(8, 20, 42, 0.58) !important;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.13);
+}
+
+/* Gold decorative line */
+#thank-you .bank-grid .bank::before {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 1px;
+  margin: 0 auto 13px;
+  background: #d8bd83;
+}
+
+/* Bank name */
+#thank-you .bank-name {
+  color: #d8bd83 !important;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+
+/* Account number */
+#thank-you .bank h3 {
+  color: #fff3dc !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(19px, 4.5vw, 25px);
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin: 8px 0;
+  overflow-wrap: anywhere;
+}
+
+/* Account holder */
+#thank-you .bank p:not(.bank-name) {
+  color: #e8dfd0 !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  margin: 5px 0 14px;
+}
+
+/* Copy button */
+#thank-you .bank button {
+  width: 100%;
+  padding: 10px 5px;
+  border: 1px solid rgba(216, 189, 131, 0.8);
+  border-radius: 3px;
+  background: transparent !important;
+  color: #e8d4ad !important;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+/* Date and location */
+#thank-you .caps {
+  color: #e5d3b1 !important;
+  font-size: 10px;
+  letter-spacing: 2px;
+  line-height: 1.8;
+  margin: 14px 0 8px;
+}
+
+/* Hashtag */
+#thank-you .hashtag {
+  color: #d8bd83 !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  margin-top: 8px;
+}
+
+/* Footer */
+#thank-you footer {
+  color: #d8bd83 !important;
+  font-size: 9px;
+  letter-spacing: 2px;
+  bottom: 10px;
+}
+
+/* Small mobile screens */
+@media (max-width: 380px) {
+  #thank-you .inner {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  #thank-you .bank-grid {
+    gap: 8px;
+  }
+
+  #thank-you .bank-grid .bank {
+    padding: 15px 7px;
+  }
+
+  #thank-you .bank-name {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  #thank-you .bank-grid .bank button {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+}
+
 
 
 
