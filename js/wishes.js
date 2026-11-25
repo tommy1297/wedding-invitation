@@ -127,25 +127,38 @@
   // =====================================
   // 5. GUEST COUNT
   // =====================================
-  function updateGuestCount() {
-    if (attendanceInput.value === 'Tidak hadir') {
-      countInput.innerHTML = '<option value="0">0 orang</option>';
-      countInput.value = '0';
-      countInput.disabled = true;
-    } else {
-      countInput.innerHTML = `
-        <option value="1">1 orang</option>
-        <option value="2">2 orang</option>
-        <option value="3">3 orang</option>
-        <option value="4">4 orang</option>
-      `;
-      countInput.disabled = false;
-      countInput.value = '1';
-    }
-  }
+ 
+const attendanceSelect = document.getElementById("attendance");
+const countSelect = document.getElementById("count");
+const attendanceButtons = document.querySelectorAll(".attendance-button");
 
-  attendanceInput.addEventListener('change', updateGuestCount);
-  updateGuestCount();
+function updateGuestCount() {
+  const isAttending = attendanceSelect.value === "Hadir";
+
+  countSelect.disabled = !isAttending;
+
+  if (!isAttending) {
+    // Database saat ini membatasi guest_count minimal 1
+    countSelect.value = "1";
+  }
+}
+
+attendanceButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const selectedValue = button.dataset.value;
+
+    attendanceSelect.value = selectedValue;
+
+    attendanceButtons.forEach(btn => {
+      btn.classList.toggle("active", btn === button);
+    });
+
+    updateGuestCount();
+  });
+});
+
+// Inisialisasi saat halaman dibuka
+updateGuestCount();
 
   // =====================================
   // 6. LOAD WISHES
