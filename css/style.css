@@ -4835,6 +4835,77 @@ form button:disabled {
 }
 
 
+/* =========================================
+   MOMENTS IN TIME - NATURAL PHOTO RATIO
+========================================= */
+
+/* All photo rows */
+#gallery .gallery-row {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  gap: 10px;
+}
+
+/* Photo containers */
+#gallery .gallery-row button,
+#gallery .gallery-row button:nth-child(n) {
+  display: flex !important;
+  flex: 0 0 auto !important;
+
+  width: auto !important;
+  height: clamp(150px, 24vh, 190px) !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  overflow: hidden;
+  border: none !important;
+  border-radius: 0;
+  background: transparent !important;
+}
+
+/* Preserve each photo's original aspect ratio */
+#gallery .gallery-row button img {
+  display: block !important;
+
+  width: auto !important;
+  height: 100% !important;
+
+  max-width: none !important;
+  object-fit: contain !important;
+  object-position: center;
+
+  flex: 0 0 auto;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  #gallery .gallery-row button,
+  #gallery .gallery-row button:nth-child(n) {
+    height: 155px !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
