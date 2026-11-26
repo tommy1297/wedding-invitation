@@ -4888,6 +4888,127 @@ form button:disabled {
 }
 
 
+/* =========================================
+   LUXURY CINEMATIC TEXT REVEAL
+   Top-to-bottom staggered fade
+========================================= */
+
+/* Text starts invisible */
+#content .reveal.visible :is(
+  .eyebrow,
+  .heading,
+  .script,
+  .caps,
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  blockquote,
+  .profile-first-name,
+  .profile-eyebrow,
+  .gallery-heading
+) {
+  animation: luxuryTextReveal 1.15s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+/* Reveal sequence from top to bottom */
+#content .reveal.visible > :nth-child(1) {
+  animation-delay: .10s;
+}
+
+#content .reveal.visible > :nth-child(2) {
+  animation-delay: .25s;
+}
+
+#content .reveal.visible > :nth-child(3) {
+  animation-delay: .40s;
+}
+
+#content .reveal.visible > :nth-child(4) {
+  animation-delay: .55s;
+}
+
+#content .reveal.visible > :nth-child(5) {
+  animation-delay: .70s;
+}
+
+#content .reveal.visible > :nth-child(6) {
+  animation-delay: .85s;
+}
+
+/* Individual text motion */
+@keyframes luxuryTextReveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -22px, 0);
+    filter: blur(4px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+/* Profile pages */
+#content .profile-content.reveal.visible > * {
+  animation: luxuryTextReveal 1.15s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+#content .profile-content.reveal.visible > :nth-child(1) {
+  animation-delay: .10s;
+}
+
+#content .profile-content.reveal.visible > :nth-child(2) {
+  animation-delay: .30s;
+}
+
+#content .profile-content.reveal.visible > :nth-child(3) {
+  animation-delay: .50s;
+}
+
+#content .profile-content.reveal.visible > :nth-child(4) {
+  animation-delay: .70s;
+}
+
+/* Keep scroll indicator animation independent */
+#content #hero .scroll {
+  animation: none !important;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  #content .reveal.visible :is(
+    .eyebrow, .heading, .script, .caps,
+    p, h1, h2, h3, h4, blockquote
+  ) {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
