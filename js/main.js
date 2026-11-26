@@ -100,9 +100,10 @@ entries.forEach(entry => {
     .forEach(item => revealObserver.observe(item));
 }
 
+
 /* =====================================
    4. SLIDE NAVIGATION
-   Native scroll-snap handles wheel and touch.
+   Smooth cinematic page transition
 ===================================== */
 
 let slideNavigationInitialized = false;
@@ -119,6 +120,8 @@ function initializeSlideNavigation() {
   if (!slides.length) return;
 
   slideNavigationInitialized = true;
+
+  let isMoving = false;
 
   function getSlideIndex() {
     const contentTop = content.getBoundingClientRect().top;
@@ -140,63 +143,73 @@ function initializeSlideNavigation() {
     return nearestIndex;
   }
 
-  
-function goToSlide(index) {
-  const nextIndex = Math.max(
-    0,
-    Math.min(index, slides.length - 1)
-  );
+  function goToSlide(index) {
+    if (isMoving) return;
 
-  if (nextIndex === currentSlide || isMoving) return;
+    const nextIndex = Math.max(
+      0,
+      Math.min(index, slides.length - 1)
+    );
 
-  isMoving = true;
+    const currentIndex = getSlideIndex();
 
-  const startPosition = content.scrollTop;
-  const targetPosition = slides[nextIndex].offsetTop;
-  const distance = targetPosition - startPosition;
+    if (nextIndex === currentIndex) return;
 
-  const duration = 720;
-  const startTime = performance.now();
+    isMoving = true;
 
-  // Prepare destination page
-  slides[nextIndex].classList.add('page-active');
+    const startPosition = content.scrollTop;
 
-  function animateScroll(now) {
-    const elapsed = now - startTime;
-    const progress = Math.min(elapsed / duration, 1);
+    const targetPosition =
+      startPosition +
+      slides[nextIndex].getBoundingClientRect().top -
+      content.getBoundingClientRect().top;
 
-    // Smooth cinematic easing
-    const eased = 1 - Math.pow(1 - progress, 4);
+    const distance = targetPosition - startPosition;
+    const duration = 720;
+    const startTime = performance.now();
 
-    content.scrollTop =
-      startPosition + distance * eased;
+    const originalSnap = content.style.scrollSnapType;
+    const originalBehavior = content.style.scrollBehavior;
 
-    if (progress < 1) {
-      requestAnimationFrame(animateScroll);
-    } else {
-      content.scrollTop = targetPosition;
-      currentSlide = nextIndex;
+    // Prevent browser snap from interrupting animation
+    content.style.scrollSnapType = 'none';
+    content.style.scrollBehavior = 'auto';
 
-      // Remove animation class from previous page
-      slides.forEach((slide, i) => {
-        if (i !== nextIndex) {
-          slide.classList.remove('page-active');
-        }
-      });
+    slides[nextIndex].classList.add('page-active');
 
-      isMoving = false;
+    function animateScroll(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Smooth ease-out transition
+      const eased = 1 - Math.pow(1 - progress, 4);
+
+      content.scrollTop =
+        startPosition + distance * eased;
+
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll);
+      } else {
+        content.scrollTop = targetPosition;
+
+        slides.forEach((slide, i) => {
+          if (i !== nextIndex) {
+            slide.classList.remove('page-active');
+          }
+        });
+
+        requestAnimationFrame(() => {
+          content.style.scrollSnapType = originalSnap;
+          content.style.scrollBehavior = originalBehavior;
+          isMoving = false;
+        });
+      }
     }
+
+    requestAnimationFrame(animateScroll);
   }
 
-  requestAnimationFrame(animateScroll);
-}
-
-    slides[safeIndex].scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }
-
+  // Keyboard navigation
   document.addEventListener('keydown', event => {
     if (content.hidden) return;
 
@@ -235,6 +248,7 @@ function goToSlide(index) {
     }
   });
 
+  // Internal page links
   content.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', event => {
       const targetId = link.getAttribute('href').slice(1);
