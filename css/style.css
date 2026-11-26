@@ -5179,6 +5179,38 @@ form button:disabled {
 
 
 
+/* =========================================
+   RESTORE TEXT FADE - FLICKER SAFE
+========================================= */
+
+/* Tulisan sebelum masuk layar */
+#content:not([hidden]) .reveal {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: none !important;
+  filter: none !important;
+
+  transition:
+    opacity 1.1s ease,
+    visibility 0s linear 1.1s !important;
+
+  animation: none !important;
+}
+
+/* Fade in saat halaman terlihat */
+#content:not([hidden]) .reveal.visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
+
+  transition:
+    opacity 1.1s ease,
+    visibility 0s !important;
+}
+
+
+
 
 
 
