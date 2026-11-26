@@ -101,9 +101,9 @@ entries.forEach(entry => {
 }
 
 
+
 /* =====================================
-   4. SLIDE NAVIGATION
-   Smooth cinematic page transition
+   4. FULL PAGE CINEMATIC NAVIGATION
 ===================================== */
 
 let slideNavigationInitialized = false;
@@ -121,17 +121,24 @@ function initializeSlideNavigation() {
 
   slideNavigationInitialized = true;
 
+  let currentSlide = 0;
   let isMoving = false;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchTarget = null;
 
-  function getSlideIndex() {
-    const contentTop = content.getBoundingClientRect().top;
+  // Disable native partial scrolling and snap
+  content.style.scrollSnapType = 'none';
+  content.style.scrollBehavior = 'auto';
+  content.style.overflowY = 'hidden';
 
+  function getCurrentSlide() {
     let nearestIndex = 0;
     let nearestDistance = Infinity;
 
     slides.forEach((slide, index) => {
       const distance = Math.abs(
-        slide.getBoundingClientRect().top - contentTop
+        slide.offsetTop - content.scrollTop
       );
 
       if (distance < nearestDistance) {
@@ -143,6 +150,30 @@ function initializeSlideNavigation() {
     return nearestIndex;
   }
 
+  function canScrollNested(target, direction) {
+    if (!(target instanceof Element)) return false;
+
+    const nested = target.closest(
+      '#wishes, .lightbox, [data-independent-scroll]'
+    );
+
+    if (!nested || nested === content) return false;
+
+    const style = getComputedStyle(nested);
+    const canScroll =
+      /(auto|scroll)/.test(style.overflowY) &&
+      nested.scrollHeight > nested.clientHeight;
+
+    if (!canScroll) return false;
+
+    if (direction > 0) {
+      return nested.scrollTop + nested.clientHeight <
+        nested.scrollHeight - 2;
+    }
+
+    return nested.scrollTop > 2;
+  }
+
   function goToSlide(index) {
     if (isMoving) return;
 
@@ -151,67 +182,126 @@ function initializeSlideNavigation() {
       Math.min(index, slides.length - 1)
     );
 
-    const currentIndex = getSlideIndex();
-
-    if (nextIndex === currentIndex) return;
+    if (nextIndex === currentSlide) return;
 
     isMoving = true;
 
     const startPosition = content.scrollTop;
-
-    const targetPosition =
-      startPosition +
-      slides[nextIndex].getBoundingClientRect().top -
-      content.getBoundingClientRect().top;
-
+    const targetPosition = slides[nextIndex].offsetTop;
     const distance = targetPosition - startPosition;
-    const duration = 720;
+
+    const duration = 850;
     const startTime = performance.now();
 
-    const originalSnap = content.style.scrollSnapType;
-    const originalBehavior = content.style.scrollBehavior;
+    function animate(now) {
+      const progress = Math.min(
+        (now - startTime) / duration,
+        1
+      );
 
-    // Prevent browser snap from interrupting animation
-    content.style.scrollSnapType = 'none';
-    content.style.scrollBehavior = 'auto';
-
-    slides[nextIndex].classList.add('page-active');
-
-    function animateScroll(now) {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      // Smooth ease-out transition
-      const eased = 1 - Math.pow(1 - progress, 4);
+      // Smooth ease-in-out
+      const eased = progress < 0.5
+        ? 4 * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
 
       content.scrollTop =
         startPosition + distance * eased;
 
       if (progress < 1) {
-        requestAnimationFrame(animateScroll);
+        requestAnimationFrame(animate);
       } else {
         content.scrollTop = targetPosition;
+        currentSlide = nextIndex;
 
         slides.forEach((slide, i) => {
-          if (i !== nextIndex) {
-            slide.classList.remove('page-active');
-          }
+          slide.classList.toggle(
+            'page-active',
+            i === nextIndex
+          );
         });
 
-        requestAnimationFrame(() => {
-          content.style.scrollSnapType = originalSnap;
-          content.style.scrollBehavior = originalBehavior;
-          isMoving = false;
-        });
+        isMoving = false;
       }
     }
 
-    requestAnimationFrame(animateScroll);
+    requestAnimationFrame(animate);
   }
+
+  // Mouse wheel: one gesture = one full page
+  content.addEventListener('wheel', event => {
+    if (content.hidden || isMoving) {
+      event.preventDefault();
+      return;
+    }
+
+    if (Math.abs(event.deltaY) < Math.abs(event.deltaX)) {
+      return;
+    }
+
+    const direction = event.deltaY > 0 ? 1 : -1;
+
+    if (canScrollNested(event.target, direction)) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (Math.abs(event.deltaY) > 5) {
+      goToSlide(currentSlide + direction);
+    }
+  }, { passive: false });
+
+  // Touch start
+  content.addEventListener('touchstart', event => {
+    const touch = event.touches[0];
+
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    touchTarget = event.target;
+  }, { passive: true });
+
+  // Prevent native partial page movement
+  content.addEventListener('touchmove', event => {
+    if (content.hidden) return;
+
+    const touch = event.touches[0];
+    const deltaX = Math.abs(touch.clientX - touchStartX);
+    const deltaY = Math.abs(touch.clientY - touchStartY);
+
+    if (deltaY > deltaX + 5) {
+      const direction =
+        touch.clientY < touchStartY ? 1 : -1;
+
+      if (!canScrollNested(touchTarget, direction)) {
+        event.preventDefault();
+      }
+    }
+  }, { passive: false });
+
+  // Touch end: one swipe = one full page
+  content.addEventListener('touchend', event => {
+    if (content.hidden || isMoving) return;
+
+    const touch = event.changedTouches[0];
+
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+
+    if (
+      Math.abs(deltaY) < 45 ||
+      Math.abs(deltaY) < Math.abs(deltaX)
+    ) return;
+
+    const direction = deltaY < 0 ? 1 : -1;
+
+    if (canScrollNested(touchTarget, direction)) return;
+
+    goToSlide(currentSlide + direction);
+  }, { passive: true });
 
   // Keyboard navigation
   document.addEventListener('keydown', event => {
-    if (content.hidden) return;
+    if (content.hidden || isMoving) return;
 
     if (event.altKey || event.ctrlKey || event.metaKey) return;
 
@@ -226,7 +316,7 @@ function initializeSlideNavigation() {
       event.key === 'PageDown'
     ) {
       event.preventDefault();
-      goToSlide(getSlideIndex() + 1);
+      goToSlide(currentSlide + 1);
     }
 
     if (
@@ -234,7 +324,7 @@ function initializeSlideNavigation() {
       event.key === 'PageUp'
     ) {
       event.preventDefault();
-      goToSlide(getSlideIndex() - 1);
+      goToSlide(currentSlide - 1);
     }
 
     if (event.key === 'Home') {
@@ -248,11 +338,12 @@ function initializeSlideNavigation() {
     }
   });
 
-  // Internal page links
+  // Internal links
   content.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', event => {
-      const targetId = link.getAttribute('href').slice(1);
-      const target = document.getElementById(targetId);
+      const target = document.getElementById(
+        link.getAttribute('href').slice(1)
+      );
 
       if (!target) return;
 
