@@ -253,6 +253,7 @@ function goToSlide(index) {
   });
 }
 
+
 /* =====================================
    5. OPEN INVITATION + MUSIC
 ===================================== */
@@ -260,9 +261,7 @@ function goToSlide(index) {
 const openButton = el('open');
 
 if (openButton) {
-
-  openButton.addEventListener('click', async event => {
-
+  openButton.addEventListener('click', async function (event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -271,68 +270,57 @@ if (openButton) {
     const audio = el('audio');
     const musicButton = el('music');
 
-    if (!cover || !content || openButton.disabled) return;
+    if (!cover || !content) {
+      console.error('Cover atau content tidak ditemukan.');
+      return;
+    }
+
+    if (openButton.disabled) return;
 
     openButton.disabled = true;
 
-    // Start music directly during the click interaction.
-    let musicPromise = Promise.resolve(false);
-
+    // Mulai musik saat tombol ditekan
     if (audio) {
-
       audio.loop = true;
       audio.volume = 0.8;
 
-      try {
-
-        musicPromise = audio.play()
-          .then(() => true)
-          .catch(error => {
-            console.warn('Music playback failed:', error);
-            return false;
-          });
-
-      } catch (error) {
-        console.warn('Music playback failed:', error);
-      }
+      audio.play().then(() => {
+        if (musicButton) {
+          musicButton.classList.add('playing');
+        }
+      }).catch(error => {
+        console.warn('Musik tidak dapat diputar:', error);
+      });
     }
 
-    // Opening animation.
+    // Animasi pembukaan
     cover.classList.add('is-opening');
 
-    await new Promise(resolve => {
-      setTimeout(resolve, 900);
-    });
+    setTimeout(() => {
+      // Sembunyikan cover
+      cover.hidden = true;
+      cover.classList.remove('is-opening');
 
-    // Hide opening page.
-    cover.hidden = true;
-    cover.classList.remove('is-opening');
-
-    // Show main invitation.
-    content.hidden = false;
-    content.scrollTop = 0;
-
-    // Start at the first slide after the container becomes visible.
-    requestAnimationFrame(() => {
+      // Tampilkan undangan
+      content.hidden = false;
       content.scrollTop = 0;
-    });
 
-    if (musicButton) {
-      musicButton.hidden = false;
-    }
+      requestAnimationFrame(() => {
+        content.scrollTop = 0;
+      });
 
-    // Initialize slide and reveal systems.
-    initializeScrollReveal();
-    initializeSlideNavigation();
+      // Tampilkan tombol musik
+      if (musicButton) {
+        musicButton.hidden = false;
+      }
 
-    const musicStarted = await musicPromise;
+      // Aktifkan sistem navigasi
+      initializeScrollReveal();
+      initializeSlideNavigation();
 
-    if (musicStarted && musicButton) {
-      musicButton.classList.add('playing');
-    }
+      openButton.disabled = false;
 
-    openButton.disabled = false;
-
+    }, 900);
   });
 }
 
