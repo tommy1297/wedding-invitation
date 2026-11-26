@@ -5063,6 +5063,63 @@ form button:disabled {
 }
 
 
+/* =====================================
+   FINAL FIX - PREVENT SCROLL FLICKER
+===================================== */
+
+/* Stabilkan rendering container */
+#content {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Stabilkan setiap halaman */
+#content > section {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Smooth text reveal without blur filter */
+#content:not([hidden]) .reveal {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translate3d(0, 24px, 0) !important;
+
+  filter: none !important;
+  -webkit-filter: none !important;
+
+  transition:
+    opacity 1.4s ease,
+    transform 1.4s cubic-bezier(.22, 1, .36, 1),
+    visibility 0s linear 1.4s !important;
+
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+#content:not([hidden]) .reveal.visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translate3d(0, 0, 0) !important;
+
+  transition:
+    opacity 1.4s ease,
+    transform 1.4s cubic-bezier(.22, 1, .36, 1),
+    visibility 0s !important;
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  #content .reveal,
+  #content .reveal.visible {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
 
 
 
