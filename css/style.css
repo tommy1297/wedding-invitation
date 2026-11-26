@@ -4586,6 +4586,188 @@ form button:disabled {
 
 
 
+/* =========================================
+   CINEMATIC HERO - NAME & SCROLL ANIMATION
+========================================= */
+
+#content #hero {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Center composition */
+#hero .inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  max-width: none;
+  padding: 0 20px 75px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Name composition */
+#hero .hero-names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: heroNameReveal 1.5s ease both;
+}
+
+#hero .hero-title {
+  color: #e5c99d;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  margin: 0 0 15px;
+}
+
+/* Couple names */
+#hero .hero-names .script {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff3df !important;
+  font-family: 'Great Vibes', cursive !important;
+  font-size: clamp(58px, 12vw, 82px);
+  font-weight: 400;
+  line-height: 0.88;
+  margin: 0;
+  text-shadow: 0 3px 25px rgba(0,0,0,.35);
+}
+
+#hero .hero-names .script span {
+  display: block;
+}
+
+#hero .hero-names .script small {
+  display: block;
+  color: #e5c99d !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 25px;
+  font-style: italic;
+  line-height: 1.2;
+  margin: 5px 0;
+}
+
+/* Wedding date */
+#hero .hero-date {
+  color: #e5c99d !important;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  margin: 22px 0 0;
+  animation: heroNameReveal 1.5s .4s both;
+}
+
+/* Vertical scroll indicator */
+#content #hero .scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 0;
+  padding: 0 0 35px;
+
+  color: #f5ead4 !important;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 8px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  text-decoration: none;
+
+  writing-mode: vertical-rl;
+  animation: scrollTextFloat 2s ease-in-out infinite;
+}
+
+/* Moving vertical line */
+#content #hero .scroll::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  height: 25px;
+  background: #e5c99d;
+  transform: translateX(-50%);
+  transform-origin: top;
+  animation: scrollLineMove 2s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes heroNameReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scrollTextFloat {
+  0%, 100% {
+    opacity: .65;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes scrollLineMove {
+  0% {
+    transform: translate(-50%, 0) scaleY(.4);
+    opacity: .4;
+  }
+  50% {
+    transform: translate(-50%, 5px) scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 10px) scaleY(.4);
+    opacity: .4;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  #hero .inner {
+    padding-bottom: 65px;
+  }
+
+  #hero .hero-names .script {
+    font-size: clamp(58px, 15vw, 76px);
+  }
+
+  #hero .hero-title {
+    font-size: 8px;
+    letter-spacing: 3px;
+  }
+
+  #hero .hero-date {
+    font-size: 8px;
+    letter-spacing: 1.5px;
+  }
+}
+
+
+
 
 
 
