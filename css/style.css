@@ -4888,109 +4888,132 @@ form button:disabled {
 }
 
 
+
 /* =========================================
-   LUXURY CINEMATIC TEXT REVEAL
-   Top-to-bottom staggered fade
+   FULL PAGE LUXURY REVEAL
+   ALL COMPONENTS - TOP TO BOTTOM
 ========================================= */
 
-/* Text starts invisible */
-#content .reveal.visible :is(
-  .eyebrow,
-  .heading,
-  .script,
-  .caps,
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  blockquote,
-  .profile-first-name,
-  .profile-eyebrow,
-  .gallery-heading
-) {
-  animation: luxuryTextReveal 1.15s cubic-bezier(.22, 1, .36, 1) both;
+/* Every component starts hidden */
+#content .reveal.visible * {
+  opacity: 0;
+  animation-name: luxuryFullReveal;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(.22, 1, .36, 1);
+  animation-fill-mode: both;
+  animation-delay: calc(var(--reveal-order, 0) * 0.12s);
 }
 
-/* Reveal sequence from top to bottom */
-#content .reveal.visible > :nth-child(1) {
-  animation-delay: .10s;
+/* Stagger every element according to sibling order */
+#content .reveal.visible *:nth-child(1) {
+  --reveal-order: 0;
+}
+#content .reveal.visible *:nth-child(2) {
+  --reveal-order: 1;
+}
+#content .reveal.visible *:nth-child(3) {
+  --reveal-order: 2;
+}
+#content .reveal.visible *:nth-child(4) {
+  --reveal-order: 3;
+}
+#content .reveal.visible *:nth-child(5) {
+  --reveal-order: 4;
+}
+#content .reveal.visible *:nth-child(6) {
+  --reveal-order: 5;
+}
+#content .reveal.visible *:nth-child(7) {
+  --reveal-order: 6;
+}
+#content .reveal.visible *:nth-child(8) {
+  --reveal-order: 7;
+}
+#content .reveal.visible *:nth-child(9) {
+  --reveal-order: 8;
+}
+#content .reveal.visible *:nth-child(10) {
+  --reveal-order: 9;
+}
+#content .reveal.visible *:nth-child(11) {
+  --reveal-order: 10;
+}
+#content .reveal.visible *:nth-child(12) {
+  --reveal-order: 11;
 }
 
-#content .reveal.visible > :nth-child(2) {
-  animation-delay: .25s;
-}
-
-#content .reveal.visible > :nth-child(3) {
-  animation-delay: .40s;
-}
-
-#content .reveal.visible > :nth-child(4) {
-  animation-delay: .55s;
-}
-
-#content .reveal.visible > :nth-child(5) {
-  animation-delay: .70s;
-}
-
-#content .reveal.visible > :nth-child(6) {
-  animation-delay: .85s;
-}
-
-/* Individual text motion */
-@keyframes luxuryTextReveal {
-  0% {
+/* Top-to-bottom fade */
+@keyframes luxuryFullReveal {
+  from {
     opacity: 0;
-    transform: translate3d(0, -22px, 0);
-    filter: blur(4px);
+    transform: translate3d(0, -20px, 0);
+    filter: blur(3px);
   }
 
-  100% {
+  to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
     filter: blur(0);
   }
 }
 
-/* Profile pages */
-#content .profile-content.reveal.visible > * {
-  animation: luxuryTextReveal 1.15s cubic-bezier(.22, 1, .36, 1) both;
-}
-
-#content .profile-content.reveal.visible > :nth-child(1) {
-  animation-delay: .10s;
-}
-
-#content .profile-content.reveal.visible > :nth-child(2) {
-  animation-delay: .30s;
-}
-
-#content .profile-content.reveal.visible > :nth-child(3) {
-  animation-delay: .50s;
-}
-
-#content .profile-content.reveal.visible > :nth-child(4) {
-  animation-delay: .70s;
-}
-
-/* Keep scroll indicator animation independent */
+/* Preserve scroll indicator animation */
 #content #hero .scroll {
   animation: none !important;
 }
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  #content .reveal.visible :is(
-    .eyebrow, .heading, .script, .caps,
-    p, h1, h2, h3, h4, blockquote
-  ) {
+  #content .reveal.visible * {
     animation: none !important;
     opacity: 1 !important;
-    filter: none !important;
     transform: none !important;
+    filter: none !important;
   }
 }
 
+
+/* =========================================
+   LUXURY PAGE TRANSITION
+========================================= */
+
+#content {
+  scroll-behavior: auto !important;
+  scroll-snap-type: none !important;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+}
+
+/* Each page */
+#content > section {
+  position: relative;
+  scroll-snap-align: none !important;
+  scroll-snap-stop: normal !important;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Smooth reveal when page becomes active */
+#content > section.page-active {
+  animation: pageFadeIn .75s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: .45;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #content > section.page-active {
+    animation: none !important;
+  }
+}
 
 
 
