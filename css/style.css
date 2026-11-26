@@ -4730,21 +4730,6 @@ form button:disabled {
   }
 }
 
-@keyframes scrollLineMove {
-  0% {
-    transform: translate(-50%, 0) scaleY(.4);
-    opacity: .4;
-  }
-  50% {
-    transform: translate(-50%, 5px) scaleY(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, 10px) scaleY(.4);
-    opacity: .4;
-  }
-}
-
 /* Mobile */
 @media (max-width: 480px) {
   #hero .inner {
@@ -4770,6 +4755,84 @@ form button:disabled {
 
 
 
+
+/* =========================================
+   SMOOTH SCROLL DOWN - FLOWING WHITE LINE
+========================================= */
+
+/* Scroll text */
+#content #hero .scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0 0 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  writing-mode: vertical-rl;
+
+  color: #ffffff !important;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-decoration: none;
+
+  animation: none !important;
+}
+
+/* Animated white line */
+#content #hero .scroll::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+
+  width: 1px;
+  height: 35px;
+
+  background: #ffffff !important;
+
+  transform: translateX(-50%);
+  transform-origin: center;
+
+  animation: scrollLineFlow 2.4s linear infinite !important;
+  will-change: clip-path;
+}
+
+/* Line flows from top to bottom */
+@keyframes scrollLineFlow {
+
+  /* No line */
+  0% {
+    clip-path: inset(0 0 100% 0);
+  }
+
+  /* Line grows downward */
+  35% {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* Full line */
+  48% {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* Top disappears, bottom remains */
+  75% {
+    clip-path: inset(100% 0 0 0);
+  }
+
+  /* Completely disappears */
+  100% {
+    clip-path: inset(100% 0 0 0);
+  }
+}
 
 
 
