@@ -5121,6 +5121,64 @@ form button:disabled {
 }
 
 
+/* =========================================
+   DEFINITIVE FIX - STOP SCROLL FLICKERING
+   ========================================= */
+
+/* 1. Remove GPU transforms from scroll layers */
+#content {
+  transform: none !important;
+  -webkit-transform: none !important;
+  backface-visibility: visible !important;
+  -webkit-backface-visibility: visible !important;
+  will-change: auto !important;
+  scroll-behavior: auto !important;
+}
+
+#content > section {
+  transform: none !important;
+  -webkit-transform: none !important;
+  animation: none !important;
+  will-change: auto !important;
+  backface-visibility: visible !important;
+  -webkit-backface-visibility: visible !important;
+}
+
+/* 2. Stop page transition animation */
+#content > section.page-active {
+  animation: none !important;
+  opacity: 1 !important;
+}
+
+/* 3. Disable nested stagger animations */
+#content .reveal,
+#content .reveal.visible,
+#content .reveal *,
+#content .reveal.visible * {
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  will-change: auto !important;
+}
+
+/* 4. Stabilize image rendering */
+#content img {
+  backface-visibility: visible !important;
+  -webkit-backface-visibility: visible !important;
+}
+
+/* 5. Keep page background transparent */
+#content,
+#content > section {
+  background-color: transparent;
+}
+
+
+
 
 
 
