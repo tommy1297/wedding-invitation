@@ -140,11 +140,56 @@ function initializeSlideNavigation() {
     return nearestIndex;
   }
 
-  function goToSlide(index) {
-    const safeIndex = Math.max(
-      0,
-      Math.min(index, slides.length - 1)
-    );
+  
+function goToSlide(index) {
+  const nextIndex = Math.max(
+    0,
+    Math.min(index, slides.length - 1)
+  );
+
+  if (nextIndex === currentSlide || isMoving) return;
+
+  isMoving = true;
+
+  const startPosition = content.scrollTop;
+  const targetPosition = slides[nextIndex].offsetTop;
+  const distance = targetPosition - startPosition;
+
+  const duration = 720;
+  const startTime = performance.now();
+
+  // Prepare destination page
+  slides[nextIndex].classList.add('page-active');
+
+  function animateScroll(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+
+    // Smooth cinematic easing
+    const eased = 1 - Math.pow(1 - progress, 4);
+
+    content.scrollTop =
+      startPosition + distance * eased;
+
+    if (progress < 1) {
+      requestAnimationFrame(animateScroll);
+    } else {
+      content.scrollTop = targetPosition;
+      currentSlide = nextIndex;
+
+      // Remove animation class from previous page
+      slides.forEach((slide, i) => {
+        if (i !== nextIndex) {
+          slide.classList.remove('page-active');
+        }
+      });
+
+      isMoving = false;
+    }
+  }
+
+  requestAnimationFrame(animateScroll);
+}
 
     slides[safeIndex].scrollIntoView({
       behavior: 'smooth',
