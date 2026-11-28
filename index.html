@@ -857,20 +857,52 @@ document.querySelectorAll('#rsvp .attendance-button').forEach(button => {
 });
 
 
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+(function () {
   const audio = document.getElementById('audio');
+  const musicButton = document.getElementById('music');
 
   if (!audio) return;
 
   audio.loop = true;
   audio.volume = 0.8;
-  audio.muted = false;
+  audio.preload = 'auto';
 
-  audio.play().catch(function (error) {
-    console.log('Autoplay diblokir browser:', error);
+  let started = false;
+
+  async function startMusic() {
+    if (started) return;
+
+    try {
+      await audio.play();
+      started = true;
+
+      if (musicButton) {
+        musicButton.classList.add('playing');
+      }
+
+      document.removeEventListener('click', startMusic);
+      document.removeEventListener('touchstart', startMusic);
+      document.removeEventListener('pointerdown', startMusic);
+
+    } catch (error) {
+      console.log('Menunggu interaksi pengguna:', error);
+    }
+  }
+
+  // Coba autoplay saat website dibuka
+  window.addEventListener('load', startMusic);
+
+  // Jika autoplay diblokir, mulai pada sentuhan pertama
+  document.addEventListener('touchstart', startMusic, {
+    passive: true
   });
-});
+
+  document.addEventListener('pointerdown', startMusic);
+  document.addEventListener('click', startMusic);
+
+})();
 </script>
 
 
