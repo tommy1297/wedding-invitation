@@ -789,7 +789,34 @@ document.querySelectorAll('#rsvp .attendance-button').forEach(button => {
 
 })();
 </script>
+  
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const video = document.getElementById('globalBackgroundVideo');
 
+  if (!video) return;
+
+  const playbackSpeed = 0.75;
+  const endTime = 121; // 2 menit 1 detik
+
+  function setVideoSpeed() {
+    video.playbackRate = playbackSpeed;
+  }
+
+  video.addEventListener('loadedmetadata', setVideoSpeed);
+
+  if (video.readyState >= 1) {
+    setVideoSpeed();
+  }
+
+  video.addEventListener('timeupdate', function () {
+    if (video.currentTime >= endTime) {
+      video.currentTime = 0;
+      video.play();
+    }
+  });
+});
+</script>
 
 </body>
 </html>
