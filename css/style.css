@@ -5405,6 +5405,23 @@ form button:disabled {
 }
 
 
+/* Subtle black glow for Meet the Groom & Bride text */
+#content > section#groom.profile-hero .profile-content,
+#content > section#bride.profile-hero .profile-content {
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.85),
+    0 0 4px rgba(0, 0, 0, 0.55),
+    0 0 8px rgba(0, 0, 0, 0.25);
+}
+
+#content > section#groom.profile-hero .profile-content *,
+#content > section#bride.profile-hero .profile-content * {
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.85),
+    0 0 4px rgba(0, 0, 0, 0.55),
+    0 0 8px rgba(0, 0, 0, 0.25);
+}
+
 
 
 
