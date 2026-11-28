@@ -5424,6 +5424,72 @@ form button:disabled {
 
 
 
+/* =========================================
+   GLOBAL VIDEO BACKGROUND
+========================================= */
+
+.global-slideshow {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  background: #17271f;
+}
+
+.global-slideshow .background-video {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  min-width: 100%;
+  min-height: 100%;
+
+  object-fit: cover !important;
+  object-position: center center !important;
+
+  transform: translate(-50%, -50%) !important;
+}
+
+/* Video overlay untuk keterbacaan teks */
+.global-slideshow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: rgba(13, 25, 19, 0.38);
+  pointer-events: none;
+}
+
+/* Groom dan Bride tetap menggunakan foto */
+#content > section#groom.profile-hero {
+  background-image: url("../groom.JPG") !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+}
+
+#content > section#bride.profile-hero {
+  background-image: url("../bride.JPG") !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+}
+
+/* Pastikan foto profile berada di atas video */
+#content > section#groom.profile-hero,
+#content > section#bride.profile-hero {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+
+
 
 
 
