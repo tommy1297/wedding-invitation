@@ -5210,8 +5210,172 @@ form button:disabled {
 }
 
 
+/* =========================================
+   COMPACT RSVP - IPHONE
+   Keep fullscreen, no page scrolling
+========================================= */
+
+@media (max-width: 600px) {
+
+  #content > section#rsvp {
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+
+    overflow: hidden !important;
+    justify-content: center !important;
+    padding: 12px 20px !important;
+  }
+
+  #rsvp .inner {
+    width: 100%;
+    max-width: 420px;
+    margin: auto !important;
+  }
+
+  /* Compact heading */
+  #rsvp .eyebrow {
+    font-size: 8px;
+    margin-bottom: 5px;
+  }
+
+  #rsvp .heading {
+    font-size: 32px;
+    margin: 5px 0 12px;
+  }
+
+  /* Compact form */
+  #rsvp form {
+    gap: 7px;
+    margin: 10px auto 12px;
+  }
+
+  #rsvp form label {
+    font-size: 9px;
+    letter-spacing: 0.7px;
+  }
+
+  #rsvp form input,
+  #rsvp form select {
+    padding: 9px 11px;
+    margin-top: 4px;
+    font-size: 14px;
+    min-height: 38px;
+  }
+
+  #rsvp form textarea {
+    padding: 8px 11px;
+    margin-top: 4px;
+    font-size: 14px;
+    min-height: 55px;
+    height: 55px;
+  }
+
+  /* Submit button */
+  #rsvp #submitWish {
+    min-height: 42px;
+    padding: 10px;
+    width: 100%;
+    font-size: 10px;
+    margin-top: 2px;
+    touch-action: manipulation;
+  }
+
+  #rsvp #status {
+    margin: 0;
+    font-size: 11px;
+  }
+
+  /* Wishes area */
+  #rsvp .wishes-heading {
+    font-size: 21px;
+    margin: 12px 0 5px;
+  }
+
+  #rsvp #wishes {
+    height: 90px;
+    max-height: 90px;
+    overflow-y: auto;
+    margin-top: 5px;
+    -webkit-overflow-scrolling: touch;
+  }
+}
 
 
+/* =========================================
+   THANK YOU - VERTICAL BANK LAYOUT
+   + COPY NUMBER BUTTON
+========================================= */
+
+/* Susunan rekening Tommy dan Wini: atas-bawah */
+#thank-you .bank-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center;
+  gap: 18px !important;
+  width: 100%;
+  max-width: 360px;
+  margin: 20px auto 15px !important;
+}
+
+#thank-you .bank-grid .bank {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 12px 10px !important;
+  margin: 0 auto !important;
+  text-align: center;
+}
+
+/* Tombol copy nomor rekening */
+#thank-you .bank button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 190px;
+  min-height: 42px;
+  padding: 10px 20px !important;
+  margin: 10px auto 0 !important;
+
+  background: #d8bd83 !important;
+  color: #263b30 !important;
+
+  border: 1px solid #d8bd83 !important;
+  border-radius: 4px !important;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15) !important;
+
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.5px !important;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Efek ketika tombol ditekan */
+#thank-you .bank button:active {
+  transform: scale(0.96);
+  background: #c5a66b !important;
+}
+
+/* Tampilan mobile */
+@media (max-width: 480px) {
+  #thank-you .bank-grid {
+    gap: 10px !important;
+    margin-top: 12px !important;
+  }
+
+  #thank-you .bank-grid .bank {
+    padding: 8px 5px !important;
+  }
+
+  #thank-you .bank button {
+    min-width: 180px;
+    min-height: 40px;
+    font-size: 9px !important;
+  }
+}
 
 
 
