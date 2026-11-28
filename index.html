@@ -856,5 +856,23 @@ document.querySelectorAll('#rsvp .attendance-button').forEach(button => {
   });
 });
 
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const audio = document.getElementById('audio');
+
+  if (!audio) return;
+
+  audio.loop = true;
+  audio.volume = 0.8;
+  audio.muted = false;
+
+  audio.play().catch(function (error) {
+    console.log('Autoplay diblokir browser:', error);
+  });
+});
+</script>
+
+
 </body>
 </html>
