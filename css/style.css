@@ -5379,6 +5379,33 @@ form button:disabled {
 
 
 
+/* =========================================
+   GROOM & BRIDE - REMOVE DARK OVERLAY
+========================================= */
+
+#content > section#groom.profile-hero .profile-overlay,
+#content > section#bride.profile-hero .profile-overlay {
+  display: none !important;
+  background: transparent !important;
+  opacity: 0 !important;
+}
+
+/* Pastikan foto tampil tanpa filter gelap */
+#content > section#groom.profile-hero,
+#content > section#bride.profile-hero {
+  filter: none !important;
+}
+
+#content > section#groom.profile-hero::before,
+#content > section#groom.profile-hero::after,
+#content > section#bride.profile-hero::before,
+#content > section#bride.profile-hero::after {
+  background: transparent !important;
+  opacity: 0 !important;
+}
+
+
+
 
 
 
