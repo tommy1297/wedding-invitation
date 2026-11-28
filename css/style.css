@@ -5423,6 +5423,30 @@ form button:disabled {
 }
 
 
+/* Move Meet the Groom text to top-left */
+#content > section#groom.profile-hero .profile-content {
+  position: absolute !important;
+  top: 10% !important;
+  left: 7% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+
+  width: auto !important;
+  max-width: 80%;
+  text-align: left !important;
+  align-items: flex-start !important;
+}
+
+/* Mobile adjustment */
+@media (max-width: 480px) {
+  #content > section#groom.profile-hero .profile-content {
+    top: 8% !important;
+    left: 6% !important;
+    max-width: 88%;
+  }
+}
+
 
 
 
