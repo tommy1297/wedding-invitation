@@ -35,20 +35,22 @@
 
 <body>
 
-<!-- GLOBAL BACKGROUND SLIDESHOW -->
+<!-- GLOBAL VIDEO BACKGROUND -->
 <div class="global-slideshow" aria-hidden="true">
-  <img
-    id="backgroundSlideA"
-    class="background-slide active"
-    src="bg-1.jpg"
-    alt=""
+  <video
+    id="globalBackgroundVideo"
+    class="background-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
   >
-  <img
-    id="backgroundSlideB"
-    class="background-slide"
-    src="bg-2.jpg"
-    alt=""
-  >
+    <source
+      src="./Tommy-Prewedding-Background.mp4"
+      type="video/mp4"
+    >
+  </video>
 </div>
 
 <!-- OPENING INVITATION -->
@@ -717,124 +719,7 @@
     })();
   </script>
 
-  <!-- GLOBAL BACKGROUND SLIDESHOW SCRIPT -->
-  <script>   
-(function () {
-  const slideA = document.getElementById('backgroundSlideA');
-  const slideB = document.getElementById('backgroundSlideB');
-
-  if (!slideA || !slideB) return;
-
-  const IMAGE_INTERVAL = 10000; // 10 detik per foto
-
-  let images = [];
-  let currentIndex = 0;
-  let showingA = true;
-  let timer = null;
-
-  function preloadImage(src) {
-    return new Promise(resolve => {
-      const img = new Image();
-
-      img.onload = () => resolve(src);
-      img.onerror = () => {
-        console.error('Image failed:', src);
-        resolve(null);
-      };
-
-      img.src = src;
-    });
-  }
-
-  async function startSlideshow() {
-    try {
-      const response = await fetch('./images.json');
-
-      if (!response.ok) {
-        throw new Error('Cannot load images.json');
-      }
-
-      const files = await response.json();
-
-      // Load images in the exact JSON order
-      const loaded = await Promise.all(
-        files.map(file => preloadImage('./' + file))
-      );
-
-      images = loaded.filter(src => src !== null);
-
-      if (images.length === 0) {
-        throw new Error('No images loaded');
-      }
-
-      // Reset both slides
-      slideA.classList.remove('active');
-      slideB.classList.remove('active');
-
-      slideA.src = images[0];
-      slideB.src = images.length > 1 ? images[1] : images[0];
-
-      // Show first image
-      void slideA.offsetWidth;
-      slideA.classList.add('active');
-
-      currentIndex = 0;
-      showingA = true;
-
-      if (images.length < 2) return;
-
-      // Start one sequential timer
-      scheduleNextImage();
-
-    } catch (error) {
-      console.error('Slideshow error:', error);
-    }
-  }
-
-  function scheduleNextImage() {
-    clearTimeout(timer);
-
-    timer = setTimeout(() => {
-      changeBackground();
-    }, IMAGE_INTERVAL);
-  }
-
   
-function changeBackground() {
-  const nextIndex = (currentIndex + 1) % images.length;
-
-  const nextSlide = showingA ? slideB : slideA;
-  const currentSlide = showingA ? slideA : slideB;
-
-  // Pertahankan ukuran terakhir foto sebelumnya
-  const currentTransform = getComputedStyle(currentSlide).transform;
-  currentSlide.style.transform = currentTransform;
-
-  // Siapkan foto berikutnya
-  nextSlide.classList.remove('active');
-  nextSlide.style.transform = '';
-  nextSlide.src = images[nextIndex];
-
-  // Aktifkan foto berikutnya
-  void nextSlide.offsetWidth;
-  nextSlide.classList.add('active');
-
-  // Foto lama hanya menghilang, tanpa zoom-out
-  currentSlide.classList.remove('active');
-
-  currentIndex = nextIndex;
-  showingA = !showingA;
-
-  console.log('Now showing:', images[currentIndex]);
-
-  // Jadwalkan pergantian berikutnya
-  scheduleNextImage();
-}
-
-  startSlideshow();
-})();
-  </script>
-
   
 /* RSVP ATTENDANCE BUTTONS */
 document.querySelectorAll('#rsvp .attendance-button').forEach(button => {
